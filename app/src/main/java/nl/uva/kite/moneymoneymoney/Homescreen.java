@@ -9,7 +9,6 @@ import android.view.MenuItem;
 public class Homescreen extends ActionBarActivity {
 
     @Override
-    //teeeeeeeeeeeeeeest navid
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homescreen);
