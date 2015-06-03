@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -105,7 +106,7 @@ public class Homescreen extends Activity implements OnClickListener{
         }
         protected void onPostExecute(Void v) {
 
-            // ambil data dari Json database
+            // get data via Json database
             try {
                 JSONArray Jarray = new JSONArray(result);
                 for(int i=0;i<Jarray.length();i++)
@@ -145,4 +146,9 @@ public class Homescreen extends Activity implements OnClickListener{
 
     }
 
+    /* opens the profile screen activity */
+    public void OpenProfileScreen() {
+        Intent intent = new Intent(this, ProfileScreen.class);
+        startActivity(intent);
+    }
 }

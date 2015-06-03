@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Login extends Activity implements OnClickListener{
+    private static boolean loggedIn = false;
+    private static String loginName;
 
     private EditText user, pass;
     private Button mSubmit, mRegister;
@@ -129,10 +131,13 @@ public class Login extends Activity implements OnClickListener{
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
                     //Intent i = new Intent(Login.this, ReadComments.class);
+                    Login.loggedIn = true;
+                    Login.loginName = username;
                     finish();
                     //startActivity(i);
                     return json.getString(TAG_MESSAGE);
                 }else{
+                    Login.loggedIn = false;
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
                     return json.getString(TAG_MESSAGE);
 
@@ -155,7 +160,14 @@ public class Login extends Activity implements OnClickListener{
             }
 
         }
+    }
 
+    public static boolean isLoggedIn() {
+        return Login.loggedIn;
+    }
+
+    public static String getLoginName() {
+        return Login.loginName;
     }
 
 }
