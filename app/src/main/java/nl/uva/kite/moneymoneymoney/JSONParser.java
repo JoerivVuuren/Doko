@@ -1,3 +1,5 @@
+// Source: http://www.mybringback.com/android-sdk/12924/android-tutorial-using-remote-databases-php-and-mysql-part-1/
+
 package nl.uva.kite.moneymoneymoney;
 
 import java.io.BufferedReader;
