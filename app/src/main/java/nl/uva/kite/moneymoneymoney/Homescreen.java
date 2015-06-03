@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-//import nl.uva.kite.R;
 
 public class Homescreen extends Activity implements OnClickListener{
     Button fetch;
