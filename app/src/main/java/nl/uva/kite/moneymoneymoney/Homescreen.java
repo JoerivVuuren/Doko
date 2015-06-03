@@ -62,6 +62,7 @@ public class Homescreen extends Activity implements OnClickListener{
                 }
             });
         }
+        //Hello just for testing.
         @Override
         protected Void doInBackground(String... params) {
             String url_select = "http://intotheblu.nl/demo.php";
