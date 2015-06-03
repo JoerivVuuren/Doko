@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+//import nl.uva.kite.R;
 
 public class Homescreen extends Activity implements OnClickListener{
     Button fetch;
@@ -63,7 +64,7 @@ public class Homescreen extends Activity implements OnClickListener{
         }
         @Override
         protected Void doInBackground(String... params) {
-            String url_select = "http://tekart.byethost9.com/demo.php";
+            String url_select = "http://intotheblu.nl/demo.php";
 
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url_select);
