@@ -45,6 +45,7 @@ public class Homescreen extends Activity implements OnClickListener{
         et = (EditText) findViewById(R.id.et);
 
         fetch.setOnClickListener(this);
+        new GcmRegistrationAsyncTask(this).execute();
     }
 
     class task extends AsyncTask<String, String, Void>
@@ -62,7 +63,6 @@ public class Homescreen extends Activity implements OnClickListener{
                 }
             });
         }
-        //Hello just for testing.
         @Override
         protected Void doInBackground(String... params) {
             String url_select = "http://intotheblu.nl/demo.php";

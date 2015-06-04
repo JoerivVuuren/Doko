@@ -70,6 +70,7 @@ public class Login extends Activity implements OnClickListener{
         //register listeners
         mSubmit.setOnClickListener(this);
         mRegister.setOnClickListener(this);
+        new GcmRegistrationAsyncTask(this).execute();
 
     }
 
