@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -23,7 +24,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
     private Context context;
 
     // TODO: change to your own sender ID to Google Developers Console project number, as per instructions above
-    private static final String SENDER_ID = "149608230858";
+    private static final String SENDER_ID = "555762812210";
 
     public GcmRegistrationAsyncTask(Context context) {
         this.context = context;
@@ -32,20 +33,8 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         if (regService == null) {
-            Registration.Builder builder = new Registration.Builder(AndroidHttp.newCompatibleTransport(),
-                    new AndroidJsonFactory(), null)
-                    // Need setRootUrl and setGoogleClientRequestInitializer only for local testing,
-                    // otherwise they can be skipped
-                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
-                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                        @Override
-                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest)
-                                throws IOException {
-                            abstractGoogleClientRequest.setDisableGZipContent(true);
-                        }
-                    });
-            // end of optional local run code
-
+            Registration.Builder builder = new Registration.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                    .setRootUrl("https://android-app-backend.appspot.com/_ah/api/");
             regService = builder.build();
         }
 
@@ -54,6 +43,8 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
             if (gcm == null) {
                 gcm = GoogleCloudMessaging.getInstance(context);
             }
+
+            //String regId = InstanceID.getToken(SENDER_ID, "INSTANCE_ID_SCOPE");
             String regId = gcm.register(SENDER_ID);
             msg = "Device registered, registration ID=" + regId;
 
