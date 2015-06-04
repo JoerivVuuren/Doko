@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-    <application>555762812210</application>
+    <application>myApplicationId</application>
     <version>1</version>
     <threadsafe>true</threadsafe>
 
@@ -17,6 +17,6 @@
             Once you have your API key (which starts with â€œAIza...â€�), replace the "gcm.api.key" string in this file.
             -->
 
-        <property name="gcm.api.key" value="AIzaSyA4RF0peeS94sf3c5PaNmSGuvZs_caNwIA" />
+        <property name="gcm.api.key" value="AIzaSyD2IIAvaU1cDBAu1BKDUv9e3nHMiGy2OFI" />
     </system-properties>
 </appengine-web-app>
