@@ -8,22 +8,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
     android:orientation="vertical" >
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:id ="@+id/et" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fetch"
-        android:id ="@+id/fetch" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:text="Login"
+        android:onClick="OpenLoginScreen"
+        android:id ="@+id/login_button" />
 
-        android:id ="@+id/text" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
