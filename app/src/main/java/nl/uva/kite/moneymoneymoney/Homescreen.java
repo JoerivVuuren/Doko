@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+
+
 public class Homescreen extends Activity {
 
     @Override
@@ -49,5 +51,19 @@ public class Homescreen extends Activity {
     public void OpenProfileScreen(View view) {
         Intent intent = new Intent(this, ProfileScreen.class);
         startActivity(intent);
+    }
+
+    public void SendPush(View view) {
+        // WRONG WAY TO SEND PUSH - INSECURE!
+        // Used for pushing. Moet nog de library importen, maar ik had geen tijd meer...
+        /*ParseQuery pushQuery = ParseInstallation.getQuery();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String message = currentUser.getString("name") + " says Hi!";
+        Log.e("", "tried to push");
+
+        ParsePush push = new ParsePush();
+        push.setQuery(pushQuery); // Set our Installation query
+        push.setMessage(message);
+        push.sendInBackground();*/
     }
 }

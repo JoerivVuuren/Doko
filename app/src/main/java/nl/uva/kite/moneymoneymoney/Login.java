@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 public class Login extends Activity implements OnClickListener{
     private static boolean loggedIn = false;
     private static String loginName;
@@ -70,7 +71,6 @@ public class Login extends Activity implements OnClickListener{
         //register listeners
         mSubmit.setOnClickListener(this);
         mRegister.setOnClickListener(this);
-        new GcmRegistrationAsyncTask(this).execute();
 
     }
 

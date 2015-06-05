@@ -23,5 +23,12 @@
         android:onClick="OpenProfileScreen"
         android:id ="@+id/profile_button" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Push Message"
+        android:onClick="SendPush"
+        android:id ="@+id/push_button" />
+
 
 </LinearLayout>
