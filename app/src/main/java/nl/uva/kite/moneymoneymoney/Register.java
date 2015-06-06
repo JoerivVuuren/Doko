@@ -18,9 +18,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-//import com.google.android.gcm.GCMRegistrar;
-
-import nl.uva.kite.moneymoneymoney.Helper.InstanceIdHelper;
 
 public class Register extends Activity implements OnClickListener{
 

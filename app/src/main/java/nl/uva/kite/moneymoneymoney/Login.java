@@ -25,7 +25,8 @@ import android.widget.Toast;
 
 public class Login extends Activity implements OnClickListener{
     private static boolean loggedIn = false;
-    private static String loginName;
+    private static String loginName = "";
+    private static String loginPass = "";
 
     private EditText user, pass;
     private Button mSubmit, mRegister;
@@ -136,6 +137,7 @@ public class Login extends Activity implements OnClickListener{
                     //Intent i = new Intent(Login.this, ReadComments.class);
                     Login.loggedIn = true;
                     Login.loginName = username;
+                    Login.loginPass = password;
                     finish();
                     //startActivity(i);
                     return json.getString(TAG_MESSAGE);
@@ -173,4 +175,7 @@ public class Login extends Activity implements OnClickListener{
         return Login.loginName;
     }
 
+    public static String getPassword() {
+        return Login.loginPass;
+    }
 }
