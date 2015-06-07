@@ -22,6 +22,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.ParseInstallation;
+import com.parse.ParseUser;
+
 
 public class Login extends Activity implements OnClickListener{
     private static boolean loggedIn = false;
@@ -138,6 +141,12 @@ public class Login extends Activity implements OnClickListener{
                     Login.loggedIn = true;
                     Login.loginName = username;
                     Login.loginPass = password;
+                    // Set Parse username data.
+                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    currentUser.setUsername(username);
+                    installation.put("username", username);
+                    installation.saveInBackground();
                     finish();
                     //startActivity(i);
                     return json.getString(TAG_MESSAGE);
