@@ -14,11 +14,13 @@ import android.widget.EditText;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseCrashReporting;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 
 public class Homescreen extends Activity {
@@ -27,25 +29,6 @@ public class Homescreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homescreen);
-
-        // Initialize Crash Reporting.
-        ParseCrashReporting.enable(this);
-
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-
-        // Add your initialization code here
-        Parse.initialize(this, "2fddNMsnNgxufI2tqFNzAo4EXPDXkQCMK6ObmSEn", "QSJ22yZ3akyvnkYUg4MOqadkgQvTOZPOVV8t156c");
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-        Log.e("", "tried to set Parse data");
-
-        ParseAnalytics.trackAppOpenedInBackground(getIntent());
-
-        ParseUser.enableAutomaticUser();
-        ParseACL defaultACL = new ParseACL();
-        // Optionally enable public read access.
-        // defaultACL.setPublicReadAccess(true);
-        ParseACL.setDefaultACL(defaultACL, true);
 
     }
 
@@ -99,13 +82,13 @@ public class Homescreen extends Activity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                         ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
-                        ParseUser currentUser = ParseUser.getCurrentUser();
-                        String message = currentUser.getUsername() + " says Hi!";
+                        //ParseUser currentUser = ParseUser.getCurrentUser();
+                        String message = installation.get("username") + " says Hi!";
                         String friendName = txtUrl.getText().toString();
                         Log.e("", "tried to push to |" + friendName + "|");
                         Log.e("", "pushed from:  |" + installation.get("username") + "|");
                         ParsePush push = new ParsePush();
-                        //pushQuery.whereEqualTo("username", friendName);
+                        pushQuery.whereEqualTo("username", friendName);
                         push.setQuery(pushQuery); // Set our Installation query
                         push.setMessage(message);
                         push.sendInBackground();
@@ -120,20 +103,33 @@ public class Homescreen extends Activity {
 
     public void RegisterPush(View View) {
         // Initialize Crash Reporting.
-        ParseCrashReporting.enable(this);
+        //ParseCrashReporting.enable(this);
 
         // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
+        //Parse.enableLocalDatastore(this);
 
         // Add your initialization code here
         Parse.initialize(this, "2fddNMsnNgxufI2tqFNzAo4EXPDXkQCMK6ObmSEn", "QSJ22yZ3akyvnkYUg4MOqadkgQvTOZPOVV8t156c");
         ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        ParsePush.subscribeInBackground("", new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
+                } else {
+                    Log.e("com.parse.push", "failed to subscribe for push", e);
+                }
+            }
+        });
+        //Log.e("", "tried to set Parse data");
         Log.e("", "tried to set Parse data");
 
-        ParseUser.enableAutomaticUser();
-        ParseACL defaultACL = new ParseACL();
+        //ParseUser.enableAutomaticUser();
+        //ParseACL defaultACL = new ParseACL();
         // Optionally enable public read access.
         // defaultACL.setPublicReadAccess(true);
-        ParseACL.setDefaultACL(defaultACL, true);
+        //ParseACL.setDefaultACL(defaultACL, true);
     }
+
 }

@@ -146,10 +146,10 @@ public class Login extends Activity implements OnClickListener{
                     Login.loginPass = password;
                     // Set Parse username data.
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                    ParseUser currentUser = ParseUser.getCurrentUser();
-                    currentUser.setUsername(username);
+                    //ParseUser currentUser = ParseUser.getCurrentUser();
+                    //currentUser.setUsername(username);
                     installation.put("username", username);
-                    Log.e("", "set current user to: " + ParseUser.getCurrentUser().getUsername());
+                    //Log.e("", "set current user to: " + ParseUser.getCurrentUser().getUsername());
                     installation.saveInBackground();
                     finish();
                     //startActivity(i);
