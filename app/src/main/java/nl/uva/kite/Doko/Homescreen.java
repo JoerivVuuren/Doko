@@ -38,7 +38,7 @@ public class Homescreen extends ActionBarActivity {
 
     // sidebar
     String sideTitles[] = {"Messages","Settings","Help","Log Out"};
-    int sideIcons[] = {R.drawable.ic_settings,R.drawable.ic_mail,R.drawable.ic_help,R.drawable.ic_travel};
+    int sideIcons[] = {R.drawable.ic_mail,R.drawable.ic_settings,R.drawable.ic_help,R.drawable.ic_travel};
     String NAME = "Meisje met Kont";
     String EMAIL = "me@doko.net";
     int PROFILE = R.drawable.aka;
