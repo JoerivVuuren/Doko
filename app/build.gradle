@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "nl.uva.kite.moneymoneymoney"
+        applicationId "nl.uva.kite.Doko"
         minSdkVersion 9
         targetSdkVersion 15
         versionCode 1
