@@ -39,7 +39,7 @@ public class Homescreen extends ActionBarActivity {
     // sidebar
     String sideTitles[] = {"Messages","Settings","Help","Log Out"};
     int sideIcons[] = {R.drawable.ic_settings,R.drawable.ic_mail,R.drawable.ic_help,R.drawable.ic_travel};
-    String NAME = "Doko Munei";
+    String NAME = "Meisje met Kont";
     String EMAIL = "me@doko.net";
     int PROFILE = R.drawable.aka;
     RecyclerView mRecyclerView;                           // Declaring RecyclerView
@@ -54,8 +54,8 @@ public class Homescreen extends ActionBarActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Start","Me", "Group", "Games"};
-    int Numboftabs =4;
+    CharSequence Titles[]={"Start", "Me", "Group", "Games"};
+    int Numboftabs = 4;
 
 
     @Override
