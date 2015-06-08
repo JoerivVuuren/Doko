@@ -172,6 +172,12 @@ public class Homescreen extends ActionBarActivity {
         startActivity(intent);*/
     }
 
+    /* opens the tic tac toe game */
+    public void OpenTicTacToe(View view) {
+        Intent intent = new Intent(this, TicTacToe.class);
+        startActivity(intent);
+    }
+
     /* json login testje */
     public void JSONTest(View view) {
         Login.loginName = "Dav";

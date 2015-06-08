@@ -8,4 +8,5 @@
     <string name="title_activity_profile_screen">My Profile</string>
     <string name="openDrawer">open</string>
     <string name="closeDrawer">close</string>
+    <string name="title_activity_tic_tac_toe">TicTacToe</string>
 </resources>
