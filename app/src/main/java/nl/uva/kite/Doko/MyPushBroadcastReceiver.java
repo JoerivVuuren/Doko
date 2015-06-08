@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import com.parse.ParsePushBroadcastReceiver;
 
@@ -23,6 +24,16 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver {
     @Override
     protected void onPushReceive(Context context, Intent intent) {
         JSONObject data = getDataFromIntent(intent);
+
+        try {
+            String message = data.getString("message");
+            String friendName = data.getString("friendName");
+            Log.e("", "just received a friend request with message: " + message + " and friendName: " + friendName);
+        } catch(JSONException e) {
+            Log.e("", "JSONERROR");
+        }
+
+
         // Do something with the data. To create a notification do:
 
         NotificationManager notificationManager =

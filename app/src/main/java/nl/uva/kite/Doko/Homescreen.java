@@ -18,6 +18,9 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class Homescreen extends Activity {
 
@@ -80,15 +83,27 @@ public class Homescreen extends Activity {
                         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                         ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                         //ParseUser currentUser = ParseUser.getCurrentUser();
-                        String message = installation.get("username") + " says Hi!";
                         String friendName = txtUrl.getText().toString();
+                        try {
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("message", "You have a new Friend request!");
+                            jsonObject.put("friendName", friendName);
+                            ParsePush push = new ParsePush();
+                            pushQuery.whereEqualTo("username", friendName);
+                            push.setQuery(pushQuery); // Set our Installation query
+                            push.setData(jsonObject);
+                            push.sendInBackground();
+                        } catch (JSONException e) {
+                            Log.e("", "failed JSON");
+                        }
+
+
+                        /*String message = installation.get("username") + " says Hi!";
+
                         Log.e("", "tried to push to |" + friendName + "|");
-                        Log.e("", "pushed from:  |" + installation.get("username") + "|");
-                        ParsePush push = new ParsePush();
-                        pushQuery.whereEqualTo("username", friendName);
-                        push.setQuery(pushQuery); // Set our Installation query
-                        push.setMessage(message);
-                        push.sendInBackground();
+                        Log.e("", "pushed from:  |" + installation.get("username") + "|");*/
+
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
