@@ -26,9 +26,9 @@ import com.parse.ParseInstallation;
 
 
 public class Login extends Activity implements OnClickListener{
-    private static boolean loggedIn = false;
-    private static String loginName = "";
-    private static String loginPass = "";
+    public static boolean loggedIn = false;
+    public static String loginName = "";
+    public static String loginPass = "";
 
     private EditText user, pass;
     private Button mSubmit, mRegister;

@@ -25,8 +25,13 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Homescreen extends ActionBarActivity {
@@ -158,6 +163,25 @@ public class Homescreen extends ActionBarActivity {
     public void OpenProfileScreen(View view) {
         Intent intent = new Intent(this, ProfileScreen.class);
         startActivity(intent);
+    }
+
+    /* opens the friends screen activity */
+    public void OpenFriendsScreen(View view) {
+        /* werkt nog niet
+        Intent intent = new Intent(this, Friends.class);
+        startActivity(intent);*/
+    }
+
+    /* json login testje */
+    public void JSONTest(View view) {
+        Login.loginName = "Dav";
+        Login.loginPass = "q";
+
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("username", "Dav"));
+        params.add(new BasicNameValuePair("password", "q"));
+        JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.LOGIN);
+        jr.execute("http://intotheblu.nl/login.php");
     }
 
     public void SendPush(View view) {

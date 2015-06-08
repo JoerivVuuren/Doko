@@ -27,6 +27,19 @@ android:background="#EEEEEE">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Friends"
+            android:onClick="OpenFriendsScreen"
+            android:id ="@+id/friends_button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login als Dav met JSON"
+            android:onClick="JSONTest" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Send Push Message"
             android:onClick="SendPush"
             android:id ="@+id/push_button" />

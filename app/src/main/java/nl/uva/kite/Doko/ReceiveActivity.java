@@ -33,7 +33,8 @@ public class ReceiveActivity extends Activity{
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
+        super.onStop();
         instance = null;
     }
 }
