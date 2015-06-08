@@ -37,7 +37,7 @@ public class JSONRetrieve extends AsyncTask<String,String,String> {
     protected void onPreExecute() {
         super.onPreExecute();
         pDialog = new ProgressDialog(ctext);
-        pDialog.setMessage("Attempting login...");
+        pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(true);
         pDialog.show();

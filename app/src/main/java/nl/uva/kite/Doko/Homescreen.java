@@ -167,9 +167,7 @@ public class Homescreen extends ActionBarActivity {
 
     /* opens the friends screen activity */
     public void OpenFriendsScreen(View view) {
-        /* werkt nog niet
-        Intent intent = new Intent(this, Friends.class);
-        startActivity(intent);*/
+        Friends.get_friendlist(this);
     }
 
     /* opens the tic tac toe game */
@@ -183,7 +181,7 @@ public class Homescreen extends ActionBarActivity {
         Login.loginName = "Dav";
         Login.loginPass = "q";
 
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", "Dav"));
         params.add(new BasicNameValuePair("password", "q"));
         JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.LOGIN);

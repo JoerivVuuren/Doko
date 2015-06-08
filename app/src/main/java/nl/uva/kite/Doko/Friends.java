@@ -1,10 +1,13 @@
 package nl.uva.kite.Doko;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -17,79 +20,32 @@ import java.util.List;
 
 import nl.uva.kite.Doko.R;
 
-public class Friends extends AppCompatActivity {
-    private static final String PHPADD = "http://intotheblu.nl/friends_add.php";
-    private static final String PHPLIST = "http://intotheblu.nl/friends_list.php";
+public class Friends extends Activity {
+    public static String[] friends;
 
-    /* adds a friend to the user's friend list;
-     * returns: 1 on success
-     *          0 on failure */
-    public int add(String friendName) {
+    /* adds a friend to the user's friend list */
+    public static void add(String friendName, Context ctext) {
         if (!Login.isLoggedIn() || friendName.equals(Login.getLoginName()))
-            return 0;
+            return;
 
-        JSONParser jsonParser = new JSONParser();
-
-        int success;
-        try {
-            // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("username", Login.getLoginName()));
-            params.add(new BasicNameValuePair("password", Login.getPassword()));
-            params.add(new BasicNameValuePair("friend", friendName));
-
-            JSONObject json = jsonParser.makeHttpRequest(PHPADD, "POST", params);
-
-            success = json.getInt("success");
-            if (success == 1) {
-                return 1;
-            }
-            else {
-                return 0;
-            }
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("friend", friendName));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.FRIENDADD);
+        jr.execute("http://intotheblu.nl/friends_add.php");
     }
 
     /* retrieves the user's friends list from DB */
-    public String[] get_friendlist() {
+    public static void get_friendlist(Context ctext) {
         if (!Login.isLoggedIn())
-            return null;
+            return;
 
-        Log.e("friends", "getting friend_list");
-
-        JSONParser jsonParser = new JSONParser();
-        String[] friend_list = null;
-
-        int success;
-        try {
-            // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("username", Login.getLoginName()));
-            params.add(new BasicNameValuePair("password", Login.getPassword()));
-
-            JSONObject json = jsonParser.makeHttpRequest(PHPLIST, "POST", params);
-
-            JSONArray jfriends = json.getJSONArray("friends");
-            friend_list = new String[jfriends.length()];
-            for (int i = 0; i < friend_list.length; i++) {
-                friend_list[i] = jfriends.getString(i);
-            }
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.e("friends", "getting friends2");
-
-        for (String f : friend_list) {
-            Log.e("friend", f);
-        }
-
-        return friend_list;
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.FRIENDLIST);
+        jr.execute("http://intotheblu.nl/friends_list.php");
     }
 
     @Override
@@ -97,7 +53,20 @@ public class Friends extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        String[] friends = get_friendlist();
+        if (!Login.isLoggedIn()) {
+            finish();
+        }
+        else {
+            /* list friends on screen */
+
+            String ftext = "Your friends:\n\n";
+            for (String f : friends) {
+                ftext += f + "\n";
+            }
+            TextView tv = (TextView)findViewById(R.id.friends_list);
+            tv.setText(ftext);
+        }
+
     }
 
     @Override
