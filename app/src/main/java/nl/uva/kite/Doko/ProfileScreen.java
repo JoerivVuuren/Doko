@@ -1,4 +1,4 @@
-package nl.uva.kite.moneymoneymoney;
+package nl.uva.kite.Doko;
 
 import android.app.Activity;
 import android.os.Bundle;

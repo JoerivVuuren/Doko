@@ -1,6 +1,6 @@
 // Source: http://www.mybringback.com/android-sdk/12924/android-tutorial-using-remote-databases-php-and-mysql-part-1/
 
-package nl.uva.kite.moneymoneymoney;
+package nl.uva.kite.Doko;
 
 import java.io.BufferedReader;
 import java.io.IOException;

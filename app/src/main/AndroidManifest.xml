@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="nl.uva.kite.moneymoneymoney"
+    package="nl.uva.kite.Doko"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -17,13 +17,13 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <permission
-        android:name="nl.uva.kite.moneymoneymoney.permission.C2D_MESSAGE"
+        android:name="nl.uva.kite.Doko.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="nl.uva.kite.moneymoneymoney.permission.C2D_MESSAGE" />
 
     <application
-        android:name=".RegisterPush"
+        android:name="nl.uva.kite.Doko.RegisterPush"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -34,7 +34,7 @@
             android:name="com.parse.CLIENT_KEY"
             android:value="@string/parse_client_key" />
         <activity
-            android:name=".Homescreen"
+            android:name="nl.uva.kite.Doko.Homescreen"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,15 +42,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Login"
+            android:name="nl.uva.kite.Doko.Login"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".Register"
+            android:name="nl.uva.kite.Doko.Register"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ProfileScreen"
+            android:name="nl.uva.kite.Doko.ProfileScreen"
             android:label="@string/app_name" >
         </activity>
         <service android:name="com.parse.PushService" />

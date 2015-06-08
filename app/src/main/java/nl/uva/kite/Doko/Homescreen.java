@@ -1,4 +1,4 @@
-package nl.uva.kite.moneymoneymoney;
+package nl.uva.kite.Doko;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,14 +12,10 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.parse.Parse;
-import com.parse.ParseACL;
-import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
-import com.parse.ParseCrashReporting;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 

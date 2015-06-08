@@ -1,6 +1,4 @@
-package nl.uva.kite.moneymoneymoney;
-
-import android.util.Log;
+package nl.uva.kite.Doko;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
