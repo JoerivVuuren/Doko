@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="ColorPrimary">#50AF7A</color>
+    <color name="ColorPrimaryDark">#408C61</color>
+    <color name="tabsScrollColor">#E3F2FD</color>
+    <color name="tabTextColor">#000000</color>
+    <color name="smallColor">#ffb3b3b3</color>
+
+    <!-- floating action button-->
+    <color name="primary">#ff50af7a</color>
+    <color name="primary_pressed">#408C61</color>
+    <color name="primary_dark">#408C61</color>
+    <color name="ripple">#ff66eba4</color>
+    <color name="accent">#ff64dd9a</color>
+    <color name="accent_pressed">#ff66eba4</color>
+
+</resources>
