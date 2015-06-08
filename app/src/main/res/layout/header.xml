@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:background="@drawable/wallhaven"
+    android:background="#3f3f3f"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -23,11 +23,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:textColor="#ffffff"
-            android:text="Akash Bangad"
+            android:text="Meisje met kont"
             android:textSize="14sp"
             android:textStyle="bold"
 
-            />
+            android:paddingTop="10dp" />
 
         <TextView
             android:id="@+id/email"
