@@ -8,7 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
+import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseInstallation;
+//import com.parse.ParseCrashReporting;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 
 public class Homescreen extends Activity {
@@ -17,6 +23,21 @@ public class Homescreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homescreen);
+
+        // Initialize Crash Reporting.
+        //ParseCrashReporting.enable(this);
+
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+
+        Parse.initialize(this, "2fddNMsnNgxufI2tqFNzAo4EXPDXkQCMK6ObmSEn", "QSJ22yZ3akyvnkYUg4MOqadkgQvTOZPOVV8t156c");
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        ParseUser.enableAutomaticUser();
+        ParseACL defaultACL = new ParseACL();
+        // Optionally enable public read access.
+        // defaultACL.setPublicReadAccess(true);
+        ParseACL.setDefaultACL(defaultACL, true);
 
     }
 
@@ -56,14 +77,14 @@ public class Homescreen extends Activity {
     public void SendPush(View view) {
         // WRONG WAY TO SEND PUSH - INSECURE!
         // Used for pushing. Moet nog de library importen, maar ik had geen tijd meer...
-        /*ParseQuery pushQuery = ParseInstallation.getQuery();
+        ParseQuery pushQuery = ParseInstallation.getQuery();
         ParseUser currentUser = ParseUser.getCurrentUser();
-        String message = currentUser.getString("name") + " says Hi!";
+        String message = currentUser.getUsername() + " says Hi!";
         Log.e("", "tried to push");
 
         ParsePush push = new ParsePush();
         push.setQuery(pushQuery); // Set our Installation query
         push.setMessage(message);
-        push.sendInBackground();*/
+        push.sendInBackground();
     }
 }
