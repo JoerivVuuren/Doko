@@ -212,7 +212,7 @@ public class Homescreen extends ActionBarActivity {
                         try {
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("message", "You have a new Friend request!");
-                            jsonObject.put("friendName", friendName);
+                            jsonObject.put("friendName", installation.get("username"));
                             ParsePush push = new ParsePush();
                             pushQuery.whereEqualTo("username", friendName);
                             push.setQuery(pushQuery); // Set our Installation query

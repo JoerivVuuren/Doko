@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +36,7 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
             String friendName = data.getString("friendName");
             Log.e("", "just received a friend request with message: " + message + " and friendName: " + friendName);
             ReceiveActivity instance = ReceiveActivity.instance();
+
             if(instance != null){
                 instance.setTextView(friendName);
             }

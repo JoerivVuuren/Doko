@@ -29,7 +29,7 @@ public class ReceiveActivity extends Activity{
 
         TextView name = (TextView) templateView.findViewById(R.id.textView1);
         name.setText(friendName);
-        insertPoint.addView(name);
+        insertPoint.addView(templateView);
     }
 
     @Override
