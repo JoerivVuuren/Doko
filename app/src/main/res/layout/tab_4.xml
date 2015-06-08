@@ -4,32 +4,38 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="#EEEEEE">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:onClick="OpenLoginScreen"
-        android:id ="@+id/login_button" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Profile"
-        android:onClick="OpenProfileScreen"
-        android:id ="@+id/profile_button" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:onClick="OpenLoginScreen"
+            android:id ="@+id/login_button" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Push Message"
-        android:onClick="SendPush"
-        android:id ="@+id/push_button" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Profile"
+            android:onClick="OpenProfileScreen"
+            android:id ="@+id/profile_button" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register device for parse push"
-        android:onClick="RegisterPush"
-        android:id ="@+id/reg_push_button" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send Push Message"
+            android:onClick="SendPush"
+            android:id ="@+id/push_button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register device for parse push"
+            android:onClick="RegisterPush"
+            android:id ="@+id/reg_push_button" />
+    </LinearLayout>
 
 </RelativeLayout>
