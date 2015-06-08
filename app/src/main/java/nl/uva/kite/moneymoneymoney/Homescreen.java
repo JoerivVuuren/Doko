@@ -1,17 +1,21 @@
 package nl.uva.kite.moneymoneymoney;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
-//import com.parse.ParseCrashReporting;
+import com.parse.ParseCrashReporting;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -25,13 +29,17 @@ public class Homescreen extends Activity {
         setContentView(R.layout.activity_homescreen);
 
         // Initialize Crash Reporting.
-        //ParseCrashReporting.enable(this);
+        ParseCrashReporting.enable(this);
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
 
+        // Add your initialization code here
         Parse.initialize(this, "2fddNMsnNgxufI2tqFNzAo4EXPDXkQCMK6ObmSEn", "QSJ22yZ3akyvnkYUg4MOqadkgQvTOZPOVV8t156c");
         ParseInstallation.getCurrentInstallation().saveInBackground();
+        Log.e("", "tried to set Parse data");
+
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
@@ -77,14 +85,55 @@ public class Homescreen extends Activity {
     public void SendPush(View view) {
         // WRONG WAY TO SEND PUSH - INSECURE!
         // Used for pushing. Moet nog de library importen, maar ik had geen tijd meer...
-        ParseQuery pushQuery = ParseInstallation.getQuery();
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        String message = currentUser.getUsername() + " says Hi!";
-        Log.e("", "tried to push");
 
-        ParsePush push = new ParsePush();
-        push.setQuery(pushQuery); // Set our Installation query
-        push.setMessage(message);
-        push.sendInBackground();
+        final EditText txtUrl = new EditText(this);
+
+        // Set the default text to a link of the Queen
+        txtUrl.setHint("Your friends name");
+
+        new AlertDialog.Builder(this)
+                .setTitle("Name")
+                .setMessage("Paste in the username of your friend!")
+                .setView(txtUrl)
+                .setPositiveButton("Invite", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                        ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
+                        ParseUser currentUser = ParseUser.getCurrentUser();
+                        String message = currentUser.getUsername() + " says Hi!";
+                        String friendName = txtUrl.getText().toString();
+                        Log.e("", "tried to push to |" + friendName + "|");
+                        Log.e("", "pushed from:  |" + installation.get("username") + "|");
+                        ParsePush push = new ParsePush();
+                        //pushQuery.whereEqualTo("username", friendName);
+                        push.setQuery(pushQuery); // Set our Installation query
+                        push.setMessage(message);
+                        push.sendInBackground();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                })
+                .show();
+    }
+
+    public void RegisterPush(View View) {
+        // Initialize Crash Reporting.
+        ParseCrashReporting.enable(this);
+
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+
+        // Add your initialization code here
+        Parse.initialize(this, "2fddNMsnNgxufI2tqFNzAo4EXPDXkQCMK6ObmSEn", "QSJ22yZ3akyvnkYUg4MOqadkgQvTOZPOVV8t156c");
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+        Log.e("", "tried to set Parse data");
+
+        ParseUser.enableAutomaticUser();
+        ParseACL defaultACL = new ParseACL();
+        // Optionally enable public read access.
+        // defaultACL.setPublicReadAccess(true);
+        ParseACL.setDefaultACL(defaultACL, true);
     }
 }

@@ -30,5 +30,12 @@
         android:onClick="SendPush"
         android:id ="@+id/push_button" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register device for parse push"
+        android:onClick="RegisterPush"
+        android:id ="@+id/reg_push_button" />
+
 
 </LinearLayout>

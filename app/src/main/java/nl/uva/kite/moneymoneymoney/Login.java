@@ -22,6 +22,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseCrashReporting;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
@@ -146,6 +149,7 @@ public class Login extends Activity implements OnClickListener{
                     ParseUser currentUser = ParseUser.getCurrentUser();
                     currentUser.setUsername(username);
                     installation.put("username", username);
+                    Log.e("", "set current user to: " + ParseUser.getCurrentUser().getUsername());
                     installation.saveInBackground();
                     finish();
                     //startActivity(i);
