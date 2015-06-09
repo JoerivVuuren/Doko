@@ -56,7 +56,7 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             builder.setContentText(message);
-            builder.setSmallIcon(R.drawable.banaan);
+            builder.setSmallIcon(R.drawable.ic_stat_doko_d);
             builder.setAutoCancel(true);
             builder.setContentIntent(pIntent);
 
