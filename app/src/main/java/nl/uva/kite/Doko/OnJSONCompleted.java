@@ -15,6 +15,7 @@ public class OnJSONCompleted {
     public static final int REGISTER = 1;
     public static final int FRIENDADD = 2;
     public static final int FRIENDLIST = 3;
+    public static final int GROUPCREATE = 4;
 
     public static void dotask(int type, JSONObject json, Context ctext) {
         try {
