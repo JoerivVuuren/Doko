@@ -51,6 +51,13 @@ android:background="#EEEEEE">
             android:text="Register device for parse push"
             android:onClick="RegisterPush"
             android:id ="@+id/reg_push_button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login als Dav"
+            android:onClick="JSONTest"
+            android:id ="@+id/login_dav" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -27,7 +27,7 @@
     <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".RegisterPush"
+        android:name=".pushHandling.RegisterPush"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -93,7 +93,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".MyPushBroadcastReceiver"
+            android:name=".pushHandling.MyPushBroadcastReceiver"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
@@ -103,7 +103,7 @@
         </receiver>
 
         <activity
-            android:name=".ReceiveActivity"
+            android:name=".pushHandling.ReceiveActivity"
             android:parentActivityName=".Homescreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

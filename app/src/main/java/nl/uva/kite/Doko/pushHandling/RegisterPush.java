@@ -1,4 +1,4 @@
-package nl.uva.kite.Doko;
+package nl.uva.kite.Doko.pushHandling;
 
 import android.app.Application;
 import android.util.Log;
