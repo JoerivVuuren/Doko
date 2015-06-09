@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             />
 
-        <nl.uva.kite.Doko.SlidingTabLayout
+        <nl.uva.kite.Doko.SlidingTab.SlidingTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

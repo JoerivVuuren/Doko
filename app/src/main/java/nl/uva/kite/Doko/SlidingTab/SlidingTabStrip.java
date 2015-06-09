@@ -1,4 +1,4 @@
-package nl.uva.kite.Doko;
+package nl.uva.kite.Doko.SlidingTab;
 
 import android.content.Context;
 import android.graphics.Canvas;

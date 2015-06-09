@@ -1,6 +1,5 @@
 package nl.uva.kite.Doko;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,12 +32,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.uva.kite.Doko.SlidingTab.SlidingTabLayout;
+import nl.uva.kite.Doko.SlidingTab.ViewPagerAdapter;
+import nl.uva.kite.Doko.Fragments.Contacts;
+
 
 public class Homescreen extends ActionBarActivity {
 
     // sidebar
-    String sideTitles[] = {"Messages","Settings","Help","Log Out"};
-    int sideIcons[] = {R.drawable.ic_mail,R.drawable.ic_settings,R.drawable.ic_help,R.drawable.ic_travel};
+    String sideTitles[] = {"Messages","Contacts","Settings","Help","Log Out"};
+    int sideIcons[] = {R.drawable.ic_mail,R.drawable.ic_shop, R.drawable.ic_settings,R.drawable.ic_help,R.drawable.ic_travel};
     String NAME = "Meisje met Kont";
     String EMAIL = "me@doko.net";
     int PROFILE = R.drawable.aka;
@@ -166,8 +169,10 @@ public class Homescreen extends ActionBarActivity {
     }
 
     /* opens the friends screen activity */
-    public void OpenFriendsScreen(View view) {
-        Friends.get_friendlist(this);
+    public void OpenContacts(View view) {
+        Contacts contacts = new Contacts();
+        this.getFragmentManager().beginTransaction()
+        .replace(R.id.contentFragment, contacts, null).addToBackStack(null).commit();
     }
 
     /* opens the tic tac toe game */

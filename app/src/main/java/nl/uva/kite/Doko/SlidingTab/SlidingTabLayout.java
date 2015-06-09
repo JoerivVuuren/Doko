@@ -1,4 +1,4 @@
-package nl.uva.kite.Doko;
+package nl.uva.kite.Doko.SlidingTab;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import nl.uva.kite.Doko.R;
 
 
 public class SlidingTabLayout extends HorizontalScrollView {
