@@ -42,9 +42,16 @@ android:background="#EEEEEE"
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send Push Message"
-            android:onClick="SendPush"
-            android:id ="@+id/push_button" />
+            android:text="Send a friend request"
+            android:onClick="SendFriendRequest"
+            android:id ="@+id/friend_req_button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send a game request"
+            android:onClick="SendGameRequest"
+            android:id ="@+id/game_req_button" />
 
         <Button
             android:layout_width="wrap_content"

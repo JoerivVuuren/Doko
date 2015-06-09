@@ -29,19 +29,34 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
         JSONObject data = getDataFromIntent(intent);
         // Do something with the data. To create a notification do:
         try {
+            // Data used for the notification itself
             String friendName = data.getString("friendName");
-            int requestID = (int) System.currentTimeMillis();
-            Intent tryIntent = new Intent(context, ReceiveActivity.class);
-            tryIntent.putExtra("friendName", friendName);
-            PendingIntent pIntent = PendingIntent.getActivity(context, requestID, tryIntent, 0);
+            String message = data.getString("message");
+            String classType = data.getString("class");
 
+            Intent tryIntent;
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+            if(classType == "friendRequest") {
+                builder.setContentTitle("Friend Request");
+                tryIntent = new Intent(context, ReceiveActivity.class);
+            }
+            else if(classType == "gameRequest") {
+                builder.setContentTitle("Game Request");
+                tryIntent = new Intent(context, ReceiveActivity.class);
+            }
+            else {
+                tryIntent = new Intent(context, ReceiveActivity.class);
+            }
+            // Put data that needs to be read once notification is clicked.
+            tryIntent.putExtra("friendName", friendName);
+
+            int requestID = (int) System.currentTimeMillis();
+            PendingIntent pIntent = PendingIntent.getActivity(context, requestID, tryIntent, 0);
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            builder.setContentTitle("Friend Request");
-            builder.setContentText("You just received a friend request from " + friendName);
-            builder.setSmallIcon(R.drawable.aka);
+            builder.setContentText(message);
+            builder.setSmallIcon(R.drawable.banaan);
             builder.setAutoCancel(true);
             builder.setContentIntent(pIntent);
 

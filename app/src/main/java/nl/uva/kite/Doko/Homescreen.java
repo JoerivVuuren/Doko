@@ -193,18 +193,15 @@ public class Homescreen extends ActionBarActivity {
         jr.execute("http://intotheblu.nl/login.php");
     }
 
-    public void SendPush(View view) {
-        // WRONG WAY TO SEND PUSH - INSECURE!
-        // Used for pushing. Moet nog de library importen, maar ik had geen tijd meer...
-
+    public void SendFriendRequest(View view) {
         final EditText txtUrl = new EditText(this);
 
         // Set the default text to a link of the Queen
         txtUrl.setHint("Your friends name");
 
         new AlertDialog.Builder(this)
-                .setTitle("Name")
-                .setMessage("Paste in the username of your friend!")
+                .setTitle("Friend Request")
+                .setMessage("Please type the username of your friend!")
                 .setView(txtUrl)
                 .setPositiveButton("Invite", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -214,8 +211,9 @@ public class Homescreen extends ActionBarActivity {
                         String friendName = txtUrl.getText().toString();
                         try {
                             JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("message", "You have a new Friend request!");
+                            jsonObject.put("message", "You just reveived a new Friend request from " + installation.get("username") + "!");
                             jsonObject.put("friendName", installation.get("username"));
+                            jsonObject.put("class", "friendrequest");
                             ParsePush push = new ParsePush();
                             pushQuery.whereEqualTo("username", friendName);
                             push.setQuery(pushQuery); // Set our Installation query
@@ -224,14 +222,44 @@ public class Homescreen extends ActionBarActivity {
                         } catch (JSONException e) {
                             Log.e("", "failed JSON");
                         }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                })
+                .show();
+    }
 
+    public void SendGameRequest(View view) {
+        final EditText txtUrl = new EditText(this);
 
-                        /*String message = installation.get("username") + " says Hi!";
+        // Set the default text to a link of the Queen
+        txtUrl.setHint("Your friends name");
 
-                        Log.e("", "tried to push to |" + friendName + "|");
-                        Log.e("", "pushed from:  |" + installation.get("username") + "|");*/
-
-
+        new AlertDialog.Builder(this)
+                .setTitle("Game request")
+                .setMessage("Please type the username of your friend!")
+                .setView(txtUrl)
+                .setPositiveButton("Invite to Game", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                        ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
+                        //ParseUser currentUser = ParseUser.getCurrentUser();
+                        String friendName = txtUrl.getText().toString();
+                        try {
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("message", "You just reveived a new Game request from " + installation.get("username") + "!");
+                            jsonObject.put("friendName", installation.get("username"));
+                            jsonObject.put("class", "gamerequest");
+                            ParsePush push = new ParsePush();
+                            pushQuery.whereEqualTo("username", friendName);
+                            push.setQuery(pushQuery); // Set our Installation query
+                            push.setData(jsonObject);
+                            push.sendInBackground();
+                        } catch (JSONException e) {
+                            Log.e("", "failed JSON");
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
