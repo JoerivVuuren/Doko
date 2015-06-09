@@ -25,4 +25,18 @@ public class Groups {
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.GROUPCREATE);
         jr.execute("http://intotheblu.nl/group_create.php");
     }
+
+    /* adds a user to group */
+    public static void adduser(String username, int group_id, Context ctext) {
+        if (!Login.isLoggedIn() || username == null || username.isEmpty())
+            return;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("group_id", "" + group_id));
+        params.add(new BasicNameValuePair("adduser", username));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.GROUPADDUSER);
+        jr.execute("http://intotheblu.nl/group_adduser.php");
+    }
 }
