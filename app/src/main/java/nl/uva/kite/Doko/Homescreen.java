@@ -1,9 +1,12 @@
 package nl.uva.kite.Doko;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -28,6 +31,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,18 +42,6 @@ import nl.uva.kite.Doko.Fragments.Contacts;
 
 public class Homescreen extends ActionBarActivity {
 
-    // sidebar
-    String sideTitles[] = {"Messages","Contacts","Settings","Help","Log Out"};
-    int sideIcons[] = {R.drawable.ic_mail,R.drawable.ic_shop, R.drawable.ic_settings,R.drawable.ic_help,R.drawable.ic_travel};
-    String NAME = "Meisje met Kont";
-    String EMAIL = "me@doko.net";
-    int PROFILE = R.drawable.aka;
-    RecyclerView mRecyclerView;                           // Declaring RecyclerView
-    RecyclerView.Adapter mAdapter;                        // Declaring Adapter For Recycler View
-    RecyclerView.LayoutManager mLayoutManager;            // Declaring Layout Manager as a linear layout manager
-    DrawerLayout Drawer;                                  // Declaring DrawerLayout
-
-    ActionBarDrawerToggle mDrawerToggle;
 
     // Declaring Your View and Variables
     Toolbar toolbar;
@@ -263,5 +255,8 @@ public class Homescreen extends ActionBarActivity {
         // defaultACL.setPublicReadAccess(true);
         //ParseACL.setDefaultACL(defaultACL, true);
     }
+
+
+
 
 }
