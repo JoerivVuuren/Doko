@@ -5,14 +5,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.parse.ParseInstallation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class OnJSONCompleted {
     public static final int LOGIN = 0;
@@ -64,17 +69,14 @@ public class OnJSONCompleted {
 
                     String[] friends = Friends.friends;
                     final LinearLayout lm = (LinearLayout) a.findViewById(R.id.select_friend);
-                    for (String friend : friends) {
-                        Button myButton = new Button(ctext);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
-                        myButton.setText(friend);
-                        myButton.setLayoutParams(params);
-                        LinearLayout ll = new LinearLayout(ctext);
-                        ll.setOrientation(LinearLayout.HORIZONTAL);
-                        ll.addView(myButton);
-                        lm.addView(ll);
-                    }
+
+                    ListView friendsListView = (ListView) a.findViewById(R.id.select_friend_list);
+
+                    ArrayList<String> friendList = new ArrayList<String>();
+                    friendList.addAll( Arrays.asList(friends) );
+                    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, friendList);
+
+                    friendsListView.setAdapter( listAdapter );
                 }
             }
             else if (type == GROUPLIST) {

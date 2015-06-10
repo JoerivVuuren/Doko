@@ -10,4 +10,11 @@
     <TextView android:text="" android:layout_width="wrap_content" android:id="@+id/friends_list"
         android:layout_height="wrap_content" android:maxLines="100" />
 
+    <ListView
+        android:id="@+id/select_friend_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:drawSelectorOnTop="false"
+        />
+
 </LinearLayout>
