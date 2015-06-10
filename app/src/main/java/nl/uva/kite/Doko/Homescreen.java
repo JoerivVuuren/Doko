@@ -48,7 +48,7 @@ public class Homescreen extends ActionBarActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Start", "Me", "Group", "Games"};
+    CharSequence Titles[]={"Wall", "Me", "Members", "Games"};
     int Numboftabs = 4;
 
 
