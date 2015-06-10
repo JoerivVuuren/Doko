@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import nl.uva.kite.Doko.Tabs.Tab1;
-import nl.uva.kite.Doko.Tabs.Tab2;
-import nl.uva.kite.Doko.Tabs.Tab3;
-import nl.uva.kite.Doko.Tabs.Tab4;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {

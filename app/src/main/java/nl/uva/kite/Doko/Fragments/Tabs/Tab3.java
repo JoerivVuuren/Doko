@@ -1,4 +1,4 @@
-package nl.uva.kite.Doko.Tabs;
+package nl.uva.kite.Doko.Fragments.Tabs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
