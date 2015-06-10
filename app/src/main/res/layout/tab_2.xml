@@ -107,7 +107,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:text="Balance, records debts history thasort of stuff"
+                                android:text="Balance, records debts history that sort of stuff"
                                 android:textColor="#000000" />
                         </TableRow>
 
