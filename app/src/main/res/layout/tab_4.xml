@@ -66,6 +66,13 @@ android:background="#EEEEEE"
             android:text="Login als Dav"
             android:onClick="JSONTest"
             android:id ="@+id/login_dav" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play Against a Friend"
+            android:id="@+id/PAF_button"
+            android:onClick="OpenPlayAgainstFriend"/>
     </LinearLayout>
 
 </RelativeLayout>

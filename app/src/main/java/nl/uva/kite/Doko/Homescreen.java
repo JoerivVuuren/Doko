@@ -140,6 +140,11 @@ public class Homescreen extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void OpenPlayAgainstFriend(View view) {
+        Intent intent = new Intent(this, SelectFriend.class);
+        startActivity(intent);
+    }
+
     /* json login testje */
     public void JSONTest(View view) {
         Login.loginName = "Dav";

@@ -64,7 +64,10 @@
             android:name=".Friends"
             android:label="@string/app_name" >
         </activity>
-
+        <activity
+            android:name=".SelectFriend"
+            android:label="Doko" >
+        </activity>
         <service android:name="com.parse.PushService" />
 
         <receiver android:name="com.parse.ParseBroadcastReceiver" >
@@ -109,6 +112,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Homescreen"/>
         </activity>
+
+
 
 <!--        <activity
             android:name=".ReceiveActivity"

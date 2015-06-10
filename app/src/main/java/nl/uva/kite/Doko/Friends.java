@@ -32,14 +32,14 @@ public class Friends extends Activity {
     }
 
     /* retrieves the user's friends list from DB */
-    public static void get_friendlist(Context ctext) {
+    public static void get_friendlist(int type, Context ctext) {
         if (!Login.isLoggedIn())
             return;
 
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));
-        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.FRIENDLIST);
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, type);
         jr.execute("http://intotheblu.nl/friends_list.php");
     }
 
