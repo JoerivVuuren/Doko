@@ -145,7 +145,7 @@
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="wrap_content">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -155,11 +155,23 @@
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginBottom="5dp" />
 
+                                <TableRow
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:text="Credit graph, list, table whatever and the buttons will have rounded corners"
+                                        android:id="@+id/textView3" />
+                                </TableRow>
+
                                 <Button
-                                    android:layout_width="126dp"
-                                    android:layout_height="23dp"
+                                    android:layout_width="140dp"
+                                    android:layout_height="30dp"
                                     android:text="Add Credit"
-                                    android:id="@+id/button9"
+                                    android:id="@+id/button11"
                                     android:layout_gravity="center_horizontal"
                                     android:background="@color/ColorPrimary"
                                     android:textColor="#ffffffff" />
@@ -211,9 +223,22 @@
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginBottom="5dp" />
 
+                                <TableRow
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp"
+                                    android:layout_gravity="center_horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:text="Credit graph/list/table whatever"
+                                        android:id="@+id/textView4" />
+                                </TableRow>
+
                                 <Button
-                                    android:layout_width="126dp"
-                                    android:layout_height="23dp"
+                                    android:layout_width="140dp"
+                                    android:layout_height="30dp"
                                     android:text="Add Debt"
                                     android:id="@+id/button10"
                                     android:layout_gravity="center_horizontal"
