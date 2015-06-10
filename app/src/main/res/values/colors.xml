@@ -6,6 +6,7 @@
     <color name="tabsScrollColor">#E3F2FD</color>
     <color name="tabTextColor">#000000</color>
     <color name="smallColor">#ffb3b3b3</color>
+    <color name="activityBackground">#f7f5f0</color>
 
     <!-- floating action button-->
     <color name="primary">#ff50af7a</color>
