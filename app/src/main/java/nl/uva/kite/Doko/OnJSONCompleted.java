@@ -81,18 +81,16 @@ public class OnJSONCompleted {
             }
             else if (type == GROUPLIST) {
                 JSONArray jgroups = json.getJSONArray("groups");
-                String[] group_list = new String[jgroups.length()];
-                for (int i = 0; i < group_list.length; i++) {
-                    group_list[i] = jgroups.getString(i);
+                String[] group_names = new String[jgroups.length()];
+                int[] group_ids = new int[jgroups.length()];
+
+                for (int i = 0; i < group_names.length; i++) {
+                    JSONObject grp = jgroups.getJSONObject(i);
+                    group_ids[i] = grp.getInt("id");
+                    group_names[i] = grp.getString("name");
                 }
 
-                JSONArray jgroup_ids = json.getJSONArray("group_ids");
-                int[] group_ids = new int[jgroup_ids.length()];
-                for (int i = 0; i < group_ids.length; i++) {
-                    group_ids[i] = jgroup_ids.getInt(i);
-                }
-
-                Groups.groups = group_list;
+                Groups.groups = group_names;
                 Groups.group_ids = group_ids;
             }
         }

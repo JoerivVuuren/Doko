@@ -115,6 +115,7 @@ public class Homescreen extends ActionBarActivity {
 
     /* opens the profile screen activity */
     public void OpenProfileScreen(View view) {
+        Groups.get_grouplist(this);
         Intent intent = new Intent(this, ProfileScreen.class);
         startActivity(intent);
     }

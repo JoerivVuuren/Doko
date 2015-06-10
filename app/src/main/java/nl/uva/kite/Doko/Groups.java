@@ -49,6 +49,6 @@ public class Groups {
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.GROUPLIST);
-        jr.execute("http://intotheblu.nl/groups_list.php");
+        jr.execute("http://intotheblu.nl/group_list.php");
     }
 }
