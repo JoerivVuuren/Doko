@@ -39,4 +39,16 @@ public class Groups {
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.GROUPADDUSER);
         jr.execute("http://intotheblu.nl/group_adduser.php");
     }
+
+    /* retrieves the group list from DB */
+    public static void get_grouplist(Context ctext) {
+        if (!Login.isLoggedIn())
+            return;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.GROUPLIST);
+        jr.execute("http://intotheblu.nl/groups_list.php");
+    }
 }

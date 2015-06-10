@@ -13,12 +13,13 @@ import com.melnykov.fab.FloatingActionButton;
 import nl.uva.kite.Doko.R;
 
 public class Tab3 extends Fragment {
+    ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab_3,container,false);
 
-        ListView listView = (ListView) v.findViewById(android.R.id.list);
+        listView = (ListView)v.findViewById(R.id.groups_list);
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
         fab.attachToListView(listView);
 

@@ -19,9 +19,10 @@ public class OnJSONCompleted {
     public static final int REGISTER = 1;
     public static final int FRIENDADD = 2;
     public static final int FRIENDLISTUPDATE = 3;
-    public static final int FRIENDLISTOPEN = 5;
-    public static final int GROUPCREATE = 6;
-    public static final int GROUPADDUSER = 7;
+    public static final int FRIENDLISTOPEN = 4;
+    public static final int GROUPCREATE = 5;
+    public static final int GROUPADDUSER = 6;
+    public static final int GROUPLIST = 7;
     public static final int SELECTFRIEND = 8;
 
     public static void dotask(int type, JSONObject json, Context ctext) {
@@ -75,6 +76,22 @@ public class OnJSONCompleted {
                         lm.addView(ll);
                     }
                 }
+            }
+            else if (type == GROUPLIST) {
+                JSONArray jgroups = json.getJSONArray("groups");
+                String[] group_list = new String[jgroups.length()];
+                for (int i = 0; i < group_list.length; i++) {
+                    group_list[i] = jgroups.getString(i);
+                }
+
+                JSONArray jgroup_ids = json.getJSONArray("group_ids");
+                int[] group_ids = new int[jgroup_ids.length()];
+                for (int i = 0; i < group_ids.length; i++) {
+                    group_ids[i] = jgroup_ids.getInt(i);
+                }
+
+                Groups.groups = group_list;
+                Groups.group_ids = group_ids;
             }
         }
         catch (JSONException e) {
