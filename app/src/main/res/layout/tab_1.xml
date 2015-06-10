@@ -63,7 +63,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textAppearance="?android:attr/textAppearanceMedium"
-                                    android:text="Meisje met kont"
+                                    android:text="Sasha Grey"
                                     android:id="@+id/textView3"
                                     android:layout_centerVertical="true"
                                     android:textColor="@color/tabTextColor"
