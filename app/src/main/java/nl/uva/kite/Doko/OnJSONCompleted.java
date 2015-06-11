@@ -20,15 +20,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class OnJSONCompleted {
+    public static final int NONE = -1;
     public static final int LOGIN = 0;
     public static final int REGISTER = 1;
     public static final int FRIENDADD = 2;
     public static final int FRIENDLISTUPDATE = 3;
     public static final int FRIENDLISTOPEN = 4;
-    public static final int GROUPCREATE = 5;
-    public static final int GROUPADDUSER = 6;
-    public static final int GROUPLIST = 7;
     public static final int SELECTFRIEND = 8;
+    public static final int GROUPCREATE = 10;
+    public static final int GROUPADDUSER = 11;
+    public static final int GROUPLISTUPDATE = 12;
+    public static final int GROUPLISTOPEN = 13;
 
     public static void dotask(int type, JSONObject json, Context ctext) {
         try {
@@ -79,7 +81,7 @@ public class OnJSONCompleted {
                     friendsListView.setAdapter( listAdapter );
                 }
             }
-            else if (type == GROUPLIST) {
+            else if (type == GROUPLISTUPDATE || type == GROUPLISTOPEN) {
                 JSONArray jgroups = json.getJSONArray("groups");
                 String[] group_names = new String[jgroups.length()];
                 int[] group_ids = new int[jgroups.length()];
@@ -92,6 +94,11 @@ public class OnJSONCompleted {
 
                 Groups.groups = group_names;
                 Groups.group_ids = group_ids;
+
+                if (type == GROUPLISTOPEN) {
+                    Intent intent = new Intent(ctext, Groups.class);
+                    ctext.startActivity(intent);
+                }
             }
         }
         catch (JSONException e) {

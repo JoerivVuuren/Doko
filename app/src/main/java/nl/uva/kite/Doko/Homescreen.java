@@ -115,9 +115,13 @@ public class Homescreen extends ActionBarActivity {
 
     /* opens the profile screen activity */
     public void OpenProfileScreen(View view) {
-        Groups.get_grouplist(this);
         Intent intent = new Intent(this, ProfileScreen.class);
         startActivity(intent);
+    }
+
+    /* opens the mygroups screen activity */
+    public void OpenMyGroups(View view) {
+        Groups.get_grouplist(OnJSONCompleted.GROUPLISTOPEN, view.getContext());
     }
 
     /* opens the friends screen activity */

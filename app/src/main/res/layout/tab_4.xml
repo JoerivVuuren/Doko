@@ -21,9 +21,16 @@ android:background="@color/activityBackground"
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Profile + update groups test"
+            android:text="My Profile"
             android:onClick="OpenProfileScreen"
             android:id ="@+id/profile_button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Groups"
+            android:onClick="OpenMyGroups"
+            android:id ="@+id/mygroups_button" />
 
         <Button
             android:layout_width="wrap_content"
