@@ -158,11 +158,11 @@ public class Homescreen extends ActionBarActivity {
         final EditText txtUrl = new EditText(this);
 
         // Set the default text to a link of the Queen
-        txtUrl.setHint("Your friends name");
+        txtUrl.setHint("Your friend's name");
 
         new AlertDialog.Builder(this)
                 .setTitle("Friend Request")
-                .setMessage("Please type the username of your friend!")
+                .setMessage("Please enter the username of your friend!")
                 .setView(txtUrl)
                 .setPositiveButton("Invite", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -217,7 +217,11 @@ public class Homescreen extends ActionBarActivity {
                         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                         ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                         //ParseUser currentUser = ParseUser.getCurrentUser();
+
                         String friendName = txtUrl.getText().toString();
+                        if (friendName.length() < 1)
+                            return;
+
                         try {
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("message", "You just reveived a new Game request from " + installation.get("username") + "!");

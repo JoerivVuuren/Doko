@@ -100,6 +100,9 @@ public class OnJSONCompleted {
                     ctext.startActivity(intent);
                 }
             }
+            else if (type == GROUPCREATE) {
+                // activate group
+            }
         }
         catch (JSONException e) {
             e.printStackTrace();

@@ -1,14 +1,20 @@
 package nl.uva.kite.Doko;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Context;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.EditText;
 import android.widget.ListView;
+
+import com.melnykov.fab.FloatingActionButton;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -26,15 +32,29 @@ public class Groups extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
 
-        //final LinearLayout lm = (LinearLayout)findViewById(R.id.mygroups);
-
-        ListView friendsListView = (ListView)findViewById(R.id.mygroups_list);
+        final ListView groupsListView = (ListView)findViewById(R.id.mygroups_list);
 
         ArrayList<String> groupList = new ArrayList<String>();
         groupList.addAll(Arrays.asList(groups));
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, groupList);
 
-        friendsListView.setAdapter(listAdapter);
+        groupsListView.setAdapter(listAdapter);
+
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.groups_fab);
+        fab.attachToListView(groupsListView);
+
+        groupsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                if (position > Groups.group_ids.length - 1)
+                    return;
+
+                int group_id = Groups.group_ids[position];
+                String group_name = parent.getItemAtPosition(position).toString();
+
+                Log.e("grp selected", "id=" + group_id + ", name=" + group_name);
+            }
+        });
     }
 
     @Override
@@ -57,6 +77,29 @@ public class Groups extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void AddGroupPrompt(final View view) {
+        final EditText txt = new EditText(this);
+
+        new AlertDialog.Builder(this)
+            .setTitle("Create a group")
+            .setMessage("Please enter the desired group name (limited to 50 characters).")
+            .setView(txt)
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    String groupName = txt.getText().toString();
+                    if (groupName.length() < 1)
+                        return;
+
+                    Groups.create(groupName, view.getContext());
+                }
+            })
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                }
+            })
+            .show();
     }
 
     /* creates a group with admin = creator */
