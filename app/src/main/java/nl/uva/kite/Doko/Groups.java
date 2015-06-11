@@ -2,14 +2,19 @@ package nl.uva.kite.Doko;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Context;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Groups extends Activity {
@@ -20,6 +25,16 @@ public class Groups extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
+
+        //final LinearLayout lm = (LinearLayout)findViewById(R.id.mygroups);
+
+        ListView friendsListView = (ListView)findViewById(R.id.mygroups_list);
+
+        ArrayList<String> groupList = new ArrayList<String>();
+        groupList.addAll(Arrays.asList(groups));
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, groupList);
+
+        friendsListView.setAdapter(listAdapter);
     }
 
     @Override
