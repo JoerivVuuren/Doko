@@ -154,7 +154,7 @@ public class Homescreen extends ActionBarActivity {
         jr.execute("http://intotheblu.nl/login.php");
     }
 
-    public void SendFriendRequest(View view) {
+    public void SendFriendRequest(final View view) {
         final EditText txtUrl = new EditText(this);
 
         // Set the default text to a link of the Queen
@@ -171,6 +171,14 @@ public class Homescreen extends ActionBarActivity {
                         //ParseUser currentUser = ParseUser.getCurrentUser();
                         String friendName = txtUrl.getText().toString();
                         try {
+                            // Add friend request to database
+                            List<NameValuePair> params = new ArrayList<>();
+                            params.add(new BasicNameValuePair("username", "Dav"));
+                            params.add(new BasicNameValuePair("password", "q"));
+                            params.add(new BasicNameValuePair("friend", friendName));
+                            JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                            jr.execute("http://intotheblu.nl/friend_request_add.php");
+
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("message", "You just reveived a new Friend request from " + installation.get("username") + "!");
                             jsonObject.put("friendName", installation.get("username"));
@@ -180,6 +188,8 @@ public class Homescreen extends ActionBarActivity {
                             push.setQuery(pushQuery); // Set our Installation query
                             push.setData(jsonObject);
                             push.sendInBackground();
+
+
                         } catch (JSONException e) {
                             Log.e("", "failed JSON");
                         }

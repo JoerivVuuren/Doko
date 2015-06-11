@@ -2,15 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    android:id="@+id/myLayout"
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Name"
-        android:id="@+id/textView1"
+        android:id="@+id/friendName"
         android:gravity="center"
         android:textSize="35dp"
-        android:onClick="myClickHandler"
         android:clickable="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
