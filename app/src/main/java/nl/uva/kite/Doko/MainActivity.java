@@ -202,6 +202,7 @@ public class MainActivity extends ActionBarActivity {
     public void SendFriendRequest(final View view) {
         final EditText txtUrl = new EditText(this);
 
+
         // Set the default text to a link of the Queen
         txtUrl.setHint("Your friend's name");
 
@@ -216,10 +217,12 @@ public class MainActivity extends ActionBarActivity {
                         //ParseUser currentUser = ParseUser.getCurrentUser();
                         String friendName = txtUrl.getText().toString();
                         try {
+                            String login = Login.getLoginName();
+                            String password = Login.getPassword();
                             // Add friend request to database
                             List<NameValuePair> params = new ArrayList<>();
-                            params.add(new BasicNameValuePair("username", "Dav"));
-                            params.add(new BasicNameValuePair("password", "q"));
+                            params.add(new BasicNameValuePair("username",login ));
+                            params.add(new BasicNameValuePair("password", password));
                             params.add(new BasicNameValuePair("friend", friendName));
                             JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                             jr.execute("http://intotheblu.nl/friend_request_add.php");
