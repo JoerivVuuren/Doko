@@ -10,6 +10,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import nl.uva.kite.Doko.JSONRetrieve;
+import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 
 public class ReceiveActivity extends Activity{
@@ -25,7 +33,7 @@ public class ReceiveActivity extends Activity{
             if((v instanceof TextView)) v.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public void onClick(View arg0) {
+                public void onClick(final View arg0) {
                     Log.e("", "Registered click.");
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                             ReceiveActivity.this);
@@ -36,6 +44,12 @@ public class ReceiveActivity extends Activity{
                             .setCancelable(true)
                             .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
+                                    List<NameValuePair> params = new ArrayList<>();
+                                    params.add(new BasicNameValuePair("username", "Dav"));
+                                    params.add(new BasicNameValuePair("password", "q"));
+                                    params.add(new BasicNameValuePair("friend", ((TextView) v).getText().toString()));
+                                    JSONRetrieve jr = new JSONRetrieve(arg0.getContext(), params, OnJSONCompleted.NONE);
+                                    jr.execute("http://intotheblu.nl/friend_request_accept.php");
                                     v.setVisibility(View.GONE);
                                 }
                             })

@@ -28,7 +28,7 @@ public class JSONRetrieve extends AsyncTask<String,String,String> {
     JSONObject json;
     List<NameValuePair> params;
 
-    JSONRetrieve(Context c, List<NameValuePair> p, int type) {
+    public JSONRetrieve(Context c, List<NameValuePair> p, int type) {
         ctext = c;
         params = p;
         post_exec = type;
