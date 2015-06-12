@@ -1,23 +1,24 @@
 package nl.uva.kite.Doko;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -35,21 +36,25 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.uva.kite.Doko.Fragments.TabWrapper;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 import nl.uva.kite.Doko.SlidingTab.SlidingTabLayout;
 import nl.uva.kite.Doko.SlidingTab.ViewPagerAdapter;
 import nl.uva.kite.Doko.Fragments.Contacts;
 
 
-public class Homescreen extends ActionBarActivity {
-
+public class MainActivity extends ActionBarActivity {
+    NavigationView mNavigationView;
+    private boolean mUserLearnedDrawer;
+    private boolean mFromSavedInstanceState;
+    private int mCurrentSelectedPosition;
+    FrameLayout mContentFrame;
 
     // Declaring Your View and Variables
     Toolbar toolbar;
-    ViewPager pager;
-    ViewPagerAdapter adapter;
-    SlidingTabLayout tabs;
-    CharSequence Titles[]={"Wall", "Me", "Members", "Games"};
-    int Numboftabs = 4;
+    private DrawerLayout mDrawerLayout;
+    Toolbar mToolbar;
 
 
     @Override
@@ -61,28 +66,64 @@ public class Homescreen extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
+        TabWrapper tabWrapper = new TabWrapper();
+        fragmentTransaction.replace(R.id.fragment_container, tabWrapper);
+        fragmentTransaction.commit();
 
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
+        setUpNavDrawer();
 
-        // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mContentFrame = (FrameLayout) findViewById(R.id.nav_contentframe);
 
-        // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
-
-        // Setting Custom Color for the Scroll bar indicator of the Tab View
-        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.tabsScrollColor);
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
+
+                menuItem.setChecked(true);
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_item_1:
+                        Snackbar.make(mContentFrame, "My Group", Snackbar.LENGTH_SHORT).show();
+                        TabWrapper tabWrapper = new TabWrapper();
+                        fragmentTransaction.replace(R.id.fragment_container, tabWrapper);
+                        fragmentTransaction.commit();
+                        mCurrentSelectedPosition = 0;
+                        return true;
+                    case R.id.navigation_item_2:
+                        Snackbar.make(mContentFrame, "Contacts", Snackbar.LENGTH_SHORT).show();
+                        Tab4 tab4 = new Tab4();
+                        fragmentTransaction.replace(R.id.fragment_container, tab4);
+                        fragmentTransaction.commit();
+                        mCurrentSelectedPosition = 1;
+                        return true;
+                    default:
+                        return true;
+                }
             }
         });
+    }
 
-        // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(pager);
+    private void setUpToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+    }
+
+    private void setUpNavDrawer() {
+        if (mToolbar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            mToolbar.setNavigationIcon(R.drawable.ic_float_new);
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+            });
+        }
     }
 
     @Override
@@ -140,6 +181,10 @@ public class Homescreen extends ActionBarActivity {
     public void OpenPlayAgainstFriend(View view) {
         Intent intent = new Intent(this, SelectFriend.class);
         startActivity(intent);
+    }
+
+    public void banaan(){
+        System.out.println("banaan");
     }
 
     /* json login testje */
@@ -274,8 +319,4 @@ public class Homescreen extends ActionBarActivity {
         // defaultACL.setPublicReadAccess(true);
         //ParseACL.setDefaultACL(defaultACL, true);
     }
-
-
-
-
 }

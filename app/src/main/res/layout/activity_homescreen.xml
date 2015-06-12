@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/DrawerLayout"
+    android:id="@+id/nav_contentframe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme"
@@ -26,24 +25,17 @@
             android:layout_width="match_parent"
             />
 
-        <nl.uva.kite.Doko.SlidingTab.SlidingTabLayout
-            android:id="@+id/tabs"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:background="@color/ColorPrimary"/>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            ></android.support.v4.view.ViewPager>
+            android:id="@+id/fragment_container"></FrameLayout>
     </LinearLayout>
-</LinearLayout>
+</FrameLayout>
 
 
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
+        android:id="@+id/nav_view"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer"

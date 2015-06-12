@@ -5,6 +5,7 @@
 
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
+        <item name="android:windowBackground">@color/activityBackground</item>
         <!--<item name="android:statusBarColor">@color/ColorPrimaryDark</item>-->
     </style>
 
