@@ -136,19 +136,15 @@ public class Login extends Activity implements OnClickListener{
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
-                    //Intent i = new Intent(Login.this, ReadComments.class);
                     Login.loggedIn = true;
                     Login.loginName = username;
                     Login.loginPass = password;
+
                     // Set Parse username data.
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                    //ParseUser currentUser = ParseUser.getCurrentUser();
-                    //currentUser.setUsername(username);
                     installation.put("username", username);
-                    //Log.e("", "set current user to: " + ParseUser.getCurrentUser().getUsername());
                     installation.saveInBackground();
                     finish();
-                    //startActivity(i);
                     return json.getString(TAG_MESSAGE);
                 }else{
                     Login.loggedIn = false;

@@ -21,7 +21,6 @@ import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 
 public class ReceiveActivity extends Activity{
-    private static ReceiveActivity instance;
 
     public void handleClicks() {
         final ViewGroup group = (ViewGroup)findViewById(R.id.myLayout);
@@ -74,7 +73,6 @@ public class ReceiveActivity extends Activity{
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-        instance = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.requests);
 
@@ -104,6 +102,5 @@ public class ReceiveActivity extends Activity{
     @Override
     public void onStop() {
         super.onStop();
-        instance = null;
     }
 }

@@ -94,8 +94,9 @@ public class MainActivity extends ActionBarActivity {
                         return true;
                     case R.id.navigation_item_2:
                         Snackbar.make(mContentFrame, "Contacts", Snackbar.LENGTH_SHORT).show();
-                        Tab4 tab4 = new Tab4();
-                        fragmentTransaction.replace(R.id.fragment_container, tab4);
+                        SelectFriend selFriend = new SelectFriend();
+                        //Tab4 tab4 = new Tab4();
+                        fragmentTransaction.replace(R.id.fragment_container, selFriend);
                         fragmentTransaction.commit();
                         mCurrentSelectedPosition = 1;
                         return true;
