@@ -35,13 +35,6 @@ android:background="@color/activityBackground"
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contacts"
-            android:onClick="OpenContacts"
-            android:id ="@+id/contacts_button" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Tic Tac Toe"
             android:onClick="OpenTicTacToe"
             android:id ="@+id/ttt_button" />

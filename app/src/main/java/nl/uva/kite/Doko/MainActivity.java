@@ -92,12 +92,12 @@ public class MainActivity extends ActionBarActivity {
                         fragmentTransaction.commit();
                         mCurrentSelectedPosition = 0;
                         return true;
-                    // List of our beloved contacts
+                    // List of our dear contacts
                     case R.id.navigation_item_2:
                         Snackbar.make(mContentFrame, "Contacts", Snackbar.LENGTH_SHORT).show();
-                        SelectFriend selFriend = new SelectFriend();
+                        Friends friendsFragment = new Friends();
                         //Tab4 tab4 = new Tab4();
-                        fragmentTransaction.replace(R.id.fragment_container, selFriend);
+                        fragmentTransaction.replace(R.id.fragment_container, friendsFragment);
                         fragmentTransaction.commit();
                         mCurrentSelectedPosition = 1;
                         return true;
@@ -180,21 +180,16 @@ public class MainActivity extends ActionBarActivity {
         Groups.get_grouplist(OnJSONCompleted.GROUPLISTOPEN, view.getContext());
     }
 
-    /* opens the friends screen activity */
+    /* opens the contacts fragment
     public void OpenContacts(View view) {
         Contacts contacts = new Contacts();
         this.getFragmentManager().beginTransaction()
         .replace(R.id.contentFragment, contacts, null).addToBackStack(null).commit();
-    }
+    }*/
 
     /* opens the tic tac toe game */
     public void OpenTicTacToe(View view) {
         Intent intent = new Intent(this, TicTacToe.class);
-        startActivity(intent);
-    }
-
-    public void OpenPlayAgainstFriend(View view) {
-        Intent intent = new Intent(this, SelectFriend.class);
         startActivity(intent);
     }
 
