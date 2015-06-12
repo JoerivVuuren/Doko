@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.util.Log;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -26,6 +27,7 @@ import java.util.List;
 public class Groups extends Activity {
     public static String[] groups;
     public static int[] group_ids;
+    public static String[] group_members;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,5 +141,18 @@ public class Groups extends Activity {
         params.add(new BasicNameValuePair("password", Login.getPassword()));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, type);
         jr.execute("http://intotheblu.nl/group_list.php");
+    }
+
+    /* retrieves list of members of a group */
+    public static void get_groupmembers(int group_id, Context context) {
+        if(!Login.isLoggedIn()) {
+            return;
+        }
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("group_id", "" + group_id));
+        JSONRetrieve jr = new JSONRetrieve(context, params, OnJSONCompleted.GROUPMEMBERSLIST);
+        jr.execute("http://intotheblu.nl/group_members.php");
     }
 }

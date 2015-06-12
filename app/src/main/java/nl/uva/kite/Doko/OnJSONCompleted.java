@@ -4,16 +4,12 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseInstallation;
 
 import org.json.JSONArray;
@@ -35,6 +31,7 @@ public class OnJSONCompleted {
     public static final int GROUPADDUSER = 11;
     public static final int GROUPLISTUPDATE = 12;
     public static final int GROUPLISTOPEN = 13;
+    public static final int GROUPMEMBERSLIST = 14;
 
     public static void dotask(int type, JSONObject json, Context ctext) {
         try {
@@ -65,26 +62,24 @@ public class OnJSONCompleted {
                 }
 
                 Friends.friends = friend_list;
+                if (type == FRIENDLISTOPEN) {
+                    Intent intent = new Intent(ctext, Friends.class);
+                    ctext.startActivity(intent);
+                }
+                else if (type == SELECTFRIEND) {
+                    Activity a = (Activity) ctext;
+                    a.setContentView(R.layout.activity_select_friend);
 
-                Activity a = (Activity)ctext;
-                final ListView friendListView = (ListView)a.findViewById(R.id.friends_list);
-                ArrayList<String> arrList = new ArrayList<String>();
-                arrList.addAll(Arrays.asList(friend_list));
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
+                    String[] friends = Friends.friends;
 
-                friendListView.setAdapter(listAdapter);
+                    ListView friendsListView = (ListView) a.findViewById(R.id.select_friend_list);
 
-                FloatingActionButton fab = (FloatingActionButton)a.findViewById(R.id.friends_fab);
-                fab.attachToListView(friendListView);
+                    ArrayList<String> friendList = new ArrayList<String>();
+                    friendList.addAll( Arrays.asList(friends) );
+                    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, friendList);
 
-                friendListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                        String friend_name = parent.getItemAtPosition(position).toString();
-
-                        Log.e("friends", "friend name=" + friend_name);
-                    }
-                });
+                    friendsListView.setAdapter( listAdapter );
+                }
             }
             else if (type == GROUPLISTUPDATE || type == GROUPLISTOPEN) {
                 JSONArray jgroups = json.getJSONArray("groups");
@@ -104,6 +99,20 @@ public class OnJSONCompleted {
                     Intent intent = new Intent(ctext, Groups.class);
                     ctext.startActivity(intent);
                 }
+            }
+            else if (type == GROUPMEMBERSLIST) {
+                JSONArray jmembers = json.getJSONArray("members");
+                String[] member_list = new String[jmembers.length()];
+                for (int i = 0; i < member_list.length; i++) {
+                    member_list[i] = jmembers.getString(i);
+                }
+                Groups.group_members = member_list;
+                Activity a = (Activity) ctext;
+                ListView memberListView = (ListView) a.findViewById(R.id.groups_list);
+                ArrayList<String> memberList = new ArrayList<String>();
+                memberList.addAll( Arrays.asList(member_list) );
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, memberList);
+                memberListView.setAdapter( listAdapter );
             }
             else if (type == GROUPCREATE) {
                 // activate group

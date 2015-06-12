@@ -1,17 +1,15 @@
 package nl.uva.kite.Doko;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -37,23 +35,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.uva.kite.Doko.Fragments.TabWrapper;
-import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
-import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
-import nl.uva.kite.Doko.SlidingTab.SlidingTabLayout;
-import nl.uva.kite.Doko.SlidingTab.ViewPagerAdapter;
 import nl.uva.kite.Doko.Fragments.Contacts;
 
 
 public class MainActivity extends ActionBarActivity {
+    // Declerations for stuff we will need later on
     NavigationView mNavigationView;
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
     private int mCurrentSelectedPosition;
     FrameLayout mContentFrame;
+    DrawerLayout mDrawerLayout;
 
     // Declaring Your View and Variables
     Toolbar toolbar;
-    private DrawerLayout mDrawerLayout;
+
+    ActionBarDrawerToggle mDrawerToggle;
     Toolbar mToolbar;
 
 
@@ -63,28 +60,31 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_homescreen);
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
-
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        // Load up a starting fragment in our fragment container
         android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
         TabWrapper tabWrapper = new TabWrapper();
         fragmentTransaction.replace(R.id.fragment_container, tabWrapper);
         fragmentTransaction.commit();
 
-        setUpNavDrawer();
+//        setUpNavDrawer();
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mContentFrame = (FrameLayout) findViewById(R.id.nav_contentframe);
-
+        // See which drawer item has been selected
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
+                // Fragment manager to switch fragments in our main activity
                 android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
 
+                // item in menu list has been selected, which fragment do we switch to?
                 menuItem.setChecked(true);
                 switch (menuItem.getItemId()) {
+                    // Current active group homepage
                     case R.id.navigation_item_1:
                         Snackbar.make(mContentFrame, "My Group", Snackbar.LENGTH_SHORT).show();
                         TabWrapper tabWrapper = new TabWrapper();
@@ -92,11 +92,12 @@ public class MainActivity extends ActionBarActivity {
                         fragmentTransaction.commit();
                         mCurrentSelectedPosition = 0;
                         return true;
+                    // List of our beloved contacts
                     case R.id.navigation_item_2:
                         Snackbar.make(mContentFrame, "Contacts", Snackbar.LENGTH_SHORT).show();
-                        Friends friendsFragment = new Friends();
+                        SelectFriend selFriend = new SelectFriend();
                         //Tab4 tab4 = new Tab4();
-                        fragmentTransaction.replace(R.id.fragment_container, friendsFragment);
+                        fragmentTransaction.replace(R.id.fragment_container, selFriend);
                         fragmentTransaction.commit();
                         mCurrentSelectedPosition = 1;
                         return true;
@@ -105,6 +106,20 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+        final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        setSupportActionBar(toolbar);
+        mDrawerToggle = new ActionBarDrawerToggle(this,
+                mDrawerLayout,
+                toolbar,
+                R.string.openDrawer,
+                R.string.closeDrawer) {
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
     }
 
     private void setUpToolbar() {
@@ -136,7 +151,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Commentaar...
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -179,9 +193,11 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void banaan(){
-        System.out.println("banaan");
+    public void OpenPlayAgainstFriend(View view) {
+        Intent intent = new Intent(this, SelectFriend.class);
+        startActivity(intent);
     }
+
 
     /* json login testje */
     public void JSONTest(View view) {
@@ -220,7 +236,6 @@ public class MainActivity extends ActionBarActivity {
                             params.add(new BasicNameValuePair("username",login ));
                             params.add(new BasicNameValuePair("password", password));
                             params.add(new BasicNameValuePair("friend", friendName));
-                            Log.e("", "My logname is: " + login + " and pass is: " + password);
                             JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                             jr.execute("http://intotheblu.nl/friend_request_add.php");
 
