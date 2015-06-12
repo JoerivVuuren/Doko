@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,7 +37,16 @@ public class Friends extends Fragment {
         params.add(new BasicNameValuePair("password", Login.getPassword()));
         params.add(new BasicNameValuePair("friend", friendName));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.FRIENDADD);
-        jr.execute("http://intotheblu.nl/friends_add.php");
+        jr.execute("http://intotheblu.nl/friend_request_accept.php");
+    }
+
+    public static void deny_request(String friendName, Context ctext){
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("friend", friendName));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, -1);
+        jr.execute("http://intotheblu.nl/friend_request_delete.php");
     }
 
     /* retrieves the user's friends list from DB */

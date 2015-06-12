@@ -51,13 +51,7 @@ public class ReceiveActivity extends Activity{
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    List<NameValuePair> params = new ArrayList<>();
-                                    params.add(new BasicNameValuePair("username", Login.getLoginName()));
-                                    params.add(new BasicNameValuePair("password", Login.getPassword()));
-                                    params.add(new BasicNameValuePair("friend", ((TextView) v).getText().toString()));
-                                    Log.e("", ((TextView) v).getText().toString());
-                                    JSONRetrieve jr = new JSONRetrieve(arg0.getContext(), params, -1);
-                                    jr.execute("http://intotheblu.nl/friend_request_delete.php");
+                                    Friends.deny_request(((TextView) v).getText().toString(), arg0.getContext());
                                     v.setVisibility(View.GONE);
                                 }
                             });
