@@ -7,6 +7,7 @@
     <color name="tabTextColor">#000000</color>
     <color name="smallColor">#ffb3b3b3</color>
     <color name="activityBackground">#f7f5f0</color>
+    <color name="colorNegative">#FF5722</color>
 
     <!-- floating action button-->
     <color name="primary">#ff50af7a</color>

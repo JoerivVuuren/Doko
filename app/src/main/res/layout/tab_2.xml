@@ -167,14 +167,15 @@
                                         android:id="@+id/textView3" />
                                 </TableRow>
 
+
                                 <Button
+                                    android:id="@+id/btnAddCredit"
                                     android:layout_width="140dp"
-                                    android:layout_height="30dp"
-                                    android:text="Add Credit"
-                                    android:id="@+id/button11"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#ffffff"
                                     android:layout_gravity="center_horizontal"
-                                    android:background="@color/ColorPrimary"
-                                    android:textColor="#ffffffff" />
+                                    android:background="@drawable/btn_add_credit"
+                                    android:text="Add Credit" />
                             </LinearLayout>
                         </TableRow>
 
@@ -237,13 +238,13 @@
                                 </TableRow>
 
                                 <Button
+                                    android:id="@+id/btnAddDebit"
                                     android:layout_width="140dp"
-                                    android:layout_height="30dp"
-                                    android:text="Add Debt"
-                                    android:id="@+id/button10"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#ffffff"
                                     android:layout_gravity="center_horizontal"
-                                    android:background="@color/ColorPrimary"
-                                    android:textColor="#ffffffff" />
+                                    android:background="@drawable/btn_add_debit"
+                                    android:text="Add Debit" />
                             </LinearLayout>
                         </TableRow>
 

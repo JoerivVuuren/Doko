@@ -45,6 +45,8 @@ import nl.uva.kite.Doko.Fragments.Contacts;
 
 
 public class MainActivity extends ActionBarActivity {
+    // Declerations for stuff we iwll need later on
+
     NavigationView mNavigationView;
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
@@ -63,9 +65,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_homescreen);
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
-
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        // Load up a starting fragment in our fragment container
         android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
         TabWrapper tabWrapper = new TabWrapper();
@@ -76,15 +78,18 @@ public class MainActivity extends ActionBarActivity {
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mContentFrame = (FrameLayout) findViewById(R.id.nav_contentframe);
-
+        // See which drawer item has been selected
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
+                // Fragment manager to switch fragments in our main activity
                 android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
 
+                // item in menu list has been selected, which fragment do we switch to?
                 menuItem.setChecked(true);
                 switch (menuItem.getItemId()) {
+                    // Current active group homepage
                     case R.id.navigation_item_1:
                         Snackbar.make(mContentFrame, "My Group", Snackbar.LENGTH_SHORT).show();
                         TabWrapper tabWrapper = new TabWrapper();
@@ -92,6 +97,7 @@ public class MainActivity extends ActionBarActivity {
                         fragmentTransaction.commit();
                         mCurrentSelectedPosition = 0;
                         return true;
+                    // List of our beloved contacts
                     case R.id.navigation_item_2:
                         Snackbar.make(mContentFrame, "Contacts", Snackbar.LENGTH_SHORT).show();
                         SelectFriend selFriend = new SelectFriend();
@@ -184,9 +190,6 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void banaan(){
-        System.out.println("banaan");
-    }
 
     /* json login testje */
     public void JSONTest(View view) {
