@@ -1,15 +1,12 @@
 package nl.uva.kite.Doko;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -38,10 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.uva.kite.Doko.Fragments.TabWrapper;
-import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
-import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
-import nl.uva.kite.Doko.SlidingTab.SlidingTabLayout;
-import nl.uva.kite.Doko.SlidingTab.ViewPagerAdapter;
 import nl.uva.kite.Doko.Fragments.Contacts;
 
 
