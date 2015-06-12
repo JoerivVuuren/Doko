@@ -108,11 +108,11 @@ public class OnJSONCompleted {
                 }
                 Groups.group_members = member_list;
                 Activity a = (Activity) ctext;
-                ListView friendsListView = (ListView) a.findViewById(R.id.groups_list);
+                ListView memberListView = (ListView) a.findViewById(R.id.groups_list);
                 ArrayList<String> memberList = new ArrayList<String>();
                 memberList.addAll( Arrays.asList(member_list) );
                 ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, memberList);
-                friendsListView.setAdapter( listAdapter );
+                memberListView.setAdapter( listAdapter );
             }
             else if (type == GROUPCREATE) {
                 // activate group

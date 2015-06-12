@@ -24,8 +24,8 @@ public class Tab3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab_3,container,false);
         listView = (ListView)v.findViewById(R.id.groups_list);
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.groups_fab);
-        fab.attachToListView(listView);
+        //FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.groups_fab);
+        //fab.attachToListView(listView);
 
         /* code voor ListView + FloatingActionButton:
 
