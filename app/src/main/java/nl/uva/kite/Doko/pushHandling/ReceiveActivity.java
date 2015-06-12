@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.uva.kite.Doko.JSONRetrieve;
+import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 
@@ -43,9 +44,11 @@ public class ReceiveActivity extends Activity{
                             .setCancelable(true)
                             .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
+                                    String login = Login.getLoginName();
+                                    String password = Login.getPassword();
                                     List<NameValuePair> params = new ArrayList<>();
-                                    params.add(new BasicNameValuePair("username", "Dav"));
-                                    params.add(new BasicNameValuePair("password", "q"));
+                                    params.add(new BasicNameValuePair("username", login));
+                                    params.add(new BasicNameValuePair("password", password));
                                     params.add(new BasicNameValuePair("friend", ((TextView) v).getText().toString()));
                                     JSONRetrieve jr = new JSONRetrieve(arg0.getContext(), params, OnJSONCompleted.NONE);
                                     jr.execute("http://intotheblu.nl/friend_request_accept.php");
