@@ -3,8 +3,15 @@ package nl.uva.kite.Doko;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
@@ -15,8 +22,9 @@ import java.util.List;
 
 import nl.uva.kite.Doko.R;
 
-public class Friends extends Activity {
+public class Friends extends Fragment {
     public static String[] friends;
+    private RelativeLayout layout;
 
     /* adds a friend to the user's friend list */
     public static void add(String friendName, Context ctext) {
@@ -56,31 +64,26 @@ public class Friends extends Activity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends);
+        layout = (RelativeLayout) inflater.inflate(R.layout.activity_friends, container, false);
 
         if (!Login.isLoggedIn()) {
-            finish();
+            return layout;
         }
         else {
-            /* list friends on screen */
-
-            String ftext = "Your friends:\n\n";
-            for (String f : friends) {
-                ftext += f + "\n";
-            }
-            TextView tv = (TextView)findViewById(R.id.friends_list);
-            tv.setText(ftext);
+            /* get friend list from DB and update list of friends in Fragment */
+            Friends.get_friendlist(OnJSONCompleted.FRIENDLISTUPDATE, this.getActivity());
         }
+        return layout;
 
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_friends, menu);
-        return true;
+        inflater.inflate(R.menu.menu_friends, menu);
+        //return true;
     }
 
     @Override
