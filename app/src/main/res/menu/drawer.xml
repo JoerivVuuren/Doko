@@ -5,21 +5,25 @@
             android:id="@+id/navigation_item_1"
             android:checked="true"
             android:icon="@drawable/ic_group"
-            android:title="Groups" />
+            android:title="Home"/>
         <item
             android:id="@+id/navigation_item_2"
             android:icon="@drawable/ic_bicep"
-            android:title="Contacts"/>
+            android:title="Groups"/>
         <item
             android:id="@+id/navigation_item_3"
             android:icon="@drawable/ic_bicep"
-            android:title="Me"/>
+            android:title="Contacts"/>
         <item
             android:id="@+id/navigation_item_4"
             android:icon="@drawable/ic_bicep"
-            android:title="blank"/>
+            android:title="Me"/>
         <item
             android:id="@+id/navigation_item_5"
+            android:icon="@drawable/ic_bicep"
+            android:title="blank"/>
+        <item
+            android:id="@+id/navigation_item_6"
             android:icon="@drawable/ic_bicep"
             android:title="Logout"/>
     </group>

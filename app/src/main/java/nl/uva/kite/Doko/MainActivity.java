@@ -86,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
                 switch (menuItem.getItemId()) {
                     // Current active group homepage
                     case R.id.navigation_item_1:
-                        Snackbar.make(mContentFrame, "My Group", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mContentFrame, "Home", Snackbar.LENGTH_SHORT).show();
                         TabWrapper tabWrapper = new TabWrapper();
                         fragmentTransaction.replace(R.id.fragment_container, tabWrapper);
                         fragmentTransaction.commit();
@@ -94,6 +94,14 @@ public class MainActivity extends ActionBarActivity {
                         return true;
                     // List of our dear contacts
                     case R.id.navigation_item_2:
+                        Snackbar.make(mContentFrame, "Groups", Snackbar.LENGTH_SHORT).show();
+                        Groups groupsFragment = new Groups();
+                        //Tab4 tab4 = new Tab4();
+                        fragmentTransaction.replace(R.id.fragment_container, groupsFragment);
+                        fragmentTransaction.commit();
+                        mCurrentSelectedPosition = 1;
+                        return true;
+                    case R.id.navigation_item_3:
                         Snackbar.make(mContentFrame, "Contacts", Snackbar.LENGTH_SHORT).show();
                         Friends friendsFragment = new Friends();
                         //Tab4 tab4 = new Tab4();
@@ -175,11 +183,6 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    /* opens the mygroups screen activity */
-    public void OpenMyGroups(View view) {
-        Groups.get_grouplist(OnJSONCompleted.GROUPLISTOPEN, view.getContext());
-    }
-
     /* opens the contacts fragment
     public void OpenContacts(View view) {
         Contacts contacts = new Contacts();
@@ -206,9 +209,31 @@ public class MainActivity extends ActionBarActivity {
         jr.execute("http://intotheblu.nl/login.php");
     }
 
+    public void AddGroupPrompt(final View view) {
+        final EditText txt = new EditText(this);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Create a group")
+                .setMessage("Please enter the desired group name (limited to 50 characters).")
+                .setView(txt)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String groupName = txt.getText().toString();
+                        if (groupName.length() < 1)
+                            return;
+
+                        Groups.create(groupName, view.getContext());
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                })
+                .show();
+    }
+
     public void SendFriendRequest(final View view) {
         final EditText txtUrl = new EditText(this);
-
 
         // Set the default text to a link of the Queen
         txtUrl.setHint("Your friend's name");
@@ -223,6 +248,10 @@ public class MainActivity extends ActionBarActivity {
                         ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                         //ParseUser currentUser = ParseUser.getCurrentUser();
                         String friendName = txtUrl.getText().toString();
+
+                        if (friendName.length() < 1)
+                            return;
+
                         try {
                             String login = Login.getLoginName();
                             String password = Login.getPassword();

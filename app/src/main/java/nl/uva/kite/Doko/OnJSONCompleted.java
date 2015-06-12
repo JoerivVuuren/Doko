@@ -1,15 +1,11 @@
 package nl.uva.kite.Doko;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -28,8 +24,6 @@ public class OnJSONCompleted {
     public static final int REGISTER = 1;
     public static final int FRIENDADD = 2;
     public static final int FRIENDLISTUPDATE = 3;
-    public static final int FRIENDLISTOPEN = 4;
-    public static final int SELECTFRIEND = 8;
     public static final int GROUPCREATE = 10;
     public static final int GROUPADDUSER = 11;
     public static final int GROUPLISTUPDATE = 12;
@@ -57,7 +51,9 @@ public class OnJSONCompleted {
                     Log.d("Login Failure!", json.getString("message"));
                 }
             }
-            else if (type == FRIENDLISTOPEN || type == FRIENDLISTUPDATE || type == SELECTFRIEND) {
+            else if (type == FRIENDLISTUPDATE) {
+
+                /* fill Friends.friends with json response */
                 JSONArray jfriends = json.getJSONArray("friends");
                 String[] friend_list = new String[jfriends.length()];
                 for (int i = 0; i < friend_list.length; i++) {
@@ -66,6 +62,7 @@ public class OnJSONCompleted {
 
                 Friends.friends = friend_list;
 
+                /* create a ListView for friends */
                 Activity a = (Activity)ctext;
                 final ListView friendListView = (ListView)a.findViewById(R.id.friends_list);
                 ArrayList<String> arrList = new ArrayList<String>();
@@ -82,11 +79,13 @@ public class OnJSONCompleted {
                     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                         String friend_name = parent.getItemAtPosition(position).toString();
 
-                        Log.e("friends", "friend name=" + friend_name);
+                        Log.e("friend selected", "friend name=" + friend_name);
                     }
                 });
             }
-            else if (type == GROUPLISTUPDATE || type == GROUPLISTOPEN) {
+            else if (type == GROUPLISTUPDATE) {
+
+                /* fill Groups.group_ids and .group_names with json response */
                 JSONArray jgroups = json.getJSONArray("groups");
                 String[] group_names = new String[jgroups.length()];
                 int[] group_ids = new int[jgroups.length()];
@@ -100,10 +99,32 @@ public class OnJSONCompleted {
                 Groups.groups = group_names;
                 Groups.group_ids = group_ids;
 
-                if (type == GROUPLISTOPEN) {
-                    Intent intent = new Intent(ctext, Groups.class);
-                    ctext.startActivity(intent);
-                }
+                /* create a ListView for groups */
+                Activity a = (Activity)ctext;
+                final ListView groupsListView = (ListView)a.findViewById(R.id.mygroups_list);
+
+                ArrayList<String> arrList = new ArrayList<String>();
+                arrList.addAll(Arrays.asList(group_names));
+
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
+
+                groupsListView.setAdapter(listAdapter);
+
+                FloatingActionButton fab = (FloatingActionButton)a.findViewById(R.id.groups_fab);
+                fab.attachToListView(groupsListView);
+
+                groupsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                        if (position > Groups.group_ids.length - 1)
+                            return;
+
+                        int group_id = Groups.group_ids[position];
+                        String group_name = parent.getItemAtPosition(position).toString();
+
+                        Log.e("group selected", "id=" + group_id + ", name=" + group_name);
+                    }
+                });
             }
             else if (type == GROUPMEMBERSLIST) {
                 JSONArray jmembers = json.getJSONArray("members");
