@@ -16,6 +16,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.uva.kite.Doko.Friends;
 import nl.uva.kite.Doko.JSONRetrieve;
 import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.OnJSONCompleted;
@@ -44,19 +45,19 @@ public class ReceiveActivity extends Activity{
                             .setCancelable(true)
                             .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
-                                    String login = Login.getLoginName();
-                                    String password = Login.getPassword();
-                                    List<NameValuePair> params = new ArrayList<>();
-                                    params.add(new BasicNameValuePair("username", login));
-                                    params.add(new BasicNameValuePair("password", password));
-                                    params.add(new BasicNameValuePair("friend", ((TextView) v).getText().toString()));
-                                    JSONRetrieve jr = new JSONRetrieve(arg0.getContext(), params, OnJSONCompleted.NONE);
-                                    jr.execute("http://intotheblu.nl/friend_request_accept.php");
+                                    Friends.add(((TextView) v).getText().toString(), arg0.getContext());
                                     v.setVisibility(View.GONE);
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    List<NameValuePair> params = new ArrayList<>();
+                                    params.add(new BasicNameValuePair("username", Login.getLoginName()));
+                                    params.add(new BasicNameValuePair("password", Login.getPassword()));
+                                    params.add(new BasicNameValuePair("friend", ((TextView) v).getText().toString()));
+                                    Log.e("", ((TextView) v).getText().toString());
+                                    JSONRetrieve jr = new JSONRetrieve(arg0.getContext(), params, -1);
+                                    jr.execute("http://intotheblu.nl/friend_request_delete.php");
                                     v.setVisibility(View.GONE);
                                 }
                             });

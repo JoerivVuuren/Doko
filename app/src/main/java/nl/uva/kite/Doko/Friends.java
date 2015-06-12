@@ -43,6 +43,18 @@ public class Friends extends Activity {
         jr.execute("http://intotheblu.nl/friends_list.php");
     }
 
+    /* retrieves the user's friend request list from DB */
+    public static void get_friend_request_list(int type, Context ctext) {
+        if (!Login.isLoggedIn())
+            return;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, type);
+        jr.execute("http://intotheblu.nl/friend_request_list.php");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
