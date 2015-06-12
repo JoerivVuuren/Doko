@@ -94,9 +94,9 @@ public class MainActivity extends ActionBarActivity {
                         return true;
                     case R.id.navigation_item_2:
                         Snackbar.make(mContentFrame, "Contacts", Snackbar.LENGTH_SHORT).show();
-                        SelectFriend selFriend = new SelectFriend();
+                        Friends friendsFragment = new Friends();
                         //Tab4 tab4 = new Tab4();
-                        fragmentTransaction.replace(R.id.fragment_container, selFriend);
+                        fragmentTransaction.replace(R.id.fragment_container, friendsFragment);
                         fragmentTransaction.commit();
                         mCurrentSelectedPosition = 1;
                         return true;
@@ -179,11 +179,6 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void OpenPlayAgainstFriend(View view) {
-        Intent intent = new Intent(this, SelectFriend.class);
-        startActivity(intent);
-    }
-
     public void banaan(){
         System.out.println("banaan");
     }
@@ -225,6 +220,7 @@ public class MainActivity extends ActionBarActivity {
                             params.add(new BasicNameValuePair("username",login ));
                             params.add(new BasicNameValuePair("password", password));
                             params.add(new BasicNameValuePair("friend", friendName));
+                            Log.e("", "My logname is: " + login + " and pass is: " + password);
                             JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                             jr.execute("http://intotheblu.nl/friend_request_add.php");
 

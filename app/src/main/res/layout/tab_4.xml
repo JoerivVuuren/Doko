@@ -49,13 +49,6 @@ android:background="@color/activityBackground"
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send a friend request"
-            android:onClick="SendFriendRequest"
-            android:id ="@+id/friend_req_button" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Send a game request"
             android:onClick="SendGameRequest"
             android:id ="@+id/game_req_button" />
@@ -73,13 +66,6 @@ android:background="@color/activityBackground"
             android:text="Login als Dav"
             android:onClick="JSONTest"
             android:id ="@+id/login_dav" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Play Against a Friend"
-            android:id="@+id/PAF_button"
-            android:onClick="OpenPlayAgainstFriend"/>
     </LinearLayout>
 
 </RelativeLayout>

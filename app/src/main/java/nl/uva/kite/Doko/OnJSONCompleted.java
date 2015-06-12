@@ -4,12 +4,16 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseInstallation;
 
 import org.json.JSONArray;
@@ -61,25 +65,26 @@ public class OnJSONCompleted {
                 }
 
                 Friends.friends = friend_list;
-                if (type == FRIENDLISTOPEN) {
-                    Intent intent = new Intent(ctext, Friends.class);
-                    ctext.startActivity(intent);
-                }
-                else if (type == SELECTFRIEND) {
-                    Activity a = (Activity) ctext;
-                    a.setContentView(R.layout.activity_select_friend);
 
-                    String[] friends = Friends.friends;
-                    final LinearLayout lm = (LinearLayout) a.findViewById(R.id.select_friend);
+                Activity a = (Activity)ctext;
+                final ListView friendListView = (ListView)a.findViewById(R.id.friends_list);
+                ArrayList<String> arrList = new ArrayList<String>();
+                arrList.addAll(Arrays.asList(friend_list));
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
 
-                    ListView friendsListView = (ListView) a.findViewById(R.id.select_friend_list);
+                friendListView.setAdapter(listAdapter);
 
-                    ArrayList<String> friendList = new ArrayList<String>();
-                    friendList.addAll( Arrays.asList(friends) );
-                    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, friendList);
+                FloatingActionButton fab = (FloatingActionButton)a.findViewById(R.id.friends_fab);
+                fab.attachToListView(friendListView);
 
-                    friendsListView.setAdapter( listAdapter );
-                }
+                friendListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                        String friend_name = parent.getItemAtPosition(position).toString();
+
+                        Log.e("friends", "friend name=" + friend_name);
+                    }
+                });
             }
             else if (type == GROUPLISTUPDATE || type == GROUPLISTOPEN) {
                 JSONArray jgroups = json.getJSONArray("groups");
