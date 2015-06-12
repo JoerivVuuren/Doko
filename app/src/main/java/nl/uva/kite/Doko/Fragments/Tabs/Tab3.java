@@ -1,5 +1,6 @@
 package nl.uva.kite.Doko.Fragments.Tabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -24,6 +26,16 @@ public class Tab3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab_3,container,false);
         listView = (ListView)v.findViewById(R.id.groups_list);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            // do this when an item of the list is clicked
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedFromList = (listView.getItemAtPosition(position).toString());
+                Log.e("", "Clicked on " + selectedFromList);
+                Intent i = new Intent();
+            }
+        });
         //FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.groups_fab);
         //fab.attachToListView(listView);
 
@@ -39,8 +51,9 @@ public class Tab3 extends Fragment {
     public void onResume() {
         super.onResume();
         Log.e("", "On RESUME");
-        if(Login.isLoggedIn()) {
+        if (Login.isLoggedIn()) {
             Groups.get_groupmembers(3, listView.getContext());
         }
     }
+
 }
