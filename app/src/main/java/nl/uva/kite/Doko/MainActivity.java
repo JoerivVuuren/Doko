@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -45,17 +46,18 @@ import nl.uva.kite.Doko.Fragments.Contacts;
 
 
 public class MainActivity extends ActionBarActivity {
-    // Declerations for stuff we iwll need later on
-
+    // Declerations for stuff we will need later on
     NavigationView mNavigationView;
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
     private int mCurrentSelectedPosition;
     FrameLayout mContentFrame;
+    DrawerLayout mDrawerLayout;
 
     // Declaring Your View and Variables
     Toolbar toolbar;
-    private DrawerLayout mDrawerLayout;
+
+    ActionBarDrawerToggle mDrawerToggle;
     Toolbar mToolbar;
 
 
@@ -74,7 +76,7 @@ public class MainActivity extends ActionBarActivity {
         fragmentTransaction.replace(R.id.fragment_container, tabWrapper);
         fragmentTransaction.commit();
 
-        setUpNavDrawer();
+//        setUpNavDrawer();
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mContentFrame = (FrameLayout) findViewById(R.id.nav_contentframe);
@@ -111,6 +113,20 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+        final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        setSupportActionBar(toolbar);
+        mDrawerToggle = new ActionBarDrawerToggle(this,
+                mDrawerLayout,
+                toolbar,
+                R.string.openDrawer,
+                R.string.closeDrawer) {
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
     }
 
     private void setUpToolbar() {
@@ -142,7 +158,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Commentaar...
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
