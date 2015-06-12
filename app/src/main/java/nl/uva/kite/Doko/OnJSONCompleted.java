@@ -31,6 +31,7 @@ public class OnJSONCompleted {
     public static final int GROUPADDUSER = 11;
     public static final int GROUPLISTUPDATE = 12;
     public static final int GROUPLISTOPEN = 13;
+    public static final int GROUPMEMBERSLIST = 14;
 
     public static void dotask(int type, JSONObject json, Context ctext) {
         try {
@@ -70,7 +71,6 @@ public class OnJSONCompleted {
                     a.setContentView(R.layout.activity_select_friend);
 
                     String[] friends = Friends.friends;
-                    final LinearLayout lm = (LinearLayout) a.findViewById(R.id.select_friend);
 
                     ListView friendsListView = (ListView) a.findViewById(R.id.select_friend_list);
 
@@ -99,6 +99,20 @@ public class OnJSONCompleted {
                     Intent intent = new Intent(ctext, Groups.class);
                     ctext.startActivity(intent);
                 }
+            }
+            else if (type == GROUPMEMBERSLIST) {
+                JSONArray jmembers = json.getJSONArray("members");
+                String[] member_list = new String[jmembers.length()];
+                for (int i = 0; i < member_list.length; i++) {
+                    member_list[i] = jmembers.getString(i);
+                }
+                Groups.group_members = member_list;
+                Activity a = (Activity) ctext;
+                ListView friendsListView = (ListView) a.findViewById(R.id.groups_list);
+                ArrayList<String> memberList = new ArrayList<String>();
+                memberList.addAll( Arrays.asList(member_list) );
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, memberList);
+                friendsListView.setAdapter( listAdapter );
             }
             else if (type == GROUPCREATE) {
                 // activate group
