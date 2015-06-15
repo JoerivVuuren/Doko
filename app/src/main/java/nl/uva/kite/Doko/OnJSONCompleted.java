@@ -137,7 +137,7 @@ public class OnJSONCompleted {
                 ListView memberListView = (ListView) a.findViewById(R.id.groups_list);
                 ArrayList<String> memberList = new ArrayList<String>();
                 memberList.addAll( Arrays.asList(member_list) );
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, memberList);
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.member_list_row,R.id.member_group_list_name,  memberList);
                 memberListView.setAdapter( listAdapter );
             }
             else if (type == GROUPCREATE) {

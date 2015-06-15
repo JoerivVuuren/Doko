@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <!--  row and profile picture -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="10dip">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/list_image"
+            android:layout_width="70dip"
+            android:layout_height="70dip"
+            android:src="@drawable/aka"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+    </LinearLayout>
+
+    <!-- Name-->
+    <TextView
+        android:id="@+id/member_group_list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="First Lastname"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <!-- Member role -->
+    <TextView
+        android:id="@+id/artist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/member_group_list_name"
+        android:textColor="#343434"
+        android:textSize="13sp"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Member" />
+</RelativeLayout>
