@@ -16,10 +16,22 @@
         <!--android:textColor="@color/tabTextColor"-->
         <!--android:layout_centerHorizontal="true" />-->
 
-    <ListView
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="CheckBox" />
+
+    <listView
         android:id="@+id/groups_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+        android:layout_alignBaseline="@+id/checkBox1"
+        android:layout_alignBottom="@+id/checkBox1"
+        android:layout_toRightOf="@+id/checkBox1" />
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fabulous_fab"

@@ -175,6 +175,7 @@
                                     android:textColor="#ffffff"
                                     android:layout_gravity="center_horizontal"
                                     android:background="@drawable/btn_add_credit"
+                                    android:onClick="AddCredit"
                                     android:text="Add Credit" />
                             </LinearLayout>
                         </TableRow>
@@ -244,6 +245,7 @@
                                     android:textColor="#ffffff"
                                     android:layout_gravity="center_horizontal"
                                     android:background="@drawable/btn_add_debit"
+                                    android:onClick="AddDebit"
                                     android:text="Add Debit" />
                             </LinearLayout>
                         </TableRow>

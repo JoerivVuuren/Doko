@@ -33,6 +33,7 @@ public class OnJSONCompleted {
     public static final int GROUPLISTOPEN = 13;
     public static final int GROUPMEMBERSLIST = 14;
     public static final int FRIENDREQUESTUPDATE = 15;
+    public static final int DEBTADD = 15;
 
     public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
@@ -190,11 +191,15 @@ public class OnJSONCompleted {
                 ListView memberListView = (ListView) a.findViewById(R.id.groups_list);
                 ArrayList<String> memberList = new ArrayList<String>();
                 memberList.addAll( Arrays.asList(member_list) );
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, memberList);
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.member_list_row,R.id.member_group_list_name,  memberList);
                 memberListView.setAdapter( listAdapter );
+
             }
             else if (type == GROUPCREATE) {
                 // activate group
+            }
+            else if (type == DEBTADD) {
+                //doeiets
             }
         }
         catch (JSONException e) {

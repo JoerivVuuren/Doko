@@ -33,7 +33,6 @@ public class Tab3 extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedFromList = (listView.getItemAtPosition(position).toString());
                 Log.e("", "Clicked on " + selectedFromList);
-                Intent i = new Intent();
             }
         });
         //FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.groups_fab);
@@ -44,6 +43,9 @@ public class Tab3 extends Fragment {
         listView = (ListView)v.findViewById(R.id.fabulous_list);
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fabulous_fab);
         fab.attachToListView(listView);*/
+        if(Login.isLoggedIn()) {
+            Groups.get_groupmembers(3, listView.getContext());
+        }
 
         return v;
     }
