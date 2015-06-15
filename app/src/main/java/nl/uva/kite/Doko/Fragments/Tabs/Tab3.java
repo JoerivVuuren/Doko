@@ -43,6 +43,9 @@ public class Tab3 extends Fragment {
         listView = (ListView)v.findViewById(R.id.fabulous_list);
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fabulous_fab);
         fab.attachToListView(listView);*/
+        if(Login.isLoggedIn()) {
+            Groups.get_groupmembers(3, listView.getContext());
+        }
 
         return v;
     }

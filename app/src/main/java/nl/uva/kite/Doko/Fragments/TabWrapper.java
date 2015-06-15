@@ -9,10 +9,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 import nl.uva.kite.Doko.R;
 import nl.uva.kite.Doko.SlidingTab.SlidingTabLayout;
 import nl.uva.kite.Doko.SlidingTab.ViewPagerAdapter;
@@ -41,6 +43,28 @@ public class TabWrapper extends android.support.v4.app.Fragment {
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) v.findViewById(R.id.pager);
         pager.setAdapter(adapter);
+        //pager.addOnPageChangeListener(this);
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 3) {
+                    Tab3 tab3 = new Tab3();
+                    android.support.v4.app.FragmentManager fragmentmanager = getFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, tab3);
+                    fragmentTransaction.commit();
+                    Log.e("", "i came in the tablistener");
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+        });
 
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) v.findViewById(R.id.tabs);

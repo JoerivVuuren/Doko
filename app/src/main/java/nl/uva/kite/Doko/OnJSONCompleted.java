@@ -29,6 +29,7 @@ public class OnJSONCompleted {
     public static final int GROUPLISTUPDATE = 12;
     public static final int GROUPLISTOPEN = 13;
     public static final int GROUPMEMBERSLIST = 14;
+    public static final int DEBTADD = 15;
 
     public static void dotask(int type, JSONObject json, Context ctext) {
         try {
@@ -143,6 +144,9 @@ public class OnJSONCompleted {
             }
             else if (type == GROUPCREATE) {
                 // activate group
+            }
+            else if (type == DEBTADD) {
+                //doeiets
             }
         }
         catch (JSONException e) {
