@@ -15,8 +15,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/list_image"
-            android:layout_width="70dip"
-            android:layout_height="70dip"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/artin"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
@@ -35,7 +35,8 @@
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_marginTop="5dp" />
 
     <!-- Member role -->
     <TextView
@@ -48,4 +49,17 @@
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Member" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="€ -5,00"
+        android:id="@+id/textView5"
+        android:layout_marginRight="19dp"
+        android:layout_marginEnd="19dp"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/artist"
+        android:layout_alignEnd="@+id/artist"
+        android:textColor="@color/colorNegative" />
 </RelativeLayout>
