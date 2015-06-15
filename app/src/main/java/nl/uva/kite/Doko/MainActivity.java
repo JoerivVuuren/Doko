@@ -1,6 +1,7 @@
 package nl.uva.kite.Doko;
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import nl.uva.kite.Doko.Fragments.TabWrapper;
 import nl.uva.kite.Doko.Fragments.Contacts;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -188,7 +190,8 @@ public class MainActivity extends ActionBarActivity {
         Contacts contacts = new Contacts();
         this.getFragmentManager().beginTransaction()
         .replace(R.id.contentFragment, contacts, null).addToBackStack(null).commit();
-    }*/
+    } */
+
 
     /* opens the tic tac toe game */
     public void OpenTicTacToe(View view) {

@@ -17,7 +17,7 @@
             android:id="@+id/list_image"
             android:layout_width="70dip"
             android:layout_height="70dip"
-            android:src="@drawable/aka"
+            android:src="@drawable/artin"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp" />

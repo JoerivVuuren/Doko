@@ -33,7 +33,6 @@ public class Tab3 extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedFromList = (listView.getItemAtPosition(position).toString());
                 Log.e("", "Clicked on " + selectedFromList);
-                Intent i = new Intent();
             }
         });
         //FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.groups_fab);
