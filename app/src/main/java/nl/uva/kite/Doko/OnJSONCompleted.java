@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Formatter;
+import java.util.Locale;
 
 public class OnJSONCompleted {
     public static final int NONE = -1;
@@ -129,16 +131,23 @@ public class OnJSONCompleted {
                 });
             }
             else if (type == GROUPMEMBERSLIST) {
-                JSONArray jmembers = json.getJSONArray("members");
-                String[] member_list = new String[jmembers.length()];
-                for (int i = 0; i < member_list.length; i++) {
-                    member_list[i] = jmembers.getString(i);
+
+                /* fill Groups.current_group_* with json response */
+                JSONArray jmembers = json.getJSONArray("users");
+                JSONArray jpics = json.getJSONArray("profile_picture");
+                JSONArray jdebt = json.getJSONArray("debts");
+                Groups.current_group_members = new String[jmembers.length()];
+                for (int i = 0; i < jmembers.length(); i++) {
+                    Groups.current_group_members[i] = jmembers.getString(i);
+                    Groups.current_group_pictures[i] = jpics.getString(i);
+                    Groups.current_group_debts[i] = String.format("€ %(,.2f", jdebt.getString(i));
                 }
-                Groups.group_members = member_list;
+                Log.e("","" + Groups.current_group_members[1] + " pic=" + Groups.current_group_members[1] + " debt=" + Groups.current_group_members[1]);
+
                 Activity a = (Activity) ctext;
                 ListView memberListView = (ListView) a.findViewById(R.id.groups_list);
                 ArrayList<String> memberList = new ArrayList<String>();
-                memberList.addAll( Arrays.asList(member_list) );
+                memberList.addAll( Arrays.asList(Groups.current_group_members) );
                 ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.member_list_row,R.id.member_group_list_name,  memberList);
                 memberListView.setAdapter( listAdapter );
 

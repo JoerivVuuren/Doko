@@ -44,7 +44,7 @@ public class Tab3 extends Fragment {
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fabulous_fab);
         fab.attachToListView(listView);*/
         if(Login.isLoggedIn()) {
-            Groups.get_groupmembers(3, listView.getContext());
+            Groups.get_groupmembers(listView.getContext());
         }
 
         return v;
@@ -54,7 +54,7 @@ public class Tab3 extends Fragment {
         super.onResume();
         Log.e("", "On RESUME");
         if (Login.isLoggedIn()) {
-            Groups.get_groupmembers(3, listView.getContext());
+            Groups.get_groupmembers(listView.getContext());
         }
     }
 
