@@ -1,12 +1,15 @@
 package nl.uva.kite.Doko;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseInstallation;
@@ -29,8 +32,9 @@ public class OnJSONCompleted {
     public static final int GROUPLISTUPDATE = 12;
     public static final int GROUPLISTOPEN = 13;
     public static final int GROUPMEMBERSLIST = 14;
+    public static final int FRIENDREQUESTUPDATE = 15;
 
-    public static void dotask(int type, JSONObject json, Context ctext) {
+    public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
             if (type == LOGIN) {
                 if (json.getInt("success") == 1) {
@@ -80,6 +84,55 @@ public class OnJSONCompleted {
                         String friend_name = parent.getItemAtPosition(position).toString();
 
                         Log.e("friend selected", "friend name=" + friend_name);
+                    }
+                });
+            }
+            else if(type == FRIENDREQUESTUPDATE){
+                /* fill Friends.requests with json response */
+                JSONArray jrequests = json.getJSONArray("senders");
+                String[] request_list = new String[jrequests.length()];
+                for (int i = 0; i < request_list.length; i++) {
+                    request_list[i] = jrequests.getString(i);
+                }
+
+                Friends.requests = request_list;
+
+                /* create a ListView for friends */
+                Activity a = (Activity)ctext;
+                final ListView requestListView = (ListView)a.findViewById(R.id.requests_list);
+                ArrayList<String> arrList = new ArrayList<String>();
+                arrList.addAll(Arrays.asList(request_list));
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
+
+                requestListView.setAdapter(listAdapter);
+
+                requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
+
+                        alertDialogBuilder.setTitle("Add " + ((TextView) view).getText() + " to friends?");
+
+                        alertDialogBuilder
+                                .setCancelable(true)
+                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        Friends.add(((TextView) view).getText().toString(), view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Friends.deny_request(((TextView) view).getText().toString(), view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                });
+
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
                     }
                 });
             }

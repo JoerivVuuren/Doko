@@ -16,6 +16,7 @@ import java.util.List;
 
 public class Friends extends Fragment {
     public static String[] friends;
+    public static String[] requests;
     private RelativeLayout layout;
 
     @Override
@@ -25,6 +26,7 @@ public class Friends extends Fragment {
 
         if (Login.isLoggedIn()) {
             /* get friend list from DB and update list of friends in Fragment */
+            Friends.get_friend_request_list(OnJSONCompleted.FRIENDREQUESTUPDATE, this.getActivity());
             Friends.get_friendlist(OnJSONCompleted.FRIENDLISTUPDATE, this.getActivity());
         }
         return layout;
