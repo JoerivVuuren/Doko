@@ -139,20 +139,21 @@ public class OnJSONCompleted {
                 Groups.current_group_members = new String[jmembers.length()];
                 Groups.current_group_pictures = new String[jmembers.length()];
                 Groups.current_group_debts = new double[jmembers.length()];
+                String[] formatted_debts = new String[jmembers.length()];
 
                 for (int i = 0; i < jmembers.length(); i++) {
                     Groups.current_group_members[i] = jmembers.getString(i);
                     Groups.current_group_pictures[i] = jpics.getString(i);
                     Groups.current_group_debts[i] = jdebt.getDouble(i);
+                    formatted_debts[i] = String.format("€ %.2f", jdebt.getDouble(i));
                 }
                 Log.e("","" + Groups.current_group_members[1] + " pic=" + Groups.current_group_pictures[1] + " debt=" + Groups.current_group_debts[1]);
-                // String.format("€ %.2f", jdebt.getDouble(i)
 
                 Activity a = (Activity) ctext;
                 ListView memberListView = (ListView) a.findViewById(R.id.groups_list);
                 ArrayList<String> memberList = new ArrayList<String>();
                 memberList.addAll( Arrays.asList(Groups.current_group_members) );
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.member_list_row,R.id.member_group_list_name,  memberList);
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.member_list_row,R.id.member_group_list_name, memberList);
                 memberListView.setAdapter( listAdapter );
 
             }
