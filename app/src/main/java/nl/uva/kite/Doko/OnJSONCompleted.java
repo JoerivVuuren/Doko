@@ -133,29 +133,35 @@ public class OnJSONCompleted {
             else if (type == GROUPMEMBERSLIST) {
 
                 /* fill Groups.current_group_* with json response */
+                final String EURO = "\u20AC";
                 JSONArray jmembers = json.getJSONArray("users");
                 JSONArray jpics = json.getJSONArray("profile_picture");
                 JSONArray jdebt = json.getJSONArray("debts");
                 Groups.current_group_members = new String[jmembers.length()];
                 Groups.current_group_pictures = new String[jmembers.length()];
                 Groups.current_group_debts = new double[jmembers.length()];
-                String[] formatted_debts = new String[jmembers.length()];
+                Groups.current_group_debts_euro = new String[jmembers.length()];
 
                 for (int i = 0; i < jmembers.length(); i++) {
                     Groups.current_group_members[i] = jmembers.getString(i);
                     Groups.current_group_pictures[i] = jpics.getString(i);
                     Groups.current_group_debts[i] = jdebt.getDouble(i);
-                    formatted_debts[i] = String.format("€ %.2f", jdebt.getDouble(i));
+
+                    String debtPrefix = "";
+                    double debt = Groups.current_group_debts[i];
+                    if (debt < 0) {
+                        /* move minus sign in front of euro sign */
+                        debtPrefix = "- ";
+                        debt = -debt;
+                    }
+                    Groups.current_group_debts_euro[i] = String.format(debtPrefix + EURO + " %.2f", debt);
                 }
-                Log.e("","" + Groups.current_group_members[1] + " pic=" + Groups.current_group_pictures[1] + " debt=" + Groups.current_group_debts[1]);
 
-                Activity a = (Activity) ctext;
-                ListView memberListView = (ListView) a.findViewById(R.id.groups_list);
-                ArrayList<String> memberList = new ArrayList<String>();
-                memberList.addAll( Arrays.asList(Groups.current_group_members) );
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.member_list_row,R.id.member_group_list_name, memberList);
-                memberListView.setAdapter( listAdapter );
-
+                /* create ListView using MemberlistArrayAdapter */
+                Activity a = (Activity)ctext;
+                ListView memberListView = (ListView)a.findViewById(R.id.groups_list);
+                MemberlistArrayAdapter listAdapter = new MemberlistArrayAdapter(ctext, Groups.current_group_members);
+                memberListView.setAdapter(listAdapter);
             }
             else if (type == GROUPCREATE) {
                 // activate group
