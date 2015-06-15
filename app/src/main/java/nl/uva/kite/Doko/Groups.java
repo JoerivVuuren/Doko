@@ -16,9 +16,14 @@ import java.util.List;
 public class Groups extends Fragment {
     private RelativeLayout layout;
 
+    public static int current_group_id = 3;
+    public static String[] current_group_members;
+    public static String[] current_group_pictures;
+    public static double[] current_group_debts;
+
     public static String[] groups;
     public static int[] group_ids;
-    public static String[] group_members;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,14 +77,14 @@ public class Groups extends Fragment {
     }
 
     /* retrieves list of members of a group */
-    public static void get_groupmembers(int group_id, Context context) {
-        if(!Login.isLoggedIn()) {
+    public static void get_groupmembers(Context context) {
+        if(!Login.isLoggedIn() || Groups.current_group_id == -1) {
             return;
         }
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));
-        params.add(new BasicNameValuePair("group_id", "" + group_id));
+        params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
         JSONRetrieve jr = new JSONRetrieve(context, params, OnJSONCompleted.GROUPMEMBERSLIST);
         jr.execute("http://intotheblu.nl/group_members.php");
     }

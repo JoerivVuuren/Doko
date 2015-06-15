@@ -120,6 +120,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toolbar.setNavigationIcon(R.drawable.ic_action);
 
         setSupportActionBar(toolbar);
         mDrawerToggle = new ActionBarDrawerToggle(this,
@@ -132,6 +133,7 @@ public class MainActivity extends ActionBarActivity {
         mDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setIcon(R.drawable.ic_action);
 //        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
     }
 
