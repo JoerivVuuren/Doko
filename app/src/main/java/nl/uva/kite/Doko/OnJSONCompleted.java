@@ -29,6 +29,7 @@ public class OnJSONCompleted {
     public static final int GROUPLISTUPDATE = 12;
     public static final int GROUPLISTOPEN = 13;
     public static final int GROUPMEMBERSLIST = 14;
+    public static final String imagesDirectory = "http://intotheblu.nl:2222/CMD_FILE_MANAGER/images/";
     public static final int DEBTADD = 15;
 
     public static void dotask(int type, JSONObject json, Context ctext) {
