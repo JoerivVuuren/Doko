@@ -137,12 +137,16 @@ public class OnJSONCompleted {
                 JSONArray jpics = json.getJSONArray("profile_picture");
                 JSONArray jdebt = json.getJSONArray("debts");
                 Groups.current_group_members = new String[jmembers.length()];
+                Groups.current_group_pictures = new String[jmembers.length()];
+                Groups.current_group_debts = new double[jmembers.length()];
+
                 for (int i = 0; i < jmembers.length(); i++) {
                     Groups.current_group_members[i] = jmembers.getString(i);
                     Groups.current_group_pictures[i] = jpics.getString(i);
-                    Groups.current_group_debts[i] = String.format("€ %(,.2f", jdebt.getString(i));
+                    Groups.current_group_debts[i] = jdebt.getDouble(i);
                 }
-                Log.e("","" + Groups.current_group_members[1] + " pic=" + Groups.current_group_members[1] + " debt=" + Groups.current_group_members[1]);
+                Log.e("","" + Groups.current_group_members[1] + " pic=" + Groups.current_group_pictures[1] + " debt=" + Groups.current_group_debts[1]);
+                // String.format("€ %.2f", jdebt.getDouble(i)
 
                 Activity a = (Activity) ctext;
                 ListView memberListView = (ListView) a.findViewById(R.id.groups_list);

@@ -19,7 +19,7 @@ public class Groups extends Fragment {
     public static int current_group_id = 3;
     public static String[] current_group_members;
     public static String[] current_group_pictures;
-    public static String[] current_group_debts;
+    public static double[] current_group_debts;
 
     public static String[] groups;
     public static int[] group_ids;
