@@ -12,4 +12,11 @@
         android:layout_margin="16dp"
         android:text="Sasha van Ewijk"
         android:textColor="@android:color/white" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/aka"
+        android:layout_marginLeft="16dp"
+        android:layout_gravity="left|center_vertical" />
 </FrameLayout>

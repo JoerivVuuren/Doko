@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@color/activityBackground"
-    android:paddingBottom="10dp">
+    android:background="@color/activityBackground">
 
 
     <ScrollView
@@ -43,7 +42,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="90dp"
                             android:background="#ffff"
-                            android:showDividers="beginning|end">    <de.hdodenhof.circleimageview.CircleImageView
+                            android:showDividers="beginning|end">
+                            <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:src="@drawable/aka"

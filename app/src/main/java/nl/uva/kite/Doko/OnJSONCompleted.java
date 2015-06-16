@@ -82,7 +82,7 @@ public class OnJSONCompleted {
                 final ListView friendListView = (ListView)a.findViewById(R.id.friends_list);
                 ArrayList<String> arrList = new ArrayList<String>();
                 arrList.addAll(Arrays.asList(friend_list));
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.member_list_row,R.id.member_group_list_name, arrList);
 
                 friendListView.setAdapter(listAdapter);
 
