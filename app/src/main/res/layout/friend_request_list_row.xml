@@ -28,23 +28,34 @@
 
     <!-- Name-->
     <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Title"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail"
+        android:layout_marginTop="5dp" />
+
+    <TextView
         android:id="@+id/friend_request_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="First Lastname"
         android:textColor="#040404"
         android:typeface="sans"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="false"
+        android:textSize="14sp"
+        android:layout_below="@+id/textView5"
         android:layout_toRightOf="@+id/thumbnail"
-        android:layout_toEndOf="@+id/thumbnail"
-        android:layout_alignParentRight="false"
-        android:layout_marginTop="15dp" />
+        android:layout_toEndOf="@+id/thumbnail" />
 
     <!-- Member role -->
 
-        <LinearLayout
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,25 +64,7 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/linearLayout">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Accept"
-            android:id="@+id/textView5"
-            android:textColor="@color/ColorPrimary"
-            android:layout_marginRight="5dp"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Ignore"
-            android:id="@+id/textView6"
-            android:textColor="@color/colorNegative"
-            android:textSize="15sp" />
-    </LinearLayout>
+        </LinearLayout>
 
 
 </RelativeLayout>

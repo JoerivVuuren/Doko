@@ -240,10 +240,10 @@ public class OnJSONCompleted {
 
                 /* create a ListView for requests */
                 Activity a = (Activity)ctext;
-                final ListView requestListView = (ListView)a.findViewById(R.id.friend_request_list);
+                final ListView requestListView = (ListView)a.findViewById(R.id.game_request_list);
                 ArrayList<String> arrList = new ArrayList<String>();
                 arrList.addAll(Arrays.asList(request_list));
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.friend_request_list_row,R.id.friend_request_name, arrList);
 
                 requestListView.setAdapter(listAdapter);
 
@@ -252,7 +252,7 @@ public class OnJSONCompleted {
                     public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
 
-                        alertDialogBuilder.setTitle("Accept the game from " + ((TextView) view).getText() + "?");
+                        alertDialogBuilder.setTitle("Accept the game from " + "?");
 
                         alertDialogBuilder
                                 .setCancelable(true)
