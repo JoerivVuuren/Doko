@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip"
+    android:id="@+id/layout_friend_request">
+
+    <!--  row and profile picture -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="10dip">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/friend_request_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/aka"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+    </LinearLayout>
+
+    <!-- Name-->
+    <TextView
+        android:id="@+id/friend_request_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Lastname"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="false"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail"
+        android:layout_alignParentRight="false"
+        android:layout_marginTop="15dp" />
+
+    <!-- Member role -->
+
+        <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Accept"
+            android:id="@+id/textView5"
+            android:textColor="@color/ColorPrimary"
+            android:layout_marginRight="5dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Ignore"
+            android:id="@+id/textView6"
+            android:textColor="@color/colorNegative"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>
