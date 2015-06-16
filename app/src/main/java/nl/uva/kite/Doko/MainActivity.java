@@ -119,13 +119,14 @@ public class MainActivity extends ActionBarActivity {
                         //Tab4 tab4 = new Tab4();
                         fragmentTransaction.replace(R.id.fragment_container, friendsFragment);
                         fragmentTransaction.commit();
-                        mCurrentSelectedPosition = 1;
+                        mCurrentSelectedPosition = 2;
                         return true;
                     case R.id.navigation_item_4:
                         Snackbar.make(mContentFrame, "Settings", Snackbar.LENGTH_LONG).show();
                         Settings settingsFragment = new Settings();
                         fragmentTransaction.replace(R.id.fragment_container, settingsFragment);
-                        mCurrentSelectedPosition = 1;
+                        fragmentTransaction.commit();
+                        mCurrentSelectedPosition = 3;
                         return true;
                     default:
                         return true;
