@@ -1,7 +1,8 @@
 package nl.uva.kite.Doko;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.support.v4.app.Fragment;
 
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -35,11 +37,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
 import nl.uva.kite.Doko.Fragments.TabWrapper;
 import nl.uva.kite.Doko.Fragments.Contacts;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 
 
@@ -74,7 +78,7 @@ public class MainActivity extends ActionBarActivity {
         fragmentTransaction.replace(R.id.fragment_container, tabWrapper);
         fragmentTransaction.commit();
 
-//        setUpNavDrawer();
+        //        setUpNavDrawer();
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mContentFrame = (FrameLayout) findViewById(R.id.nav_contentframe);
@@ -133,8 +137,23 @@ public class MainActivity extends ActionBarActivity {
         mDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setIcon(R.drawable.ic_action);
-//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        //        getSupportActionBar().setIcon(R.drawable.ic_action);
+        //        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        String menuFragment = getIntent().getStringExtra("GameRequest");
+
+        //android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
+        //android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
+        if (menuFragment != null)
+        {
+            if (menuFragment.equals("1"))
+            {
+                TabWrapper tabWrapper1 = new TabWrapper();
+                fragmentTransaction.replace(R.id.fragment_container, tabWrapper1);
+                //Tab2 mytab2 = new Tab2();
+                //fragmentTransaction.replace(R.id.fragment_container, mytab2);
+
+            }
+        }
     }
 
     private void setUpToolbar() {
@@ -461,13 +480,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void RegisterPush(View View) {
-        // Initialize Crash Reporting.
-        //ParseCrashReporting.enable(this);
-
-        // Enable Local Datastore.
-        //Parse.enableLocalDatastore(this);
-
-        // Add your initialization code here
         Parse.initialize(this, "2fddNMsnNgxufI2tqFNzAo4EXPDXkQCMK6ObmSEn", "QSJ22yZ3akyvnkYUg4MOqadkgQvTOZPOVV8t156c");
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
@@ -481,13 +493,56 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
-        //Log.e("", "tried to set Parse data");
-        Log.e("", "tried to set Parse data");
+    }
 
-        //ParseUser.enableAutomaticUser();
-        //ParseACL defaultACL = new ParseACL();
-        // Optionally enable public read access.
-        // defaultACL.setPublicReadAccess(true);
-        //ParseACL.setDefaultACL(defaultACL, true);
+    public void adduser(final View view) {
+        LinearLayout alertLayout= new LinearLayout(this);
+        alertLayout.setOrientation(LinearLayout.VERTICAL);
+        final EditText memberurl = new EditText(this);
+
+        memberurl.setHint("The name of the member to add");
+        alertLayout.addView(memberurl);
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setView(alertLayout);
+
+        alert.setTitle("Add Members");
+        alert.setMessage("Please enter the username of the members you want to add");
+
+        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String member = memberurl.getText().toString().trim();
+                int groupID = 3;
+                if (member.length() < 1)
+                    return;
+
+                try {
+                    Groups.adduser(Login.getLoginName(), groupID, view.getContext());
+                    //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
+                    ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("message", "You have just received a group invite from " + Login.getLoginName() + "!");
+                    jsonObject.put("friendName", Login.getLoginName());
+                    jsonObject.put("class", "addMember");
+                    ParsePush push = new ParsePush();
+                    pushQuery.whereEqualTo("username", member);
+                    push.setQuery(pushQuery); // Set our Installation query
+                    push.setData(jsonObject);
+                    push.sendInBackground();
+
+
+                } catch (JSONException e) {
+                    Log.e("", "failed JSON");
+                }
+            }
+        });
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
+        alert.show();
+
     }
 }

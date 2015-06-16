@@ -12,6 +12,7 @@ import com.parse.ParsePushBroadcastReceiver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import nl.uva.kite.Doko.MainActivity;
 import nl.uva.kite.Doko.R;
 
 public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
@@ -33,18 +34,22 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
             String friendName = data.getString("friendName");
             String message = data.getString("message");
             String classType = data.getString("class");
+            Log.e("", "onpushreceive classtype is: " + classType);
 
             Intent tryIntent;
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            if(classType == "friendRequest") {
+            if(classType.equals("friendRequest")) {
                 builder.setContentTitle("Friend Request");
                 tryIntent = new Intent(context, ReceiveActivity.class);
             }
-            else if(classType == "gameRequest") {
+            else if(classType.equals("gamerequest")) {
                 builder.setContentTitle("Game Request");
-                tryIntent = new Intent(context, ReceiveActivity.class);
+                tryIntent = new Intent(context, MainActivity.class);
+                Log.e("", "i came in gam request receeive");
+                tryIntent.putExtra("GameRequest", "1");
             }
             else {
+                Log.e("", "onpushreceive in de else gekomen helaas...");
                 tryIntent = new Intent(context, ReceiveActivity.class);
             }
             // Put data that needs to be read once notification is clicked.

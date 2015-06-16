@@ -34,7 +34,16 @@ public class TabWrapper extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.group_wrapper,container,false);
+        View v = inflater.inflate(R.layout.group_wrapper, container, false);
+
+        String value = getActivity().getIntent().getStringExtra("GameRequest");
+        if(value != null) {
+            //String startValue = b.getString("GameRequest");
+            if(value.equals("1")) {
+                Log.e("", "yes joeri it worked");
+            }
+        }
+
 
         FragmentManager fragManager = myContext.getSupportFragmentManager();
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
