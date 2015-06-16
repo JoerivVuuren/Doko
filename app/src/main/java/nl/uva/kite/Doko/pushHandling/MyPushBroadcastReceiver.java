@@ -40,13 +40,13 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
             if(classType.equals("friendRequest")) {
                 builder.setContentTitle("Friend Request");
-                tryIntent = new Intent(context, ReceiveActivity.class);
+                tryIntent = new Intent(context, MainActivity.class);
+                tryIntent.putExtra("Requests", "friend");
             }
             else if(classType.equals("gamerequest")) {
                 builder.setContentTitle("Game Request");
                 tryIntent = new Intent(context, MainActivity.class);
-                Log.e("", "i came in gam request receeive");
-                tryIntent.putExtra("GameRequest", "1");
+                tryIntent.putExtra("Requests", "game");
             }
             else {
                 Log.e("", "onpushreceive in de else gekomen helaas...");
