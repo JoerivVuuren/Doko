@@ -13,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
+import nl.uva.kite.Doko.Groups;
+import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.R;
 import nl.uva.kite.Doko.SlidingTab.SlidingTabLayout;
 import nl.uva.kite.Doko.SlidingTab.ViewPagerAdapter;
@@ -70,7 +73,6 @@ public class TabWrapper extends android.support.v4.app.Fragment {
                     Log.e("", "i came in the tablistener");
                 }
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
             }
@@ -97,9 +99,11 @@ public class TabWrapper extends android.support.v4.app.Fragment {
 
         return v;
     }
+
     @Override
     public void onAttach(Activity activity) {
         myContext=(FragmentActivity) activity;
         super.onAttach(activity);
     }
+
 }

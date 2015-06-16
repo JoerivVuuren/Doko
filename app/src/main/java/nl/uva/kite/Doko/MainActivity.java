@@ -33,10 +33,13 @@ import com.parse.SaveCallback;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.jibble.simpleftp.SimpleFTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +119,12 @@ public class MainActivity extends ActionBarActivity {
                         //Tab4 tab4 = new Tab4();
                         fragmentTransaction.replace(R.id.fragment_container, friendsFragment);
                         fragmentTransaction.commit();
+                        mCurrentSelectedPosition = 1;
+                        return true;
+                    case R.id.navigation_item_4:
+                        Snackbar.make(mContentFrame, "Settings", Snackbar.LENGTH_LONG).show();
+                        Settings settingsFragment = new Settings();
+                        fragmentTransaction.replace(R.id.fragment_container, settingsFragment);
                         mCurrentSelectedPosition = 1;
                         return true;
                     default:
@@ -239,6 +248,44 @@ public class MainActivity extends ActionBarActivity {
         JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.LOGIN);
         jr.execute("http://intotheblu.nl/login.php");
     }
+
+    public void onClickUploadImage(View view) {
+        try {
+            SimpleFTP ftp = new SimpleFTP();
+            int PICK_IMAGE = 0;
+            // Connect to an FTP server on port 21.
+            ftp.connect("ftp://159.253.7.201", 21, "kite", "GetMoney");
+
+            // Set binary mode.
+            ftp.bin();
+
+            // Change to a new working directory on the FTP server.
+            ftp.cwd("/public_html/image");
+
+            // Upload some files.
+            Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            getIntent.setType("image/*");
+
+            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickIntent.setType("image/*");
+
+            Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+            startActivityForResult(chooserIntent, PICK_IMAGE);
+            ftp.stor(new File("artin.jpg"));
+            // You can also upload from an InputStream, e.g.
+            //ftp.stor(new FileInputStream(new File("test.png")), "test.png");
+            //ftp.stor(someSocket.getInputStream(), "blah.dat");
+
+            // Quit from the FTP server.
+            ftp.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void AddGroupPrompt(final View view) {
         final EditText txt = new EditText(this);
@@ -548,5 +595,9 @@ public class MainActivity extends ActionBarActivity {
                 });
         alert.show();
 
+    }
+
+    public void uploadImage() {
+        Log.e("", "clicked");
     }
 }
