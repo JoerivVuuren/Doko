@@ -139,19 +139,23 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         //        getSupportActionBar().setIcon(R.drawable.ic_action);
         //        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        String menuFragment = getIntent().getStringExtra("GameRequest");
+        String menuFragment = getIntent().getStringExtra("Requests");
 
         //android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         //android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
         if (menuFragment != null)
         {
-            if (menuFragment.equals("1"))
+            if (menuFragment.equals("game"))
             {
                 TabWrapper tabWrapper1 = new TabWrapper();
                 fragmentTransaction.replace(R.id.fragment_container, tabWrapper1);
                 //Tab2 mytab2 = new Tab2();
                 //fragmentTransaction.replace(R.id.fragment_container, mytab2);
 
+            }
+            else if (menuFragment.equals("friend")){
+                Friends friends = new Friends();
+                fragmentTransaction.replace(R.id.fragment_container, friends);
             }
         }
     }

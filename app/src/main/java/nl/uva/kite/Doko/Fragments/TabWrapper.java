@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 import nl.uva.kite.Doko.R;
 import nl.uva.kite.Doko.SlidingTab.SlidingTabLayout;
@@ -36,10 +37,10 @@ public class TabWrapper extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.group_wrapper, container, false);
 
-        String value = getActivity().getIntent().getStringExtra("GameRequest");
+        String value = getActivity().getIntent().getStringExtra("Requests");
         if(value != null) {
             //String startValue = b.getString("GameRequest");
-            if(value.equals("1")) {
+            if(value.equals("game")) {
                 Log.e("", "yes joeri it worked");
             }
         }

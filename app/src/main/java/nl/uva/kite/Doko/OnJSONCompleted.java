@@ -2,8 +2,12 @@ package nl.uva.kite.Doko;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -101,7 +105,7 @@ public class OnJSONCompleted {
 
                 Friends.requests = request_list;
 
-                /* create a ListView for friends */
+                /* create a ListView for requests */
                 Activity a = (Activity)ctext;
                 final ListView requestListView = (ListView)a.findViewById(R.id.requests_list);
                 ArrayList<String> arrList = new ArrayList<String>();
