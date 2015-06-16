@@ -37,15 +37,7 @@ public class TabWrapper extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.group_wrapper, container, false);
 
-        String value = getActivity().getIntent().getStringExtra("Requests");
-        if(value != null) {
-            //String startValue = b.getString("GameRequest");
-            if(value.equals("game")) {
-                Log.e("", "yes joeri it worked");
-            }
-        }
-
-
+        
         FragmentManager fragManager = myContext.getSupportFragmentManager();
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new ViewPagerAdapter(fragManager,Titles,Numboftabs);
@@ -53,6 +45,17 @@ public class TabWrapper extends android.support.v4.app.Fragment {
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) v.findViewById(R.id.pager);
         pager.setAdapter(adapter);
+
+        String value = getActivity().getIntent().getStringExtra("Requests");
+        if(value != null) {
+            //String startValue = b.getString("GameRequest");
+            if(value.equals("game")) {
+                Log.e("", "yes joeri it worked");
+                pager.setCurrentItem(1);
+            }
+        }
+
+
         //pager.addOnPageChangeListener(this);
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
