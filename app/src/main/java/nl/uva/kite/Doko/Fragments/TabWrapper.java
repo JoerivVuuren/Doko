@@ -52,6 +52,7 @@ public class TabWrapper extends android.support.v4.app.Fragment {
             if(value.equals("game")) {
                 Log.e("", "yes joeri it worked");
                 pager.setCurrentItem(1);
+
             }
         }
 

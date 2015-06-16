@@ -27,6 +27,8 @@ import java.util.Arrays;
 import java.util.Formatter;
 import java.util.Locale;
 
+import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
+
 public class OnJSONCompleted {
     public static final int NONE = -1;
     public static final int LOGIN = 0;
@@ -40,7 +42,8 @@ public class OnJSONCompleted {
     public static final int GROUPMEMBERSLIST = 14;
     public static final int FRIENDREQUESTUPDATE = 15;
     public static final String imagesDirectory = "http://intotheblu.nl:2222/CMD_FILE_MANAGER/images/";
-    public static final int DEBTADD = 15;
+    public static final int DEBTADD = 16;
+    public static final int ALLREQUESTUPDATE = 17;
 
     public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
@@ -225,6 +228,54 @@ public class OnJSONCompleted {
             }
             else if (type == DEBTADD) {
                 //doeiets
+            }
+            else if (type == ALLREQUESTUPDATE) {
+                JSONArray jrequests = json.getJSONArray("senders");
+                String[] request_list = new String[jrequests.length()];
+                for (int i = 0; i < request_list.length; i++) {
+                    request_list[i] = jrequests.getString(i);
+                }
+
+                Tab2.requests = request_list;
+
+                /* create a ListView for requests */
+                Activity a = (Activity)ctext;
+                final ListView requestListView = (ListView)a.findViewById(R.id.friend_request_list);
+                ArrayList<String> arrList = new ArrayList<String>();
+                arrList.addAll(Arrays.asList(request_list));
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
+
+                requestListView.setAdapter(listAdapter);
+
+                requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
+
+                        alertDialogBuilder.setTitle("Accept the game from " + ((TextView) view).getText() + "?");
+
+                        alertDialogBuilder
+                                .setCancelable(true)
+                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        Tab2.add(((TextView) view).getText().toString(), view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Tab2.deny_request(((TextView) view).getText().toString(), view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                });
+
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
+                    }
+                });
             }
         }
         catch (JSONException e) {
