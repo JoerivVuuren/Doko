@@ -33,10 +33,6 @@ import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 
 public class Tab2 extends Fragment {
-    ListView friendRequests;
-    float historicX = Float.NaN, historicY = Float.NaN;
-    static final int DELTA = 50;
-    enum Direction {LEFT, RIGHT;}
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
