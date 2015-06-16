@@ -31,7 +31,8 @@ import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 
 public class Tab2 extends Fragment {
-    public static String[] requests;
+    public static String[] requests_game;
+    public static String[] requests_debt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

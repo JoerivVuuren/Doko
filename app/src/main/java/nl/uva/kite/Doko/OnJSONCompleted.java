@@ -230,29 +230,76 @@ public class OnJSONCompleted {
                 //doeiets
             }
             else if (type == ALLREQUESTUPDATE) {
-                JSONArray jrequests = json.getJSONArray("senders");
-                String[] request_list = new String[jrequests.length()];
-                for (int i = 0; i < request_list.length; i++) {
-                    request_list[i] = jrequests.getString(i);
+                JSONArray jrequests_game = json.getJSONArray("senders_game");
+                JSONArray jrequests_debt = json.getJSONArray("senders_debt");
+
+                String[] request_list_game = new String[jrequests_game.length()];
+                for (int i = 0; i < request_list_game.length; i++) {
+                    request_list_game[i] = jrequests_game.getString(i);
+                }
+                Tab2.requests_game = request_list_game;
+
+                String[] request_list_debt = new String[jrequests_debt.length()];
+                for (int i = 0; i < request_list_debt.length; i++) {
+                    request_list_debt[i] = jrequests_debt.getString(i);
                 }
 
-                Tab2.requests = request_list;
+                Tab2.requests_debt = request_list_debt;
 
-                /* create a ListView for requests */
+                /* create a ListView for game requests */
                 Activity a = (Activity)ctext;
-                final ListView requestListView = (ListView)a.findViewById(R.id.game_request_list);
-                ArrayList<String> arrList = new ArrayList<String>();
-                arrList.addAll(Arrays.asList(request_list));
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.friend_request_list_row,R.id.friend_request_name, arrList);
+                final ListView requestListView_game = (ListView)a.findViewById(R.id.game_request_list);
+                ArrayList<String> arrList_game = new ArrayList<String>();
+                arrList_game.addAll(Arrays.asList(request_list_game));
+                ArrayAdapter<String> listAdapter_game = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList_game);
 
-                requestListView.setAdapter(listAdapter);
+                requestListView_game.setAdapter(listAdapter_game);
 
-                requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                requestListView_game.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
 
-                        alertDialogBuilder.setTitle("Accept the game from " + "?");
+                        alertDialogBuilder.setTitle("Accept the game from " + ((TextView) view).getText() + "?");
+
+                        alertDialogBuilder
+                                .setCancelable(true)
+                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        Tab2.add(((TextView) view).getText().toString(), view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Tab2.deny_request(((TextView) view).getText().toString(), view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                });
+
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
+                    }
+                });
+
+                /* create a ListView for debt requests */
+                //Activity ab = (Activity)ctext;
+                final ListView requestListView_debt = (ListView)a.findViewById(R.id.friend_request_list);
+                ArrayList<String> arrList_debt = new ArrayList<String>();
+                arrList_debt.addAll(Arrays.asList(request_list_debt));
+                ArrayAdapter<String> listAdapter_debt = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList_debt);
+
+                requestListView_debt.setAdapter(listAdapter_debt);
+
+                requestListView_debt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
+
+                        alertDialogBuilder.setTitle("Accept the game from " + ((TextView) view).getText() + "?");
 
                         alertDialogBuilder
                                 .setCancelable(true)

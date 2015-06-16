@@ -153,17 +153,11 @@ public class MainActivity extends ActionBarActivity {
 
         //android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         //android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
-        if (menuFragment != null)
-        {
-            if (menuFragment.equals("game"))
-            {
+        if (menuFragment != null) {
+            if (menuFragment.equals("game") || menuFragment.equals("debt")) {
                 TabWrapper tabWrapper1 = new TabWrapper();
                 fragmentTransaction.replace(R.id.fragment_container, tabWrapper1);
-                //Tab2 mytab2 = new Tab2();
-                //fragmentTransaction.replace(R.id.fragment_container, mytab2);
-
-            }
-            else if (menuFragment.equals("friend")){
+            } else if (menuFragment.equals("friend")) {
                 Friends friends = new Friends();
                 fragmentTransaction.replace(R.id.fragment_container, friends);
             }
@@ -442,7 +436,7 @@ public class MainActivity extends ActionBarActivity {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received debt from " + Login.getLoginName() + "!");
                     jsonObject.put("friendName", Login.getLoginName());
-                    jsonObject.put("class", "addDebt");
+                    jsonObject.put("class", "debtrequest");
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", debitor);
                     push.setQuery(pushQuery); // Set our Installation query
