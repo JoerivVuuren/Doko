@@ -460,7 +460,16 @@ public class MainActivity extends AppCompatActivity {
                     return;
 
                 try {
-                    AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
+                    String login = Login.getLoginName();
+                    String password = Login.getPassword();
+                    List<NameValuePair> params = new ArrayList<>();
+                    params.add(new BasicNameValuePair("username",login ));
+                    params.add(new BasicNameValuePair("password", password));
+                    params.add(new BasicNameValuePair("friend", debitor));
+                    params.add(new BasicNameValuePair("debt", debt));
+                    JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                    jr.execute("http://intotheblu.nl/credit_request_add.php");
+                    //AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received debt from " + Login.getLoginName() + "!");
@@ -514,7 +523,16 @@ public class MainActivity extends AppCompatActivity {
                     return;
 
                 try {
-                    AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
+                    String login = Login.getLoginName();
+                    String password = Login.getPassword();
+                    List<NameValuePair> params = new ArrayList<>();
+                    params.add(new BasicNameValuePair("username",login ));
+                    params.add(new BasicNameValuePair("password", password));
+                    params.add(new BasicNameValuePair("friend", creditor));
+                    params.add(new BasicNameValuePair("debt", debt));
+                    JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                    jr.execute("http://intotheblu.nl/debit_request_add.php");
+                    //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received credit from " + Login.getLoginName() + "!");
