@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -183,10 +184,16 @@ public class OnJSONCompleted {
                         if (position > Groups.group_ids.length - 1)
                             return;
 
+                        /* user clicked this group: */
                         int group_id = Groups.group_ids[position];
                         String group_name = parent.getItemAtPosition(position).toString();
 
-                        Log.e("group selected", "id=" + group_id + ", name=" + group_name);
+                        Groups.current_group_id = group_id;
+                        Groups.current_group_name = group_name;
+
+                        /* restart MainActivity */
+                        Intent intent = new Intent(ctext, MainActivity.class);
+                        ctext.startActivity(intent);
                     }
                 });
             }

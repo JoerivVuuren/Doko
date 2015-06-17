@@ -1,5 +1,6 @@
 package nl.uva.kite.Doko;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -50,8 +52,8 @@ import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 
 
-public class MainActivity extends ActionBarActivity {
-    // Declerations for stuff we will need later on
+public class MainActivity extends AppCompatActivity {
+
     NavigationView mNavigationView;
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
@@ -69,11 +71,18 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setUpAndDisplayMainScreen();
+    }
+
+    /* creates and sets up the Main screen with tabs, nav drawer */
+    public void setUpAndDisplayMainScreen() {
         setContentView(R.layout.activity_homescreen);
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+
         // Load up a starting fragment in our fragment container
         android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
