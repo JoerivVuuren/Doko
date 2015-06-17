@@ -82,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        if(Groups.current_group_name != null)
+            getSupportActionBar().setTitle(Groups.current_group_name);
+
+
 
         // Load up a starting fragment in our fragment container
         android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
