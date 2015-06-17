@@ -20,7 +20,7 @@ import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 
 public class Tab3 extends Fragment {
-    ListView listView;
+    public static ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,12 +50,12 @@ public class Tab3 extends Fragment {
         return v;
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         Log.e("", "On RESUME");
         if (Login.isLoggedIn()) {
-            Groups.get_groupmembers(listView.getContext());
+            Groups.get_groupmembers(Tab3.listView.getContext());
         }
     }
-
 }
