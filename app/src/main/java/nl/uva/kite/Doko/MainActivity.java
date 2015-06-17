@@ -557,6 +557,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void adduser(final View view) {
+        if (Groups.current_group_id == -1)
+            return;
+
         LinearLayout alertLayout= new LinearLayout(this);
         alertLayout.setOrientation(LinearLayout.VERTICAL);
         final EditText memberurl = new EditText(this);
@@ -573,12 +576,12 @@ public class MainActivity extends AppCompatActivity {
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String member = memberurl.getText().toString().trim();
-                int groupID = Groups.current_group_id;
-                if (member.length() < 1 || groupID == -1)
+
+                if (member.length() < 1)
                     return;
 
                 try {
-                    Groups.adduser(Login.getLoginName(), groupID, view.getContext());
+                    Groups.adduser(Login.getLoginName(), Groups.current_group_id, view.getContext());
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
