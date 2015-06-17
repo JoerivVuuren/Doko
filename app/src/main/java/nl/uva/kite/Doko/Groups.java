@@ -16,7 +16,8 @@ import java.util.List;
 public class Groups extends Fragment {
     private RelativeLayout layout;
 
-    public static int current_group_id = 3;
+    public static int current_group_id = -1;
+    public static String current_group_name;
     public static String[] current_group_members;
     public static String[] current_group_pictures;
     public static double[] current_group_debts;
