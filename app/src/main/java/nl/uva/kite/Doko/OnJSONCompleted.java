@@ -192,7 +192,9 @@ public class OnJSONCompleted {
                         Groups.current_group_name = group_name;
 
                         /* restart MainActivity */
+                        Activity a = (Activity)ctext;
                         Intent intent = new Intent(ctext, MainActivity.class);
+                        a.finish();
                         ctext.startActivity(intent);
                     }
                 });

@@ -19,4 +19,14 @@
     <color name="accent">#ff64dd9a</color>
     <color name="accent_pressed">#ff66eba4</color>
 
+    <!--pull down refresher colors-->
+    <color name="refresh_progress_1">@color/ColorPrimary</color>
+    <color name="refresh_progress_2">@color/ColorPrimary</color>
+    <color name="refresh_progress_3">@color/ColorPrimary</color>
+
+    <color name="pDarkGreen">#8ec549</color>
+    <color name="pDarskSlowGreen">#c1f57f</color>
+    <color name="pLightGreen">#f7ffed</color>
+    <color name="pFullLightGreen">#d6d4d4</color>
+
 </resources>
