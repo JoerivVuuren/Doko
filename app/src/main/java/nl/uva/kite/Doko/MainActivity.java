@@ -573,8 +573,8 @@ public class MainActivity extends AppCompatActivity {
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String member = memberurl.getText().toString().trim();
-                int groupID = 3;
-                if (member.length() < 1)
+                int groupID = Groups.current_group_id;
+                if (member.length() < 1 || groupID == -1)
                     return;
 
                 try {

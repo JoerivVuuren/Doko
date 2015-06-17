@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.parse.ParseInstallation;
 
@@ -23,6 +24,8 @@ import nl.uva.kite.Doko.JSONParser;
 public class JSONRetrieve extends AsyncTask<String,String,String> {
     int post_exec;
     Context ctext;
+    String resultMessage = "";
+
     private ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
     JSONObject json;
@@ -51,6 +54,17 @@ public class JSONRetrieve extends AsyncTask<String,String,String> {
     }
     protected void onPostExecute(String ab){
         pDialog.dismiss();
+
+        try {
+            if (json.getString("message") != null)
+                resultMessage = json.getString("message");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (resultMessage.length() > 0)
+            Toast.makeText(ctext, resultMessage, Toast.LENGTH_LONG).show();
+
         OnJSONCompleted.dotask(post_exec, json, ctext);
     }
 }
