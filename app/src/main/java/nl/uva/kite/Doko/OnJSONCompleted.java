@@ -226,6 +226,9 @@ public class OnJSONCompleted {
             else if (type == DEBTADD) {
                 //doeiets
             }
+            else if (type == FRIENDADD){
+                Friends.get_friendlist(FRIENDLISTUPDATE, ctext);
+            }
         }
         catch (JSONException e) {
             e.printStackTrace();

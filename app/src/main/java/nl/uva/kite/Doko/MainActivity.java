@@ -317,7 +317,7 @@ public class MainActivity extends ActionBarActivity {
                 .show();
     }
 
-    public void SendGameRequest(View view) {
+    public void SendGameRequest(final View view) {
         final EditText txtUrl = new EditText(this);
 
         // Set the default text to a link of the Queen
@@ -338,6 +338,16 @@ public class MainActivity extends ActionBarActivity {
                             return;
 
                         try {
+                            String login = Login.getLoginName();
+                            String password = Login.getPassword();
+                            // Add game request to database
+                            List<NameValuePair> params = new ArrayList<>();
+                            params.add(new BasicNameValuePair("username",login ));
+                            params.add(new BasicNameValuePair("password", password));
+                            params.add(new BasicNameValuePair("friend", friendName));
+                            JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                            jr.execute("http://intotheblu.nl/game_request_add.php");
+
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("message", "You just reveived a new Game request from " + installation.get("username") + "!");
                             jsonObject.put("friendName", installation.get("username"));
