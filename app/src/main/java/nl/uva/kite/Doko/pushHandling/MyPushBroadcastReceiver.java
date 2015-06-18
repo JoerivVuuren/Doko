@@ -38,7 +38,7 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
 
             Intent tryIntent;
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            if(classType.equals("friendRequest")) {
+            if(classType.equals("friendrequest")) {
                 builder.setContentTitle("Friend Request");
                 tryIntent = new Intent(context, MainActivity.class);
                 tryIntent.putExtra("Requests", "friend");

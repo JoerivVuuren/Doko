@@ -1,11 +1,14 @@
 package nl.uva.kite.Doko;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -15,8 +18,11 @@ import java.util.List;
 
 public class Groups extends Fragment {
     private RelativeLayout layout;
+    public static ListView listView;
 
-    public static int current_group_id = 3;
+    public static int current_group_id = -1;
+    public static String current_group_name;
+    public static String current_group_admin_name;
     public static String[] current_group_members;
     public static String[] current_group_pictures;
     public static double[] current_group_debts;
@@ -26,15 +32,48 @@ public class Groups extends Fragment {
     public static int[] group_ids;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final Context thisContext = this.getActivity();
         super.onCreate(savedInstanceState);
         layout = (RelativeLayout)inflater.inflate(R.layout.groups, container, false);
+        final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) layout.findViewById(R.id.swipeContainerGroups);
+//        set refresh color
+        swipeView.setColorSchemeColors(
+                R.color.refresh_progress_1,
+                R.color.refresh_progress_2,
+                R.color.refresh_progress_3
+        );
+
+        listView = (ListView) layout.findViewById(R.id.mygroups_list);
+        //        sweet refresh on pulldown spinner
+        swipeView.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        swipeView.setRefreshing(true);
+                        if (Login.isLoggedIn()) {
+//                            update the list!
+                            if (Login.isLoggedIn())
+                            Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, thisContext);
+                        }
+                        (new Handler()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                swipeView.setRefreshing(false);
+
+                            }
+                        }, 1000);
+                    }
+                });
+
 
         if (Login.isLoggedIn()) {
             /* get friend list from DB and update list of friends in Fragment */
             Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, this.getActivity());
         }
+
         return layout;
     }
 

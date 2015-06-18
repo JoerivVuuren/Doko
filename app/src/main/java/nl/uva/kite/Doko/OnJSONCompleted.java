@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -183,10 +184,18 @@ public class OnJSONCompleted {
                         if (position > Groups.group_ids.length - 1)
                             return;
 
+                        /* user clicked this group: */
                         int group_id = Groups.group_ids[position];
                         String group_name = parent.getItemAtPosition(position).toString();
 
-                        Log.e("group selected", "id=" + group_id + ", name=" + group_name);
+                        Groups.current_group_id = group_id;
+                        Groups.current_group_name = group_name;
+
+                        /* restart MainActivity */
+                        Activity a = (Activity)ctext;
+                        Intent intent = new Intent(ctext, MainActivity.class);
+                        a.finish();
+                        ctext.startActivity(intent);
                     }
                 });
             }
@@ -197,6 +206,7 @@ public class OnJSONCompleted {
                 JSONArray jmembers = json.getJSONArray("users");
                 JSONArray jpics = json.getJSONArray("profile_picture");
                 JSONArray jdebt = json.getJSONArray("debts");
+                Groups.current_group_admin_name = json.getString("admin_name");
                 Groups.current_group_members = new String[jmembers.length()];
                 Groups.current_group_pictures = new String[jmembers.length()];
                 Groups.current_group_debts = new double[jmembers.length()];
@@ -323,6 +333,9 @@ public class OnJSONCompleted {
                         alertDialog.show();
                     }
                 });
+            }
+            else if (type == FRIENDADD){
+                Friends.get_friendlist(FRIENDLISTUPDATE, ctext);
             }
         }
         catch (JSONException e) {

@@ -39,7 +39,6 @@ public class TabWrapper extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.group_wrapper, container, false);
-
         
         FragmentManager fragManager = myContext.getSupportFragmentManager();
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
