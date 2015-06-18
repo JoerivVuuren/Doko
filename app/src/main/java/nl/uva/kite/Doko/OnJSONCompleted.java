@@ -50,9 +50,7 @@ public class OnJSONCompleted {
         try {
             if (type == LOGIN) {
                 if (json.getInt("success") == 1) {
-                    Log.d("Login Successful!", json.toString());
-
-                    Login.loggedIn = true;
+                    Login.setLoggedIn(true);
 
                     // Set Parse username data.
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
@@ -61,10 +59,18 @@ public class OnJSONCompleted {
                     installation.put("username", Login.getLoginName());
                     //Log.e("", "set current user to: " + ParseUser.getCurrentUser().getUsername());
                     installation.saveInBackground();
+
+                    /* close Login activity and open MainActivity */
+                    Activity a = (Activity)ctext;
+                    Intent intent = new Intent(ctext, MainActivity.class);
+                    a.finish();
+                    ctext.startActivity(intent);
                 }
                 else {
-                    Login.loggedIn = false;
-                    Log.d("Login Failure!", json.getString("message"));
+                    /* disable autologin */
+                    SecurePreferences saved_preferences = new SecurePreferences(ctext, "Doko-preferences", "DokoFO2opPOA@#F=/00000000", true);
+                    saved_preferences.put("autologin", "0");
+                    Login.setLoggedIn(false);
                 }
             }
             else if (type == FRIENDLISTUPDATE) {

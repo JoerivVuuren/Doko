@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
@@ -38,6 +39,10 @@ public class Tab2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab_2,container,false);
         get_request_list(OnJSONCompleted.ALLREQUESTUPDATE, this.getActivity());
+
+        /* display user's name */
+        TextView meName = (TextView)v.findViewById(R.id.me_name);
+        meName.setText(Login.getLoginName());
 //        ListView friendRequestsLv = (ListView)v.findViewById(R.id.friend_request_list);
 //        ArrayList<String> friendRequests = new ArrayList<String>();
 //        friendRequests.add("Staci Carr");

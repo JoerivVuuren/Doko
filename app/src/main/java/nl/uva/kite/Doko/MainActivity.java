@@ -241,18 +241,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /* json login testje */
-    public void JSONTest(View view) {
-        Login.loginName = "Dav";
-        Login.loginPass = "q";
-
-        List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("username", "Dav"));
-        params.add(new BasicNameValuePair("password", "q"));
-        JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.LOGIN);
-        jr.execute("http://intotheblu.nl/login.php");
-    }
-
     public void AddGroupPrompt(final View view) {
         final EditText txt = new EditText(this);
 
