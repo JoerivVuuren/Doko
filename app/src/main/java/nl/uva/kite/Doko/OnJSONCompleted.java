@@ -246,12 +246,14 @@ public class OnJSONCompleted {
                 String[] request_list_game = new String[jrequests_game.length()];
                 for (int i = 0; i < request_list_game.length; i++) {
                     request_list_game[i] = jrequests_game.getString(i);
+                    Log.e("", "i do have a game_request");
                 }
                 Tab2.requests_game = request_list_game;
 
                 String[] request_list_debt = new String[jrequests_debt.length()];
                 for (int i = 0; i < request_list_debt.length; i++) {
                     request_list_debt[i] = jrequests_debt.getString(i);
+                    Log.e("", "i do have a debt_request");
                 }
 
                 Tab2.requests_debt = request_list_debt;
@@ -261,7 +263,7 @@ public class OnJSONCompleted {
                 final ListView requestListView_game = (ListView)a.findViewById(R.id.game_request_list);
                 ArrayList<String> arrList_game = new ArrayList<String>();
                 arrList_game.addAll(Arrays.asList(request_list_game));
-                ArrayAdapter<String> listAdapter_game = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList_game);
+                ArrayAdapter<String> listAdapter_game = new ArrayAdapter<String>(ctext, R.layout.simplerow,R.id.rowTextView, arrList_game);
 
                 requestListView_game.setAdapter(listAdapter_game);
 
@@ -297,10 +299,10 @@ public class OnJSONCompleted {
 
                 /* create a ListView for debt requests */
                 //Activity ab = (Activity)ctext;
-                final ListView requestListView_debt = (ListView)a.findViewById(R.id.friend_request_list);
+                final ListView requestListView_debt = (ListView)a.findViewById(R.id.debt_request_list);
                 ArrayList<String> arrList_debt = new ArrayList<String>();
                 arrList_debt.addAll(Arrays.asList(request_list_debt));
-                ArrayAdapter<String> listAdapter_debt = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList_debt);
+                ArrayAdapter<String> listAdapter_debt = new ArrayAdapter<String>(ctext, R.layout.simplerow, R.id.rowTextView, arrList_debt);
 
                 requestListView_debt.setAdapter(listAdapter_debt);
 
