@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+//        change title to current group name if there is an active group
         if(Groups.current_group_name != null)
             getSupportActionBar().setTitle(Groups.current_group_name);
 
