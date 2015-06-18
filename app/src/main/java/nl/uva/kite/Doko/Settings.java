@@ -1,6 +1,5 @@
 package nl.uva.kite.Doko;
 
-import org.jibble.simpleftp.*;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
