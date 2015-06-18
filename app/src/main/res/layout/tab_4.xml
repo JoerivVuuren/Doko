@@ -14,8 +14,8 @@ android:background="@color/activityBackground"
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:onClick="OpenLoginScreen"
+            android:text="Logout"
+            android:onClick="LogOutUser"
             android:id ="@+id/login_button" />
 
         <Button

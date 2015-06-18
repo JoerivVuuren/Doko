@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +18,7 @@ import android.widget.EditText;
 
 
 public class Login extends Activity implements OnClickListener {
-    SecurePreferences saved_preferences;
+    public static SecurePreferences securePreferences;
 
     private static boolean loggedIn = false;
     private static String loginName = "";
@@ -26,21 +27,27 @@ public class Login extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        saved_preferences = new SecurePreferences(this, "Doko-preferences", "DokoFO2opPOA@#F=/00000000", true);
+        securePreferences = new SecurePreferences(this, "Doko-preferences", "DokoFO2opPOA@#F=/00000000", true);
 
         setContentView(R.layout.login);
 
-        /* do auto-login */
-        if (saved_preferences.getString("autologin") != null &&
-                saved_preferences.getString("autologin").equals("1") &&
-                saved_preferences.getString("username") != null &&
-                saved_preferences.getString("password") != null) {
-
-            attemptLogin(saved_preferences.getString("username"),
-                         saved_preferences.getString("password"));
+        /* fill in username field */
+        if (securePreferences.getString("username") != null) {
+            ((EditText)findViewById(R.id.username)).setText(securePreferences.getString("username"));
+            findViewById(R.id.password).requestFocus();
         }
-        else if (saved_preferences.getString("autologin") != null &&
-                     saved_preferences.getString("autologin").equals("0")) {
+
+        /* do auto-login */
+        if (securePreferences.getString("autologin") != null &&
+                securePreferences.getString("autologin").equals("1") &&
+                securePreferences.getString("username") != null &&
+                securePreferences.getString("password") != null) {
+
+            attemptLogin(securePreferences.getString("username"),
+                         securePreferences.getString("password"));
+        }
+        else if (securePreferences.getString("autologin") != null &&
+                     securePreferences.getString("autologin").equals("0")) {
             ((CheckBox)findViewById(R.id.autoLoginCheckBox)).setChecked(false);
         }
 
@@ -59,9 +66,9 @@ public class Login extends Activity implements OnClickListener {
                 String pass = ((EditText)findViewById(R.id.password)).getText().toString();
                 boolean autoLogin = ((CheckBox)findViewById(R.id.autoLoginCheckBox)).isChecked();
 
-                saved_preferences.put("autologin", (autoLogin ? "1" : "0"));
-                saved_preferences.put("username", user);
-                saved_preferences.put("password", pass);
+                securePreferences.put("autologin", (autoLogin ? "1" : "0"));
+                securePreferences.put("username", user);
+                securePreferences.put("password", pass);
 
                 attemptLogin(user, pass);
                 break;
@@ -88,6 +95,19 @@ public class Login extends Activity implements OnClickListener {
         params.add(new BasicNameValuePair("password", pass));
         JSONRetrieve jr = new JSONRetrieve(this, params, OnJSONCompleted.LOGIN);
         jr.execute("http://intotheblu.nl/login.php");
+    }
+
+    /* logs the current user out */
+    public static void logOut(Context ctext) {
+        setLoggedIn(false);
+        setLoginName("");
+        setLoginPass("");
+        securePreferences.put("autologin", "0");
+        securePreferences.put("password", "");
+
+        /* close current activity */
+        Activity a = (Activity)ctext;
+        a.finish();
     }
 
     public static boolean isLoggedIn() {

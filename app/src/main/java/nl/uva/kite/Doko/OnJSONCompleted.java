@@ -68,8 +68,7 @@ public class OnJSONCompleted {
                 }
                 else {
                     /* disable autologin */
-                    SecurePreferences saved_preferences = new SecurePreferences(ctext, "Doko-preferences", "DokoFO2opPOA@#F=/00000000", true);
-                    saved_preferences.put("autologin", "0");
+                    Login.securePreferences.put("autologin", "0");
                     Login.setLoggedIn(false);
                 }
             }

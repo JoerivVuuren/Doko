@@ -241,6 +241,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /* logs out the current user */
+    public void LogOutUser(View view) {
+        Login.logOut(view.getContext());
+    }
+
     public void AddGroupPrompt(final View view) {
         final EditText txt = new EditText(this);
 
