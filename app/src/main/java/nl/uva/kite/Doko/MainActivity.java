@@ -1,11 +1,6 @@
 package nl.uva.kite.Doko;
 
-
-
-import it.sauronsoftware.ftp4j.FTPClient;
-import it.sauronsoftware.ftp4j.FTPDataTransferListener;
-import it.sauronsoftware.ftp4j.FTPException;
-import it.sauronsoftware.ftp4j.FTPFile;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -39,26 +35,25 @@ import com.parse.SaveCallback;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.jibble.simpleftp.SimpleFTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
 import nl.uva.kite.Doko.Fragments.TabWrapper;
 import nl.uva.kite.Doko.Fragments.Contacts;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 
 
-public class MainActivity extends ActionBarActivity {
-    // Declerations for stuff we will need later on
+public class MainActivity extends AppCompatActivity {
+
     NavigationView mNavigationView;
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
@@ -76,11 +71,22 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setUpAndDisplayMainScreen();
+    }
+
+    /* creates and sets up the Main screen with tabs, nav drawer */
+    public void setUpAndDisplayMainScreen() {
         setContentView(R.layout.activity_homescreen);
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        if(Groups.current_group_name != null)
+            getSupportActionBar().setTitle(Groups.current_group_name);
+
+
+
         // Load up a starting fragment in our fragment container
         android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
@@ -257,29 +263,84 @@ public class MainActivity extends ActionBarActivity {
         jr.execute("http://intotheblu.nl/login.php");
     }
 
-    public void uploadFile(File fileName){
-        FTPClient client = new FTPClient();
+    public void onClickUploadImage(View view) {
+
+
+        FTPClient ftpClient = null;
+
         try {
-            Log.e("", fileName.getAbsolutePath());
-            client.connect("ftp://159.253.7.201");
-            client.login("kite", "GetMoney");
-            //client.setType(FTPClient.TYPE_BINARY);
-            //client.changeDirectory("/public_html/image");
-            //client.upload(fileName);
-        } catch(IOException ex) {
-            Log.e("", "IOExeption");
-        } catch(IllegalStateException ex) {
-            Log.e("", "IllegalStateException");
-        } catch(FTPIllegalReplyException ex) {
-            Log.e("", "FTPIllegalReplyException");
-        } catch(FTPException ex) {
-            Log.e("", "FTPException");
-        } catch(Exception e) {
-            Log.e("", "different exception");
+            ftpClient = new FTPClient();
+            ftpClient.connect(InetAddress.getByName("ftp://159.253.7.201"));
+
+            if (ftpClient.login("kite", "GetmMoney")) {
+
+                ftpClient.enterLocalPassiveMode(); // important!
+                ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+                String Location = Environment.getExternalStorageDirectory()
+                        .toString();
+                String data = Location + File.separator + "FileToSend.txt";
+                FileInputStream in = new FileInputStream(new File(data));
+                boolean result = ftpClient.storeFile("FileToSend.txt", in);
+                in.close();
+                if (result)
+                    Log.v("upload result", "succeeded");
+                ftpClient.logout();
+                ftpClient.disconnect();
+
+            }
+        } catch (Exception e) {
+            Log.v("count", "error");
+            e.printStackTrace();
+        }
+
+/*
+        FTPClient con = null;
+
+        try
+        {
+            con = new FTPClient();
+            con.connect("ftp://159.253.7.201");
+            Log.v("", "connection succeed");
+            if (con.login("kite", "GetMoney"))
+            {
+                con.enterLocalPassiveMode(); // important!
+                con.setFileType(FTP.BINARY_FILE_TYPE);
+
+                String data = "/sdcard/";
+
+
+
+                FileInputStream in = new FileInputStream(new File(data));
+                boolean result = con.storeFile("/vivekm4a.m4a", in);
+                in.close();
+                if (result) Log.v("upload result", "succeeded");
+                con.logout();
+                con.disconnect();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e("", "failed upload");
         }
 
 
-    }
+
+*/
+        /*SimpleFTP ftp = new SimpleFTP();
+        int PICK_IMAGE = 0;
+
+
+        try {
+
+            // Connect to an FTP server on port 21.
+            ftp.connect("ftp://159.253.7.201", 21, "kite", "GetMoney");
+
+            // Set binary mode.
+            ftp.bin();
+
+            // Change to a new working directory on the FTP server.
+            ftp.cwd("/public_html/image");
 
     public void onClickUploadImage(View view) {
         Log.e("", "upload image..");
@@ -366,7 +427,7 @@ public class MainActivity extends ActionBarActivity {
                 .show();
     }
 
-    public void SendGameRequest(View view) {
+    public void SendGameRequest(final View view) {
         final EditText txtUrl = new EditText(this);
 
         // Set the default text to a link of the Queen
@@ -387,6 +448,16 @@ public class MainActivity extends ActionBarActivity {
                             return;
 
                         try {
+                            String login = Login.getLoginName();
+                            String password = Login.getPassword();
+                            // Add game request to database
+                            List<NameValuePair> params = new ArrayList<>();
+                            params.add(new BasicNameValuePair("username",login ));
+                            params.add(new BasicNameValuePair("password", password));
+                            params.add(new BasicNameValuePair("friend", friendName));
+                            JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                            jr.execute("http://intotheblu.nl/game_request_add.php");
+
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("message", "You just reveived a new Game request from " + installation.get("username") + "!");
                             jsonObject.put("friendName", installation.get("username"));
@@ -438,7 +509,16 @@ public class MainActivity extends ActionBarActivity {
                     return;
 
                 try {
-                    AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
+                    String login = Login.getLoginName();
+                    String password = Login.getPassword();
+                    List<NameValuePair> params = new ArrayList<>();
+                    params.add(new BasicNameValuePair("username",login ));
+                    params.add(new BasicNameValuePair("password", password));
+                    params.add(new BasicNameValuePair("friend", debitor));
+                    params.add(new BasicNameValuePair("debt", debt));
+                    JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                    jr.execute("http://intotheblu.nl/credit_request_add.php");
+                    //AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received debt from " + Login.getLoginName() + "!");
@@ -492,7 +572,16 @@ public class MainActivity extends ActionBarActivity {
                     return;
 
                 try {
-                    AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
+                    String login = Login.getLoginName();
+                    String password = Login.getPassword();
+                    List<NameValuePair> params = new ArrayList<>();
+                    params.add(new BasicNameValuePair("username",login ));
+                    params.add(new BasicNameValuePair("password", password));
+                    params.add(new BasicNameValuePair("friend", creditor));
+                    params.add(new BasicNameValuePair("debt", debt));
+                    JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                    jr.execute("http://intotheblu.nl/debit_request_add.php");
+                    //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received credit from " + Login.getLoginName() + "!");
@@ -549,6 +638,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void adduser(final View view) {
+        if (Groups.current_group_id == -1)
+            return;
+
         LinearLayout alertLayout= new LinearLayout(this);
         alertLayout.setOrientation(LinearLayout.VERTICAL);
         final EditText memberurl = new EditText(this);
@@ -565,12 +657,12 @@ public class MainActivity extends ActionBarActivity {
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String member = memberurl.getText().toString().trim();
-                int groupID = 3;
+
                 if (member.length() < 1)
                     return;
 
                 try {
-                    Groups.adduser(Login.getLoginName(), groupID, view.getContext());
+                    Groups.adduser(Login.getLoginName(), Groups.current_group_id, view.getContext());
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();

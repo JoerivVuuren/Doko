@@ -6,15 +6,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import nl.uva.kite.Doko.R;
 
 
 public class Tab1 extends Fragment {
+    ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.tab_1,container,false);
+        //listView = (ListView)v.findViewById(R.id.groups_list);
         return v;
     }
 }
