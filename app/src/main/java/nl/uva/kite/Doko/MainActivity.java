@@ -2,6 +2,7 @@ package nl.uva.kite.Doko;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.os.Environment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
@@ -26,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.support.v4.app.Fragment;
 
+//import org.apache.commons.net.ftp.FTPClient;
+
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
@@ -33,6 +36,8 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.jibble.simpleftp.SimpleFTP;
@@ -40,9 +45,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Member;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -264,9 +274,75 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickUploadImage(View view) {
+
+
+        FTPClient ftpClient = null;
+
         try {
-            SimpleFTP ftp = new SimpleFTP();
-            int PICK_IMAGE = 0;
+            ftpClient = new FTPClient();
+            ftpClient.connect(InetAddress.getByName("ftp://159.253.7.201"));
+
+            if (ftpClient.login("kite", "GetmMoney")) {
+
+                ftpClient.enterLocalPassiveMode(); // important!
+                ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+                String Location = Environment.getExternalStorageDirectory()
+                        .toString();
+                String data = Location + File.separator + "FileToSend.txt";
+                FileInputStream in = new FileInputStream(new File(data));
+                boolean result = ftpClient.storeFile("FileToSend.txt", in);
+                in.close();
+                if (result)
+                    Log.v("upload result", "succeeded");
+                ftpClient.logout();
+                ftpClient.disconnect();
+
+            }
+        } catch (Exception e) {
+            Log.v("count", "error");
+            e.printStackTrace();
+        }
+
+/*
+        FTPClient con = null;
+
+        try
+        {
+            con = new FTPClient();
+            con.connect("ftp://159.253.7.201");
+            Log.v("", "connection succeed");
+            if (con.login("kite", "GetMoney"))
+            {
+                con.enterLocalPassiveMode(); // important!
+                con.setFileType(FTP.BINARY_FILE_TYPE);
+
+                String data = "/sdcard/";
+
+
+
+                FileInputStream in = new FileInputStream(new File(data));
+                boolean result = con.storeFile("/vivekm4a.m4a", in);
+                in.close();
+                if (result) Log.v("upload result", "succeeded");
+                con.logout();
+                con.disconnect();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e("", "failed upload");
+        }
+
+
+
+*/
+        /*SimpleFTP ftp = new SimpleFTP();
+        int PICK_IMAGE = 0;
+
+
+        try {
+
             // Connect to an FTP server on port 21.
             ftp.connect("ftp://159.253.7.201", 21, "kite", "GetMoney");
 
@@ -278,10 +354,10 @@ public class MainActivity extends AppCompatActivity {
 
             // Upload some files.
             Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-            getIntent.setType("image/*");
+            getIntent.setType("image*//**//*");
 
             Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            pickIntent.setType("image/*");
+            pickIntent.setType("image*//**//*");
 
             Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
@@ -296,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
             ftp.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 
