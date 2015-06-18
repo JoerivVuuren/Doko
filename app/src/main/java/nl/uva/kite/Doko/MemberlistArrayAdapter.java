@@ -27,6 +27,7 @@ public class MemberlistArrayAdapter extends ArrayAdapter<String> {
 
         TextView memberName = (TextView)rowView.findViewById(R.id.member_group_list_name);
         TextView memberDebt = (TextView)rowView.findViewById(R.id.group_list_debt);
+        TextView memberUserLevel = (TextView)rowView.findViewById(R.id.member_group_list_user_level);
         CircleImageView memberPic = (CircleImageView)rowView.findViewById(R.id.group_list_image);
 
         /* set member name and debt */
@@ -36,6 +37,10 @@ public class MemberlistArrayAdapter extends ArrayAdapter<String> {
         /* color member debt */
         if (Groups.current_group_debts[position] < 0)
             memberDebt.setTextColor(context.getResources().getColor(R.color.colorNegative));
+
+        /* display member Administrator level */
+        if (Groups.current_group_admin_name.equals(names[position]))
+            memberUserLevel.setText("Administrator");
 
         /* set member profile picture */
         if (Groups.current_group_pictures[position].equals("artin.jpg"))

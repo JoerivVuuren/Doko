@@ -206,6 +206,7 @@ public class OnJSONCompleted {
                 JSONArray jmembers = json.getJSONArray("users");
                 JSONArray jpics = json.getJSONArray("profile_picture");
                 JSONArray jdebt = json.getJSONArray("debts");
+                Groups.current_group_admin_name = json.getString("admin_name");
                 Groups.current_group_members = new String[jmembers.length()];
                 Groups.current_group_pictures = new String[jmembers.length()];
                 Groups.current_group_debts = new double[jmembers.length()];

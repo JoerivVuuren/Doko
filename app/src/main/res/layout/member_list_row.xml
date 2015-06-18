@@ -40,7 +40,7 @@
 
     <!-- Member role -->
     <TextView
-        android:id="@+id/artist"
+        android:id="@+id/member_group_list_user_level"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/member_group_list_name"
@@ -59,7 +59,7 @@
         android:layout_marginRight="19dp"
         android:layout_marginEnd="19dp"
         android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/artist"
-        android:layout_alignEnd="@+id/artist"
+        android:layout_alignRight="@+id/member_group_list_user_level"
+        android:layout_alignEnd="@+id/member_group_list_user_level"
         android:textColor="@color/colorPositive" />
 </RelativeLayout>
