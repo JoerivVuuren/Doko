@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         //android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         //android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
         if (menuFragment != null) {
-            if (menuFragment.equals("game") || menuFragment.equals("debt")) {
+            if (menuFragment.equals("game") || menuFragment.equals("debt") || menuFragment.equals("credit")) {
                 TabWrapper tabWrapper1 = new TabWrapper();
                 fragmentTransaction.replace(R.id.fragment_container, tabWrapper1);
             } else if (menuFragment.equals("friend")) {
@@ -361,6 +361,7 @@ public class MainActivity extends AppCompatActivity {
                             params.add(new BasicNameValuePair("username",login ));
                             params.add(new BasicNameValuePair("password", password));
                             params.add(new BasicNameValuePair("friend", friendName));
+                            params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
                             JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                             jr.execute("http://intotheblu.nl/game_request_add.php");
 
@@ -422,6 +423,8 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("password", password));
                     params.add(new BasicNameValuePair("friend", debitor));
                     params.add(new BasicNameValuePair("debt", debt));
+                    params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
+                    params.add(new BasicNameValuePair("origin", reason));
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                     jr.execute("http://intotheblu.nl/credit_request_add.php");
                     //AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
@@ -429,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received debt from " + Login.getLoginName() + "!");
                     jsonObject.put("friendName", Login.getLoginName());
-                    jsonObject.put("class", "debtrequest");
+                    jsonObject.put("class", "addCredit");
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", debitor);
                     push.setQuery(pushQuery); // Set our Installation query
@@ -485,6 +488,8 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("password", password));
                     params.add(new BasicNameValuePair("friend", creditor));
                     params.add(new BasicNameValuePair("debt", debt));
+                    params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
+                    params.add(new BasicNameValuePair("origin", reason));
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                     jr.execute("http://intotheblu.nl/debit_request_add.php");
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
@@ -492,7 +497,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received credit from " + Login.getLoginName() + "!");
                     jsonObject.put("friendName", Login.getLoginName());
-                    jsonObject.put("class", "addDebt");
+                    jsonObject.put("class", "addDebit");
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", creditor);
                     push.setQuery(pushQuery); // Set our Installation query
