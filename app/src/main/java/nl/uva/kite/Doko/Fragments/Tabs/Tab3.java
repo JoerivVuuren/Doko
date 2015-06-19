@@ -49,7 +49,7 @@ public class Tab3 extends Fragment {
                 R.color.refresh_progress_3
         );
 
-//        sweet refresh on pulldown
+//        sweet refresh on pulldown spinner
         swipeView.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override

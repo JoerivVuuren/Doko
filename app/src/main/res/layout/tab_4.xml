@@ -14,8 +14,8 @@ android:background="@color/activityBackground"
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:onClick="OpenLoginScreen"
+            android:text="Logout"
+            android:onClick="LogOutUser"
             android:id ="@+id/login_button" />
 
         <Button
@@ -46,13 +46,6 @@ android:background="@color/activityBackground"
             android:onClick="RegisterPush"
             android:id ="@+id/reg_push_button"
             android:singleLine="false" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login als Dav"
-            android:onClick="JSONTest"
-            android:id ="@+id/login_dav" />
     </LinearLayout>
 
 </RelativeLayout>

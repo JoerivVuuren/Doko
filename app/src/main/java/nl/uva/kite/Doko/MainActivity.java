@@ -2,6 +2,7 @@ package nl.uva.kite.Doko;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.os.Environment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
@@ -35,14 +36,18 @@ import com.parse.SaveCallback;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.jibble.simpleftp.SimpleFTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Member;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+//        change title to current group name if there is an active group
         if(Groups.current_group_name != null)
             getSupportActionBar().setTitle(Groups.current_group_name);
 
@@ -166,17 +172,11 @@ public class MainActivity extends AppCompatActivity {
 
         //android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         //android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
-        if (menuFragment != null)
-        {
-            if (menuFragment.equals("game"))
-            {
+        if (menuFragment != null) {
+            if (menuFragment.equals("game") || menuFragment.equals("debt")) {
                 TabWrapper tabWrapper1 = new TabWrapper();
                 fragmentTransaction.replace(R.id.fragment_container, tabWrapper1);
-                //Tab2 mytab2 = new Tab2();
-                //fragmentTransaction.replace(R.id.fragment_container, mytab2);
-
-            }
-            else if (menuFragment.equals("friend")){
+            } else if (menuFragment.equals("friend")) {
                 Friends friends = new Friends();
                 fragmentTransaction.replace(R.id.fragment_container, friends);
             }
@@ -250,105 +250,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-    /* json login testje */
-    public void JSONTest(View view) {
-        Login.loginName = "Dav";
-        Login.loginPass = "q";
-
-        List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("username", "Dav"));
-        params.add(new BasicNameValuePair("password", "q"));
-        JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.LOGIN);
-        jr.execute("http://intotheblu.nl/login.php");
+    /* logs out the current user */
+    public void LogOutUser(View view) {
+        Login.logOut(view.getContext());
     }
-
-    public void onClickUploadImage(View view) {
-
-
-        FTPClient ftpClient = null;
-
-        try {
-            ftpClient = new FTPClient();
-            ftpClient.connect(InetAddress.getByName("ftp://159.253.7.201"));
-
-            if (ftpClient.login("kite", "GetmMoney")) {
-
-                ftpClient.enterLocalPassiveMode(); // important!
-                ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-                String Location = Environment.getExternalStorageDirectory()
-                        .toString();
-                String data = Location + File.separator + "FileToSend.txt";
-                FileInputStream in = new FileInputStream(new File(data));
-                boolean result = ftpClient.storeFile("FileToSend.txt", in);
-                in.close();
-                if (result)
-                    Log.v("upload result", "succeeded");
-                ftpClient.logout();
-                ftpClient.disconnect();
-
-            }
-        } catch (Exception e) {
-            Log.v("count", "error");
-            e.printStackTrace();
-        }
-
-/*
-        FTPClient con = null;
-
-        try
-        {
-            con = new FTPClient();
-            con.connect("ftp://159.253.7.201");
-            Log.v("", "connection succeed");
-            if (con.login("kite", "GetMoney"))
-            {
-                con.enterLocalPassiveMode(); // important!
-                con.setFileType(FTP.BINARY_FILE_TYPE);
-
-                String data = "/sdcard/";
-
-
-
-                FileInputStream in = new FileInputStream(new File(data));
-                boolean result = con.storeFile("/vivekm4a.m4a", in);
-                in.close();
-                if (result) Log.v("upload result", "succeeded");
-                con.logout();
-                con.disconnect();
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            Log.e("", "failed upload");
-        }
-
-
-
-*/
-        /*SimpleFTP ftp = new SimpleFTP();
-        int PICK_IMAGE = 0;
-
-
-        try {
-
-            // Connect to an FTP server on port 21.
-            ftp.connect("ftp://159.253.7.201", 21, "kite", "GetMoney");
-
-            // Set binary mode.
-            ftp.bin();
-
-            // Change to a new working directory on the FTP server.
-            ftp.cwd("/public_html/image");
-
-    public void onClickUploadImage(View view) {
-        Log.e("", "upload image..");
-        File toUpload = new File("/phone/WhatsApp/Media/WhatsApp Images/IMG-20150518-WA0013.jpg");
-        uploadFile(toUpload);
-    }
-
-
 
     public void AddGroupPrompt(final View view) {
         final EditText txt = new EditText(this);
@@ -523,7 +428,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received debt from " + Login.getLoginName() + "!");
                     jsonObject.put("friendName", Login.getLoginName());
-                    jsonObject.put("class", "addDebt");
+                    jsonObject.put("class", "debtrequest");
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", debitor);
                     push.setQuery(pushQuery); // Set our Installation query
