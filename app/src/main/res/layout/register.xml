@@ -15,12 +15,12 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/password"
+        android:layout_alignLeft="@+id/register_pass"
         android:layout_centerVertical="true"
         android:text="Username" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/register_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
@@ -31,8 +31,8 @@
         android:id="@+id/TextView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/username"
-        android:layout_below="@+id/username"
+        android:layout_alignLeft="@+id/register_user"
+        android:layout_below="@+id/register_user"
         android:text="Password" />
 
     <TextView
@@ -41,14 +41,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="66dp"
         android:gravity="center"
-        android:text="register"
+        android:text="Create an account"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/register_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TextView01"
@@ -57,11 +57,11 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/register_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/password"
-        android:layout_below="@+id/password"
+        android:layout_alignRight="@+id/register_pass"
+        android:layout_below="@+id/register_pass"
         android:text="Register" />
 
 </RelativeLayout>

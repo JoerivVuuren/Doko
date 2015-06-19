@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
         /* activate last selected group_id */
         if (Login.securePreferences.getString("group_id") != null) {
             int group_id = Integer.parseInt(Login.securePreferences.getString("group_id"));
-            Groups.activateGroup(group_id);
+            if (group_id > -1)
+                Groups.activateGroup(group_id);
         }
 
         // Creating The Toolbar and setting it as the Toolbar for the activity

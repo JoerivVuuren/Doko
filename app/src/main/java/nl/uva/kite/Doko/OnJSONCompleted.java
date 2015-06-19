@@ -48,6 +48,8 @@ public class OnJSONCompleted {
 
     public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
+            Activity a = (Activity)ctext;
+
             if (type == LOGIN) {
                 if (json.getInt("success") == 1) {
                     Login.setLoggedIn(true);
@@ -61,7 +63,6 @@ public class OnJSONCompleted {
                     installation.saveInBackground();
 
                     /* close Login activity and open MainActivity */
-                    Activity a = (Activity)ctext;
                     Intent intent = new Intent(ctext, MainActivity.class);
                     a.finish();
                     ctext.startActivity(intent);
@@ -70,6 +71,15 @@ public class OnJSONCompleted {
                     /* disable autologin */
                     Login.securePreferences.put("autologin", "0");
                     Login.setLoggedIn(false);
+                }
+            }
+            else if (type == REGISTER) {
+                if (json.getInt("success") == 1) {
+                    /* close Register activity and auto login user */
+                    a.finish();
+                    Login.securePreferences.put("autologin", "1");
+                    Login.attemptLogin(Login.mContext, Login.securePreferences.getString("username"),
+                            Login.securePreferences.getString("password"));
                 }
             }
             else if (type == FRIENDLISTUPDATE) {
@@ -84,7 +94,6 @@ public class OnJSONCompleted {
                 Friends.friends = friend_list;
 
                 /* create a ListView for friends */
-                Activity a = (Activity)ctext;
                 final ListView friendListView = (ListView)a.findViewById(R.id.friends_list);
                 ArrayList<String> arrList = new ArrayList<String>();
                 arrList.addAll(Arrays.asList(friend_list));
@@ -115,7 +124,6 @@ public class OnJSONCompleted {
                 Friends.requests = request_list;
 
                 /* create a ListView for requests */
-                Activity a = (Activity)ctext;
                 final ListView requestListView = (ListView)a.findViewById(R.id.requests_list);
                 ArrayList<String> arrList = new ArrayList<String>();
                 arrList.addAll(Arrays.asList(request_list));
@@ -171,7 +179,6 @@ public class OnJSONCompleted {
 
                 if (type == GROUPLISTOPEN) {
                     /* create a ListView for groups */
-                    Activity a = (Activity) ctext;
                     final ListView groupsListView = (ListView) a.findViewById(R.id.mygroups_list);
 
                     ArrayList<String> arrList = new ArrayList<String>();
@@ -233,7 +240,6 @@ public class OnJSONCompleted {
                 }
 
                 /* create ListView using MemberlistArrayAdapter */
-                Activity a = (Activity)ctext;
                 ListView memberListView = (ListView)a.findViewById(R.id.groups_list);
                 MemberlistArrayAdapter listAdapter = new MemberlistArrayAdapter(ctext, Groups.current_group_members);
                 memberListView.setAdapter(listAdapter);
@@ -264,7 +270,6 @@ public class OnJSONCompleted {
                 Tab2.requests_debt = request_list_debt;
 
                 /* create a ListView for game requests */
-                Activity a = (Activity)ctext;
                 final ListView requestListView_game = (ListView)a.findViewById(R.id.game_request_list);
                 ArrayList<String> arrList_game = new ArrayList<String>();
                 arrList_game.addAll(Arrays.asList(request_list_game));
