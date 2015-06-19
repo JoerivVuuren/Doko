@@ -51,7 +51,7 @@ public class TabWrapper extends android.support.v4.app.Fragment {
         String value = getActivity().getIntent().getStringExtra("Requests");
         if(value != null) {
             //String startValue = b.getString("GameRequest");
-            if(value.equals("game") || value.equals("debt")) {
+            if(value.equals("game") || value.equals("debt") || value.equals("credit")) {
                 Log.e("", "yes joeri it worked");
                 pager.setCurrentItem(1);
             }
