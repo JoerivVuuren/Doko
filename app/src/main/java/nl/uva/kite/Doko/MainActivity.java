@@ -400,6 +400,11 @@ public class MainActivity extends AppCompatActivity {
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
+        if(Groups.current_group_id == -1) {
+            Toast.makeText(view.getContext(), "please choose a group first!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(alertLayout);
 
@@ -465,6 +470,11 @@ public class MainActivity extends AppCompatActivity {
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
+        if(Groups.current_group_id == -1) {
+            Toast.makeText(view.getContext(), "please choose a group first!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(alertLayout);
 
@@ -476,7 +486,6 @@ public class MainActivity extends AppCompatActivity {
                 String creditor = creditorurl.getText().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
-                int groupID = 3;
                 if (creditor.length() < 1 || debt.length() < 1 || reason.length() < 1)
                     return;
 

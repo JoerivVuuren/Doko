@@ -251,8 +251,12 @@ public class OnJSONCompleted {
                 //doeiets
             }
             else if (type == ALLREQUESTUPDATE) {
-                JSONArray jrequests_game = json.getJSONArray("senders_game");
-                JSONArray jrequests_debt = json.getJSONArray("senders_debt");
+                JSONArray jrequests_game = json.getJSONArray("game_senders");
+                JSONArray jrequests_debit = json.getJSONArray("debit_senders");
+                JSONArray jrequests_debit_debt = json.getJSONArray("debit_debt");
+                JSONArray jrequests_credit = json.getJSONArray("credit_senders");
+                JSONArray jrequests_credit_debt = json.getJSONArray("credit_debt");
+                Log.e("", "came in request update");
 
                 String[] request_list_game = new String[jrequests_game.length()];
                 for (int i = 0; i < request_list_game.length; i++) {
@@ -261,13 +265,21 @@ public class OnJSONCompleted {
                 }
                 Tab2.requests_game = request_list_game;
 
-                String[] request_list_debt = new String[jrequests_debt.length()];
-                for (int i = 0; i < request_list_debt.length; i++) {
-                    request_list_debt[i] = jrequests_debt.getString(i);
-                    Log.e("", "i do have a debt_request");
+                String[] request_list_debit = new String[jrequests_debit.length()];
+                for (int i = 0; i < request_list_debit.length; i++) {
+                    request_list_debit[i] = jrequests_debit.getString(i);
+                    Log.e("", "i do have a debit_request");
                 }
 
-                Tab2.requests_debt = request_list_debt;
+                Tab2.requests_debit = request_list_debit;
+
+                String[] request_list_credit = new String[jrequests_credit.length()];
+                for (int i = 0; i < request_list_credit.length; i++) {
+                    request_list_credit[i] = jrequests_debit.getString(i);
+                    Log.e("", "i do have a credit_request");
+                }
+
+                Tab2.requests_credit = request_list_credit;
 
                 /* create a ListView for game requests */
                 final ListView requestListView_game = (ListView)a.findViewById(R.id.game_request_list);
@@ -307,21 +319,60 @@ public class OnJSONCompleted {
                     }
                 });
 
-                /* create a ListView for debt requests */
+                /* create a ListView for debit requests */
                 //Activity ab = (Activity)ctext;
-                final ListView requestListView_debt = (ListView)a.findViewById(R.id.debt_request_list);
-                ArrayList<String> arrList_debt = new ArrayList<String>();
-                arrList_debt.addAll(Arrays.asList(request_list_debt));
-                ArrayAdapter<String> listAdapter_debt = new ArrayAdapter<String>(ctext, R.layout.simplerow, R.id.rowTextView, arrList_debt);
+                final ListView requestListView_debit = (ListView)a.findViewById(R.id.debt_request_list);
+                ArrayList<String> arrList_debit = new ArrayList<String>();
+                arrList_debit.addAll(Arrays.asList(request_list_debit));
+                ArrayAdapter<String> listAdapter_debit = new ArrayAdapter<String>(ctext, R.layout.simplerow, R.id.rowTextView, arrList_debit);
 
-                requestListView_debt.setAdapter(listAdapter_debt);
+                requestListView_debit.setAdapter(listAdapter_debit);
 
-                requestListView_debt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                requestListView_debit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
 
-                        alertDialogBuilder.setTitle("Accept the game from " + ((TextView) view).getText() + "?");
+                        alertDialogBuilder.setTitle("Accept the debit from " + ((TextView) view).getText() + "?");
+
+                        alertDialogBuilder
+                                .setCancelable(true)
+                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        Tab2.add(((TextView) view).getText().toString(), view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Tab2.deny_request(((TextView) view).getText().toString(), view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                });
+
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
+                    }
+                });
+
+                /* create a ListView for credit requests */
+                //Activity ab = (Activity)ctext;
+                final ListView requestListView_credit = (ListView)a.findViewById(R.id.debt_request_list);
+                ArrayList<String> arrList_credit = new ArrayList<String>();
+                arrList_credit.addAll(Arrays.asList(request_list_credit));
+                ArrayAdapter<String> listAdapter_debt = new ArrayAdapter<String>(ctext, R.layout.simplerow, R.id.rowTextView, arrList_credit);
+
+                requestListView_credit.setAdapter(listAdapter_debt);
+
+                requestListView_credit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
+
+                        alertDialogBuilder.setTitle("Accept the credit from " + ((TextView) view).getText() + "?");
 
                         alertDialogBuilder
                                 .setCancelable(true)
