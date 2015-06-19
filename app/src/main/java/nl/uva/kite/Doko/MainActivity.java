@@ -515,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void AddDebt(String debt, String creditor, String debitor, String reason, int groupID, Context ctext) {
+    public void AddDebt(String debt, String creditor, String debitor, String reason, int groupID, Context ctext, String debtType) {
         if (!Login.isLoggedIn() || creditor.equals(debitor))
             return;
 
@@ -527,6 +527,7 @@ public class MainActivity extends AppCompatActivity {
         params.add(new BasicNameValuePair("group_id", "" + groupID));
         params.add(new BasicNameValuePair("origin", reason));
         params.add(new BasicNameValuePair("debt", debt));
+        params.add(new BasicNameValuePair("type", debtType));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.DEBTADD);
         jr.execute("http://intotheblu.nl/debt_add.php");
     }
