@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
         /* activate last selected group_id */
         if (Login.securePreferences.getString("group_id") != null) {
             int group_id = Integer.parseInt(Login.securePreferences.getString("group_id"));
-            Groups.activateGroup(group_id);
+            if (group_id > -1)
+                Groups.activateGroup(group_id);
         }
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
@@ -399,6 +400,11 @@ public class MainActivity extends AppCompatActivity {
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
+        if(Groups.current_group_id == -1) {
+            Toast.makeText(view.getContext(), "please choose a group first!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(alertLayout);
 
@@ -464,6 +470,11 @@ public class MainActivity extends AppCompatActivity {
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
+        if(Groups.current_group_id == -1) {
+            Toast.makeText(view.getContext(), "please choose a group first!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(alertLayout);
 
@@ -475,7 +486,6 @@ public class MainActivity extends AppCompatActivity {
                 String creditor = creditorurl.getText().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
-                int groupID = 3;
                 if (creditor.length() < 1 || debt.length() < 1 || reason.length() < 1)
                     return;
 

@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.uva.kite.Doko.Groups;
 import nl.uva.kite.Doko.JSONRetrieve;
 import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.OnJSONCompleted;
@@ -33,7 +34,8 @@ import nl.uva.kite.Doko.R;
 
 public class Tab2 extends Fragment {
     public static String[] requests_game;
-    public static String[] requests_debt;
+    public static String[] requests_debit;
+    public static String[] requests_credit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class Tab2 extends Fragment {
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, type);
         jr.execute("http://intotheblu.nl/all_request_list.php");
     }
