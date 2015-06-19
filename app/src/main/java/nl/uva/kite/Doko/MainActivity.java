@@ -75,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
     public void setUpAndDisplayMainScreen() {
         setContentView(R.layout.activity_homescreen);
 
+        /* update groups list */
+        Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, this);
+
+        /* activate last selected group_id */
+        if (Login.securePreferences.getString("group_id") != null) {
+            int group_id = Integer.parseInt(Login.securePreferences.getString("group_id"));
+            Groups.activateGroup(group_id);
+        }
+
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);

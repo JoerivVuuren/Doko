@@ -56,7 +56,7 @@ public class Groups extends Fragment {
                         if (Login.isLoggedIn()) {
 //                            update the list!
                             if (Login.isLoggedIn())
-                            Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, thisContext);
+                            Groups.get_grouplist(OnJSONCompleted.GROUPLISTOPEN, thisContext);
                         }
                         (new Handler()).postDelayed(new Runnable() {
                             @Override
@@ -71,7 +71,7 @@ public class Groups extends Fragment {
 
         if (Login.isLoggedIn()) {
             /* get friend list from DB and update list of friends in Fragment */
-            Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, this.getActivity());
+            Groups.get_grouplist(OnJSONCompleted.GROUPLISTOPEN, this.getActivity());
         }
 
         return layout;
@@ -127,5 +127,33 @@ public class Groups extends Fragment {
         params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
         JSONRetrieve jr = new JSONRetrieve(context, params, OnJSONCompleted.GROUPMEMBERSLIST);
         jr.execute("http://intotheblu.nl/group_members.php");
+    }
+
+    /* activates group */
+    public static void activateGroup(int id) {
+        Groups.current_group_id = id;
+        Groups.current_group_name = groupIDtoName(id);
+
+        /* save group_id for next App start */
+        Login.securePreferences.put("group_id", "" + id);
+    }
+
+    /* returns group name for group id;
+     * returns "" if group id not found */
+    public static String groupIDtoName(int id) {
+        if (Groups.group_ids == null)
+            return "";
+
+        int index = -1;
+        for (int i = 0; i < Groups.group_ids.length; i++) {
+            if (Groups.group_ids[i] == id) {
+                index = i;
+                break;
+            }
+        }
+        if (index != -1)
+            return Groups.groups[index];
+
+        return "";
     }
 }

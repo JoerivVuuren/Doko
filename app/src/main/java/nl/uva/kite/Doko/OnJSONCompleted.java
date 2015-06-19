@@ -153,7 +153,7 @@ public class OnJSONCompleted {
                     }
                 });
             }
-            else if (type == GROUPLISTUPDATE) {
+            else if (type == GROUPLISTOPEN || type == GROUPLISTUPDATE) {
 
                 /* fill Groups.group_ids and .group_names with json response */
                 JSONArray jgroups = json.getJSONArray("groups");
@@ -169,40 +169,40 @@ public class OnJSONCompleted {
                 Groups.groups = group_names;
                 Groups.group_ids = group_ids;
 
-                /* create a ListView for groups */
-                Activity a = (Activity)ctext;
-                final ListView groupsListView = (ListView)a.findViewById(R.id.mygroups_list);
+                if (type == GROUPLISTOPEN) {
+                    /* create a ListView for groups */
+                    Activity a = (Activity) ctext;
+                    final ListView groupsListView = (ListView) a.findViewById(R.id.mygroups_list);
 
-                ArrayList<String> arrList = new ArrayList<String>();
-                arrList.addAll(Arrays.asList(group_names));
+                    ArrayList<String> arrList = new ArrayList<String>();
+                    arrList.addAll(Arrays.asList(group_names));
 
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
+                    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
 
-                groupsListView.setAdapter(listAdapter);
+                    groupsListView.setAdapter(listAdapter);
 
-                FloatingActionButton fab = (FloatingActionButton)a.findViewById(R.id.groups_fab);
-                fab.attachToListView(groupsListView);
+                    FloatingActionButton fab = (FloatingActionButton) a.findViewById(R.id.groups_fab);
+                    fab.attachToListView(groupsListView);
 
-                groupsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                        if (position > Groups.group_ids.length - 1)
-                            return;
+                    groupsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                            if (position > Groups.group_ids.length - 1)
+                                return;
 
-                        /* user clicked this group: */
-                        int group_id = Groups.group_ids[position];
-                        String group_name = parent.getItemAtPosition(position).toString();
+                            /* user clicked this group: */
+                            int group_id = Groups.group_ids[position];
 
-                        Groups.current_group_id = group_id;
-                        Groups.current_group_name = group_name;
+                            Groups.activateGroup(group_id);
 
-                        /* restart MainActivity */
-                        Activity a = (Activity)ctext;
-                        Intent intent = new Intent(ctext, MainActivity.class);
-                        a.finish();
-                        ctext.startActivity(intent);
-                    }
-                });
+                            /* restart MainActivity */
+                            Activity a = (Activity) ctext;
+                            Intent intent = new Intent(ctext, MainActivity.class);
+                            a.finish();
+                            ctext.startActivity(intent);
+                        }
+                    });
+                }
             }
             else if (type == GROUPMEMBERSLIST) {
 
