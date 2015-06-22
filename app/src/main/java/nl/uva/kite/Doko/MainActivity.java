@@ -180,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (menuFragment.equals("friend")) {
                 Friends friends = new Friends();
                 fragmentTransaction.replace(R.id.fragment_container, friends);
+            } else if (menuFragment.equals("addMember")) {
+                Groups groups = new Groups();
+                fragmentTransaction.replace(R.id.fragment_container, groups);
             }
         }
     }
@@ -583,7 +586,8 @@ public class MainActivity extends AppCompatActivity {
                     return;
 
                 try {
-                    Groups.adduser(member, Groups.current_group_id, view.getContext());
+                    Groups.add_request(member, Groups.current_group_id, Groups.current_group_name, view.getContext());
+                    //Groups.adduser(member, Groups.current_group_id, view.getContext());
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();

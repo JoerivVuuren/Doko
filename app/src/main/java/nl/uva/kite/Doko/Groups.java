@@ -29,6 +29,7 @@ public class Groups extends Fragment {
     public static String[] current_group_debts_euro;
 
     public static String[] groups;
+    public static String[] requests;
     public static int[] group_ids;
 
 
@@ -71,6 +72,7 @@ public class Groups extends Fragment {
 
         if (Login.isLoggedIn()) {
             /* get friend list from DB and update list of friends in Fragment */
+            Groups.get_group_request_list(OnJSONCompleted.GROUPREQUESTUPDATE, this.getActivity());
             Groups.get_grouplist(OnJSONCompleted.GROUPLISTOPEN, this.getActivity());
         }
 
@@ -104,6 +106,26 @@ public class Groups extends Fragment {
         jr.execute("http://intotheblu.nl/group_adduser.php");
     }
 
+    public static void add_request(String friendName, int groupid, String group_name, Context ctext) {
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("group_id", "" + groupid));
+        params.add(new BasicNameValuePair("group_name", group_name));
+        params.add(new BasicNameValuePair("friend", friendName));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.NONE);
+        jr.execute("http://intotheblu.nl/group_request_add.php");
+    }
+
+    public static void deny_request(String friendName, Context ctext){
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("friend", friendName));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.NONE);
+        jr.execute("http://intotheblu.nl/group_request_delete.php");
+    }
+
     /* retrieves the group list from DB */
     public static void get_grouplist(int type, Context ctext) {
         if (!Login.isLoggedIn())
@@ -127,6 +149,18 @@ public class Groups extends Fragment {
         params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
         JSONRetrieve jr = new JSONRetrieve(context, params, OnJSONCompleted.GROUPMEMBERSLIST);
         jr.execute("http://intotheblu.nl/group_members.php");
+    }
+
+    /* retrieves the user's friend request list from DB */
+    public static void get_group_request_list(int type, Context ctext) {
+        if (!Login.isLoggedIn())
+            return;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, type);
+        jr.execute("http://intotheblu.nl/group_request_list.php");
     }
 
     /* activates group */
