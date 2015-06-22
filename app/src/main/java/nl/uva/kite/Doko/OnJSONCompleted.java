@@ -243,7 +243,7 @@ public class OnJSONCompleted {
 
                 /* hide + button if user is not admin */
                 FloatingActionButton fab = (FloatingActionButton)a.findViewById(R.id.fabulous_fab);
-                if (Groups.current_group_admin_name != Login.getLoginName())
+                if (!Groups.current_group_admin_name.equals(Login.getLoginName()))
                     fab.hide();
                 else
                     fab.show();
