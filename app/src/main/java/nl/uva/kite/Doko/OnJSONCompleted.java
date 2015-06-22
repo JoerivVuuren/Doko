@@ -255,10 +255,13 @@ public class OnJSONCompleted {
             }
             else if(type == GROUPREQUESTUPDATE){
                 /* fill Friends.requests with json response */
-                JSONArray jrequests = json.getJSONArray("senders");
-                String[] request_list = new String[jrequests.length()];
+                JSONArray jrequests_group_names = json.getJSONArray("group_name");
+                JSONArray jrequests_group_id = json.getJSONArray("group_id");
+                String[] request_list = new String[jrequests_group_names.length()];
+                final String[] id_list = new String[jrequests_group_names.length()];
                 for (int i = 0; i < request_list.length; i++) {
-                    request_list[i] = jrequests.getString(i);
+                    request_list[i] = jrequests_group_names.getString(i);
+                    id_list[i] = jrequests_group_id.getString(i);
                 }
 
                 Groups.requests = request_list;
@@ -282,13 +285,13 @@ public class OnJSONCompleted {
                                 .setCancelable(true)
                                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
-                                        Groups.adduser(Login.getLoginName(), Groups.current_group_id, view.getContext());
+                                        Groups.adduser(Login.getLoginName(), id_list[id+1], view.getContext());
                                         view.setVisibility(View.GONE);
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Groups.deny_request(((TextView) view).getText().toString(), view.getContext());
+                                        Groups.deny_request(id_list[id+1], view.getContext());
                                         view.setVisibility(View.GONE);
                                     }
                                 });
