@@ -583,7 +583,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
 
                 try {
-                    Groups.adduser(Login.getLoginName(), Groups.current_group_id, view.getContext());
+                    Groups.adduser(member, Groups.current_group_id, view.getContext());
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
