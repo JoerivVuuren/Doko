@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -201,7 +202,7 @@ public class OnJSONCompleted {
                             /* user clicked this group: */
                             int group_id = Groups.group_ids[position];
 
-                            Groups.activateGroup(group_id);
+                            Groups.activateGroup(group_id, Groups.groupIDtoName(group_id));
 
                             /* restart MainActivity */
                             Activity a = (Activity) ctext;
@@ -239,6 +240,13 @@ public class OnJSONCompleted {
                     }
                     Groups.current_group_debts_euro[i] = String.format(debtPrefix + EURO + " %.2f", debt);
                 }
+
+                /* hide + button if user is not admin */
+                FloatingActionButton fab = (FloatingActionButton)a.findViewById(R.id.fabulous_fab);
+                if (Groups.current_group_admin_name != Login.getLoginName())
+                    fab.hide();
+                else
+                    fab.show();
 
                 /* create ListView using MemberlistArrayAdapter */
                 ListView memberListView = (ListView)a.findViewById(R.id.groups_list);
@@ -294,7 +302,13 @@ public class OnJSONCompleted {
                 });
             }
             else if (type == GROUPCREATE) {
-                // activate group
+                /* activate new group id */
+                Groups.activateGroup(Integer.parseInt(json.getString("group_id")), json.getString("group_name"));
+
+                /* restart MainActivity */
+                Intent intent = new Intent(ctext, MainActivity.class);
+                a.finish();
+                ctext.startActivity(intent);
             }
             else if (type == DEBTADD) {
                 //doeiets

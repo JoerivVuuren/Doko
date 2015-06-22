@@ -50,6 +50,7 @@ import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MainActivity mContext;
     NavigationView mNavigationView;
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
@@ -73,23 +74,26 @@ public class MainActivity extends AppCompatActivity {
 
     /* creates and sets up the Main screen with tabs, nav drawer */
     public void setUpAndDisplayMainScreen() {
+        MainActivity.mContext = this;
         setContentView(R.layout.activity_homescreen);
 
         /* update groups list */
         Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, this);
 
         /* activate last selected group_id */
-        if (Login.securePreferences.getString("group_id") != null) {
+        if (Login.securePreferences.getString("group_id") != null &&
+            Login.securePreferences.getString("group_name") != null) {
             int group_id = Integer.parseInt(Login.securePreferences.getString("group_id"));
+            String group_name = Login.securePreferences.getString("group_name");
             if (group_id > -1)
-                Groups.activateGroup(group_id);
+                Groups.activateGroup(group_id, group_name);
         }
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 //        change title to current group name if there is an active group
-        if(Groups.current_group_name != null)
+        if (Groups.current_group_name != null)
             getSupportActionBar().setTitle(Groups.current_group_name);
 
 

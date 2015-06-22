@@ -164,12 +164,13 @@ public class Groups extends Fragment {
     }
 
     /* activates group */
-    public static void activateGroup(int id) {
+    public static void activateGroup(int id, String name) {
         Groups.current_group_id = id;
-        Groups.current_group_name = groupIDtoName(id);
+        Groups.current_group_name = name;
 
         /* save group_id for next App start */
         Login.securePreferences.put("group_id", "" + id);
+        Login.securePreferences.put("group_name", name);
     }
 
     /* returns group name for group id;
