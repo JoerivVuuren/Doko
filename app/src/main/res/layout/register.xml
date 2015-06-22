@@ -4,12 +4,33 @@
     android:layout_height="match_parent"
     >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@color/ColorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/register_new_text"
+            android:layout_height="wrap_content"
+            android:text="Register for a new Doko account!"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#ffffffff"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose a username and password below"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_below="@+id/register_new_text"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/ColorPrimaryDark" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textView1"
@@ -35,18 +56,6 @@
         android:layout_below="@+id/register_user"
         android:text="Password" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="66dp"
-        android:gravity="center"
-        android:text="Create an account"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <EditText
         android:id="@+id/register_pass"
         android:layout_width="wrap_content"
@@ -55,13 +64,21 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="textPassword" />
-
     <Button
         android:id="@+id/register_submit"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/register_pass"
+        android:textColor="#ffffff"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_add_credit"
+        android:text="Register"
         android:layout_below="@+id/register_pass"
-        android:text="Register" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@+id/register_pass"
+        android:layout_alignStart="@+id/register_pass"
+        android:layout_alignRight="@+id/register_pass"
+        android:layout_alignEnd="@+id/register_pass"/>
+
 
 </RelativeLayout>
