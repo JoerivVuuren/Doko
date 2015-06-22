@@ -8,6 +8,19 @@
     <TextView android:text="" android:layout_width="wrap_content" android:id="@+id/mygroups_text"
         android:layout_height="wrap_content" android:maxLines="100" />
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Group Requests"
+        android:textStyle="bold"/>
+
+    <ListView
+        android:id="@+id/requests_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:drawSelectorOnTop="false"
+        />
+
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeContainerGroups"
@@ -19,6 +32,7 @@
         android:layout_height="fill_parent"
         android:drawSelectorOnTop="false"
         />
+
 </android.support.v4.widget.SwipeRefreshLayout>
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/groups_fab"

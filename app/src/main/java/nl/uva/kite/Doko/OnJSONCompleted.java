@@ -41,6 +41,7 @@ public class OnJSONCompleted {
     public static final int GROUPLISTUPDATE = 12;
     public static final int GROUPLISTOPEN = 13;
     public static final int GROUPMEMBERSLIST = 14;
+    public static final int GROUPREQUESTUPDATE = 20;
     public static final int FRIENDREQUESTUPDATE = 15;
     public static final String imagesDirectory = "http://intotheblu.nl:2222/CMD_FILE_MANAGER/images/";
     public static final int DEBTADD = 16;
@@ -244,6 +245,54 @@ public class OnJSONCompleted {
                 MemberlistArrayAdapter listAdapter = new MemberlistArrayAdapter(ctext, Groups.current_group_members);
                 memberListView.setAdapter(listAdapter);
             }
+            else if(type == GROUPREQUESTUPDATE){
+                /* fill Friends.requests with json response */
+                JSONArray jrequests = json.getJSONArray("senders");
+                String[] request_list = new String[jrequests.length()];
+                for (int i = 0; i < request_list.length; i++) {
+                    request_list[i] = jrequests.getString(i);
+                }
+
+                Groups.requests = request_list;
+
+                /* create a ListView for requests */
+                final ListView requestListView = (ListView)a.findViewById(R.id.requests_list);
+                ArrayList<String> arrList = new ArrayList<String>();
+                arrList.addAll(Arrays.asList(request_list));
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
+
+                requestListView.setAdapter(listAdapter);
+
+                requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
+
+                        alertDialogBuilder.setTitle("Do you want to join the group " + ((TextView) view).getText() + "?");
+
+                        alertDialogBuilder
+                                .setCancelable(true)
+                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        Groups.adduser(Login.getLoginName(), Groups.current_group_id, view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Groups.deny_request(((TextView) view).getText().toString(), view.getContext());
+                                        view.setVisibility(View.GONE);
+                                    }
+                                });
+
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
+                    }
+                });
+            }
             else if (type == GROUPCREATE) {
                 // activate group
             }
@@ -321,7 +370,7 @@ public class OnJSONCompleted {
 
                 /* create a ListView for debit requests */
                 //Activity ab = (Activity)ctext;
-                final ListView requestListView_debit = (ListView)a.findViewById(R.id.debt_request_list);
+                final ListView requestListView_debit = (ListView)a.findViewById(R.id.debit_request_list);
                 ArrayList<String> arrList_debit = new ArrayList<String>();
                 arrList_debit.addAll(Arrays.asList(request_list_debit));
                 ArrayAdapter<String> listAdapter_debit = new ArrayAdapter<String>(ctext, R.layout.simplerow, R.id.rowTextView, arrList_debit);
@@ -361,7 +410,7 @@ public class OnJSONCompleted {
 
                 /* create a ListView for credit requests */
                 //Activity ab = (Activity)ctext;
-                final ListView requestListView_credit = (ListView)a.findViewById(R.id.debt_request_list);
+                final ListView requestListView_credit = (ListView)a.findViewById(R.id.credit_request_list);
                 ArrayList<String> arrList_credit = new ArrayList<String>();
                 arrList_credit.addAll(Arrays.asList(request_list_credit));
                 ArrayAdapter<String> listAdapter_debt = new ArrayAdapter<String>(ctext, R.layout.simplerow, R.id.rowTextView, arrList_credit);
