@@ -341,6 +341,7 @@ public class OnJSONCompleted {
                                     public void onClick(DialogInterface dialog,int id) {
                                         Tab2.add(((TextView) view).getText().toString(), view.getContext());
                                         view.setVisibility(View.GONE);
+
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

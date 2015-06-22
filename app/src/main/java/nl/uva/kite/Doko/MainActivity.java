@@ -525,7 +525,7 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void AddDebt(String debt, String creditor, String debitor, String reason, int groupID, Context ctext, String debtType) {
+    public static void AddDebt(String debt, String creditor, String debitor, String reason, int groupID, Context ctext, String debtType) {
         if (!Login.isLoggedIn() || creditor.equals(debitor))
             return;
 
