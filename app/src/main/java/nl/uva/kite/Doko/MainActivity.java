@@ -59,6 +59,7 @@ import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MainActivity mContext;
     NavigationView mNavigationView;
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
@@ -82,13 +83,26 @@ public class MainActivity extends AppCompatActivity {
 
     /* creates and sets up the Main screen with tabs, nav drawer */
     public void setUpAndDisplayMainScreen() {
+        MainActivity.mContext = this;
         setContentView(R.layout.activity_homescreen);
+
+        /* update groups list */
+        Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, this);
+
+        /* activate last selected group_id */
+        if (Login.securePreferences.getString("group_id") != null &&
+            Login.securePreferences.getString("group_name") != null) {
+            int group_id = Integer.parseInt(Login.securePreferences.getString("group_id"));
+            String group_name = Login.securePreferences.getString("group_name");
+            if (group_id > -1)
+                Groups.activateGroup(group_id, group_name);
+        }
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 //        change title to current group name if there is an active group
-        if(Groups.current_group_name != null)
+        if (Groups.current_group_name != null)
             getSupportActionBar().setTitle(Groups.current_group_name);
 
 
@@ -173,12 +187,15 @@ public class MainActivity extends AppCompatActivity {
         //android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         //android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
         if (menuFragment != null) {
-            if (menuFragment.equals("game") || menuFragment.equals("debt")) {
+            if (menuFragment.equals("game") || menuFragment.equals("debt") || menuFragment.equals("credit")) {
                 TabWrapper tabWrapper1 = new TabWrapper();
                 fragmentTransaction.replace(R.id.fragment_container, tabWrapper1);
             } else if (menuFragment.equals("friend")) {
                 Friends friends = new Friends();
                 fragmentTransaction.replace(R.id.fragment_container, friends);
+            } else if (menuFragment.equals("addMember")) {
+                Groups groups = new Groups();
+                fragmentTransaction.replace(R.id.fragment_container, groups);
             }
         }
     }
@@ -360,6 +377,7 @@ public class MainActivity extends AppCompatActivity {
                             params.add(new BasicNameValuePair("username",login ));
                             params.add(new BasicNameValuePair("password", password));
                             params.add(new BasicNameValuePair("friend", friendName));
+                            params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
                             JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                             jr.execute("http://intotheblu.nl/game_request_add.php");
 
@@ -398,6 +416,11 @@ public class MainActivity extends AppCompatActivity {
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
+        if(Groups.current_group_id == -1) {
+            Toast.makeText(view.getContext(), "please choose a group first!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(alertLayout);
 
@@ -421,6 +444,8 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("password", password));
                     params.add(new BasicNameValuePair("friend", debitor));
                     params.add(new BasicNameValuePair("debt", debt));
+                    params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
+                    params.add(new BasicNameValuePair("origin", reason));
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                     jr.execute("http://intotheblu.nl/credit_request_add.php");
                     //AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
@@ -428,7 +453,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received debt from " + Login.getLoginName() + "!");
                     jsonObject.put("friendName", Login.getLoginName());
-                    jsonObject.put("class", "debtrequest");
+                    jsonObject.put("class", "addCredit");
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", debitor);
                     push.setQuery(pushQuery); // Set our Installation query
@@ -461,6 +486,11 @@ public class MainActivity extends AppCompatActivity {
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
+        if(Groups.current_group_id == -1) {
+            Toast.makeText(view.getContext(), "please choose a group first!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(alertLayout);
 
@@ -472,7 +502,6 @@ public class MainActivity extends AppCompatActivity {
                 String creditor = creditorurl.getText().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
-                int groupID = 3;
                 if (creditor.length() < 1 || debt.length() < 1 || reason.length() < 1)
                     return;
 
@@ -484,6 +513,8 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("password", password));
                     params.add(new BasicNameValuePair("friend", creditor));
                     params.add(new BasicNameValuePair("debt", debt));
+                    params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
+                    params.add(new BasicNameValuePair("origin", reason));
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                     jr.execute("http://intotheblu.nl/debit_request_add.php");
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
@@ -491,7 +522,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received credit from " + Login.getLoginName() + "!");
                     jsonObject.put("friendName", Login.getLoginName());
-                    jsonObject.put("class", "addDebt");
+                    jsonObject.put("class", "addDebit");
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", creditor);
                     push.setQuery(pushQuery); // Set our Installation query
@@ -510,7 +541,7 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void AddDebt(String debt, String creditor, String debitor, String reason, int groupID, Context ctext) {
+    public static void AddDebt(String debt, String creditor, String debitor, String reason, int groupID, Context ctext, String debtType) {
         if (!Login.isLoggedIn() || creditor.equals(debitor))
             return;
 
@@ -522,6 +553,7 @@ public class MainActivity extends AppCompatActivity {
         params.add(new BasicNameValuePair("group_id", "" + groupID));
         params.add(new BasicNameValuePair("origin", reason));
         params.add(new BasicNameValuePair("debt", debt));
+        params.add(new BasicNameValuePair("type", debtType));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.DEBTADD);
         jr.execute("http://intotheblu.nl/debt_add.php");
     }
@@ -567,7 +599,8 @@ public class MainActivity extends AppCompatActivity {
                     return;
 
                 try {
-                    Groups.adduser(Login.getLoginName(), Groups.current_group_id, view.getContext());
+                    Groups.add_request(member, Groups.current_group_id, Groups.current_group_name, view.getContext());
+                    //Groups.adduser(member, Groups.current_group_id, view.getContext());
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();

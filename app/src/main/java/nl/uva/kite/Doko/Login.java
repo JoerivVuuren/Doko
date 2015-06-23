@@ -18,8 +18,8 @@ import android.widget.EditText;
 
 
 public class Login extends Activity implements OnClickListener {
+    public static Context mContext;
     public static SecurePreferences securePreferences;
-
     private static boolean loggedIn = false;
     private static String loginName = "";
     private static String loginPass = "";
@@ -27,6 +27,8 @@ public class Login extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mContext = this;
         securePreferences = new SecurePreferences(this, "Doko-preferences", "DokoFO2opPOA@#F=/00000000", true);
 
         setContentView(R.layout.login);
@@ -43,7 +45,7 @@ public class Login extends Activity implements OnClickListener {
                 securePreferences.getString("username") != null &&
                 securePreferences.getString("password") != null) {
 
-            attemptLogin(securePreferences.getString("username"),
+            attemptLogin(this, securePreferences.getString("username"),
                          securePreferences.getString("password"));
         }
         else if (securePreferences.getString("autologin") != null &&
@@ -70,7 +72,7 @@ public class Login extends Activity implements OnClickListener {
                 securePreferences.put("username", user);
                 securePreferences.put("password", pass);
 
-                attemptLogin(user, pass);
+                attemptLogin(this, user, pass);
                 break;
 
             case R.id.register:
@@ -84,7 +86,7 @@ public class Login extends Activity implements OnClickListener {
     }
 
     /* attempts login */
-    public void attemptLogin(String user, String pass) {
+    public static void attemptLogin(Context ctext, String user, String pass) {
         if (user.length() < 1 && pass.length() < 1)
             return;
 
@@ -93,7 +95,7 @@ public class Login extends Activity implements OnClickListener {
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", user));
         params.add(new BasicNameValuePair("password", pass));
-        JSONRetrieve jr = new JSONRetrieve(this, params, OnJSONCompleted.LOGIN);
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.LOGIN);
         jr.execute("http://intotheblu.nl/login.php");
     }
 

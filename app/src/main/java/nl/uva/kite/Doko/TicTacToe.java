@@ -2,6 +2,7 @@ package nl.uva.kite.Doko;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TicTacToe extends Activity implements OnClickListener {
 
@@ -113,6 +120,23 @@ public class TicTacToe extends Activity implements OnClickListener {
 
     private void notify(String text) {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void startGame(String player1, String player2, Context ctext) {
+        if (!Login.isLoggedIn() || player1.equals(player2))
+            return;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("player1", player1));
+        params.add(new BasicNameValuePair("player2", player2));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.STARTGAME);
+        jr.execute("http://intotheblu.nl/game_request_accept.php");
+    }
+
+    public static void update(int game_id, int veld0, int veld1, int veld2, int veld3, int veld4, int veld5, int veld6, int veld7, int veld8, String player1, String player2, Double amount, String turn) {
+        //setgamedata
     }
 
     private void startAndstop(boolean enable) {

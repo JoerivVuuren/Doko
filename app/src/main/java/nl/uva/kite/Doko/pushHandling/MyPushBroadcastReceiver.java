@@ -48,10 +48,20 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
                 tryIntent = new Intent(context, MainActivity.class);
                 tryIntent.putExtra("Requests", "game");
             }
-            else if(classType.equals("debtrequest")) {
-                builder.setContentTitle("Debt Request");
+            else if(classType.equals("addDebit")){
+                builder.setContentTitle("Debt request");
                 tryIntent = new Intent(context, MainActivity.class);
                 tryIntent.putExtra("Requests", "debt");
+            }
+            else if(classType.equals("addCredit")){
+                builder.setContentTitle("Credit request");
+                tryIntent = new Intent(context, MainActivity.class);
+                tryIntent.putExtra("Requests", "credit");
+            }
+            else if(classType.equals("addMember")) {
+                builder.setContentTitle("Group request");
+                tryIntent = new Intent(context, MainActivity.class);
+                tryIntent.putExtra("Requests", "addMember");
             }
             else {
                 Log.e("", "onpushreceive in de else gekomen helaas...");

@@ -118,15 +118,41 @@
 
             </android.support.v7.widget.CardView>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Game Requests"
+                android:textColor="#000000"/>
+
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/game_request_list"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Debit Requests"
+                android:textColor="#000000"/>
+
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/debt_request_list"/>
+                android:id="@+id/debit_request_list"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Credit Requests"
+                android:textColor="#000000"/>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/credit_request_list"/>
 
             <android.support.v7.widget.CardView
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -166,7 +192,8 @@
                                     android:textAppearance="?android:attr/textAppearanceLarge"
                                     android:text="Credits"
                                     android:layout_gravity="center_horizontal"
-                                    android:layout_marginBottom="5dp" />
+                                    android:layout_marginBottom="5dp"
+                                    android:textStyle="bold" />
 
                                 <TableRow
                                     android:layout_width="match_parent"
@@ -236,7 +263,8 @@
                                     android:textAppearance="?android:attr/textAppearanceLarge"
                                     android:text="Debts"
                                     android:layout_gravity="center_horizontal"
-                                    android:layout_marginBottom="5dp" />
+                                    android:layout_marginBottom="5dp"
+                                    android:textStyle="bold" />
 
                                 <TableRow
                                     android:layout_width="match_parent"
@@ -247,7 +275,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:text="Credit graph/list/table whatever"
+                                        android:text="Add a debt you owe to somebody from the group"
                                         android:id="@+id/textView4" />
                                 </TableRow>
 
