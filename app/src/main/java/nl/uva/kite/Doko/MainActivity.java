@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +22,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -126,10 +132,15 @@ public class MainActivity extends AppCompatActivity {
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-//        change title to current group name if there is an active group
-        if (Groups.current_group_name != null)
-            getSupportActionBar().setTitle(Groups.current_group_name);
 
+        Typeface titleTF = Typeface.createFromAsset(getAssets(), "fonts/Crescent-Regular.ttf");
+        SpannableStringBuilder SS = new SpannableStringBuilder("Doko");
+        //        change title to current group name if there is an active group
+        if (Groups.current_group_name != null){
+            SS = new SpannableStringBuilder(Groups.current_group_name);
+        }
+        SS.setSpan (new CustomTypefaceSpan("", titleTF), 0, SS.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        getSupportActionBar().setTitle(SS);
 
 
         // Load up a starting fragment in our fragment container
