@@ -204,7 +204,8 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:text="Credits"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="5dp" />
+                                android:layout_marginBottom="5dp"
+                                android:textStyle="bold" />
 
                             <TableRow
                                 android:layout_width="match_parent"
@@ -275,7 +276,8 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:text="Debts"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="5dp" />
+                                android:layout_marginBottom="5dp"
+                                android:textStyle="bold" />
 
                             <TableRow
                                 android:layout_width="match_parent"
@@ -286,7 +288,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:text="Credit graph/list/table whatever"
+                                    android:text="Add a debt you owe to somebody from the group"
                                     android:id="@+id/textView4" />
                             </TableRow>
 

@@ -47,6 +47,7 @@ public class OnJSONCompleted {
     public static final String imagesDirectory = "http://intotheblu.nl:2222/CMD_FILE_MANAGER/images/";
     public static final int DEBTADD = 16;
     public static final int ALLREQUESTUPDATE = 17;
+    public static final int STARTGAME = 21;
 
     public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
@@ -451,6 +452,24 @@ public class OnJSONCompleted {
             }
             else if (type == GROUPADDUSER){
                 Groups.get_grouplist(GROUPLISTOPEN, ctext);
+            }
+            else if (type == STARTGAME) {
+                int game_id = json.getInt("id");
+                int veld0 = json.getInt("veld0");
+                int veld1 = json.getInt("veld1");
+                int veld2 = json.getInt("veld2");
+                int veld3 = json.getInt("veld3");
+                int veld4 = json.getInt("veld4");
+                int veld5 = json.getInt("veld5");
+                int veld6 = json.getInt("veld6");
+                int veld7 = json.getInt("veld7");
+                int veld8 = json.getInt("veld8");
+                String player1 = json.getString("player1");
+                String player2 = json.getString("player2");
+                double amount = json.getDouble("amount");
+                String turn = json.getString("turn");
+
+                TicTacToe.update(game_id, veld0, veld1, veld2, veld3, veld4, veld5, veld6, veld7, veld8, player1, player2, amount, turn);
             }
         }
         catch (JSONException e) {
