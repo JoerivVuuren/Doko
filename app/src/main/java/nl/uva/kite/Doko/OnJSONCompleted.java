@@ -2,14 +2,9 @@ package nl.uva.kite.Doko;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,9 +21,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Formatter;
-import java.util.Locale;
 
+import nl.uva.kite.Doko.Adapters.MemberListArrayAdapter;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 
 public class OnJSONCompleted {
@@ -240,9 +234,9 @@ public class OnJSONCompleted {
                 else
                     fab.show();
 
-                /* create ListView using MemberlistArrayAdapter */
+                /* create ListView using MemberListArrayAdapter */
                 ListView memberListView = (ListView)a.findViewById(R.id.groups_list);
-                MemberlistArrayAdapter listAdapter = new MemberlistArrayAdapter(ctext, Groups.current_group_members);
+                MemberListArrayAdapter listAdapter = new MemberListArrayAdapter(ctext, Groups.current_group_members);
                 memberListView.setAdapter(listAdapter);
             }
             else if(type == GROUPREQUESTUPDATE){

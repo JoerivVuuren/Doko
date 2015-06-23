@@ -1,5 +1,5 @@
 /* TUTORIAL USED: http://www.vogella.com/tutorials/AndroidListView/article.html#adapterown_example */
-package nl.uva.kite.Doko;
+package nl.uva.kite.Doko.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,12 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import nl.uva.kite.Doko.Groups;
+import nl.uva.kite.Doko.R;
 
-public class MemberlistArrayAdapter extends ArrayAdapter<String> {
+public class MemberListArrayAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final String[] names;
 
-    public MemberlistArrayAdapter(Context context, String[] names) {
+    public MemberListArrayAdapter(Context context, String[] names) {
         super(context, -1, names);
         this.context = context;
         this.names = names;
