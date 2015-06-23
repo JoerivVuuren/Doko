@@ -479,7 +479,7 @@ public class MainActivity extends AppCompatActivity {
                 String debitor = debitorurl.getText().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
-                if (debitor.length() < 1 || debt.length() < 1 || reason.length() < 1)
+                if (debitor.length() < 1 || debt.length() < 1 || reason.length() < 1 || Double.parseDouble(debt) < 0)
                     return;
 
                 try {
@@ -497,7 +497,8 @@ public class MainActivity extends AppCompatActivity {
                     //AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("message", "You have just received a debit request from " + Login.getLoginName() + " in group " + Groups.current_group_name + "!");
+                    jsonObject.put("message", "You have just received a debit request from " + Login.getLoginName() +
+                                   " for " + reason + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
                     jsonObject.put("class", "addDebit");
                     ParsePush push = new ParsePush();
@@ -505,8 +506,6 @@ public class MainActivity extends AppCompatActivity {
                     push.setQuery(pushQuery); // Set our Installation query
                     push.setData(jsonObject);
                     push.sendInBackground();
-
-
                 } catch (JSONException e) {
                     Log.e("", "failed JSON");
                 }
@@ -551,7 +550,7 @@ public class MainActivity extends AppCompatActivity {
                 String creditor = creditorurl.getText().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
-                if (creditor.length() < 1 || debt.length() < 1 || reason.length() < 1)
+                if (creditor.length() < 1 || debt.length() < 1 || reason.length() < 1 || Double.parseDouble(debt) < 0)
                     return;
 
                 try {
@@ -569,7 +568,8 @@ public class MainActivity extends AppCompatActivity {
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("message", "You have just received a credit request from " + Login.getLoginName() + " in group " + Groups.current_group_name + "!");
+                    jsonObject.put("message", "You have just received a credit request from " + Login.getLoginName() +
+                                   " for " + reason + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
                     jsonObject.put("class", "addCredit");
                     ParsePush push = new ParsePush();

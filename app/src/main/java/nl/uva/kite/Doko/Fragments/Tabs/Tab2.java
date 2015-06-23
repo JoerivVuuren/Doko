@@ -113,7 +113,7 @@ public class Tab2 extends Fragment {
                             public void onClick(DialogInterface dialog, int id) {
                                 addDebt(requests_debit_amount[position], requests_debit[position], Login.getLoginName(),
                                         requests_debit_reason[position], requests_debit_id[position], Groups.current_group_id,
-                                        view.getContext(), "credit");
+                                        view.getContext(), "debit");
                                 view.setVisibility(View.GONE);
                             }
                         })
@@ -148,7 +148,7 @@ public class Tab2 extends Fragment {
                             public void onClick(DialogInterface dialog, int id) {
                                 addDebt(requests_credit_amount[position], Login.getLoginName(), requests_credit[position],
                                         requests_credit_reason[position], requests_credit_id[position], Groups.current_group_id,
-                                        view.getContext(), "debit");
+                                        view.getContext(), "credit");
                                 view.setVisibility(View.GONE);
                             }
                         })
