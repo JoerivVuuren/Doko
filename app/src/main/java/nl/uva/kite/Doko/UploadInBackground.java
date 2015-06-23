@@ -35,7 +35,9 @@ public class UploadInBackground extends AsyncTask<String, String, String> {
 
     protected String doInBackground(String... args) {
         try {
-            sendPost("http://intotheblu.nl/image", args[0]);
+            sendPost("http://kite:GetMoney@www.intotheblu.nl/image/artin.jpg", args[0]);
+            Log.d("", execute().toString());
+
         }
         catch(Exception e) {
             Log.e("", e.toString());
@@ -77,7 +79,5 @@ public class UploadInBackground extends AsyncTask<String, String, String> {
         }
         httpclient.getConnectionManager().shutdown();
     }
-
-
 
 }
