@@ -216,7 +216,6 @@ public class OnJSONCompleted {
             else if (type == GROUPMEMBERSLIST) {
 
                 /* fill Groups.current_group_* with json response */
-                final String EURO = "\u20AC";
                 JSONArray jmembers = json.getJSONArray("users");
                 JSONArray jpics = json.getJSONArray("profile_picture");
                 JSONArray jdebt = json.getJSONArray("debts");
@@ -230,15 +229,7 @@ public class OnJSONCompleted {
                     Groups.current_group_members[i] = jmembers.getString(i);
                     Groups.current_group_pictures[i] = jpics.getString(i);
                     Groups.current_group_debts[i] = jdebt.getDouble(i);
-
-                    String debtPrefix = "";
-                    double debt = Groups.current_group_debts[i];
-                    if (debt < 0) {
-                        /* move minus sign in front of euro sign */
-                        debtPrefix = "- ";
-                        debt = -debt;
-                    }
-                    Groups.current_group_debts_euro[i] = String.format(debtPrefix + EURO + " %.2f", debt);
+                    Groups.current_group_debts_euro[i] = MainActivity.doubleToEuro(Groups.current_group_debts[i]);
                 }
 
                 /* hide + button if user is not admin */
@@ -318,74 +309,65 @@ public class OnJSONCompleted {
             }
             else if (type == ALLREQUESTUPDATE) {
                 JSONArray jrequests_game = json.getJSONArray("game_senders");
+                JSONArray jrequests_game_amount = json.getJSONArray("game_amount");
                 JSONArray jrequests_debit = json.getJSONArray("debit_senders");
                 JSONArray jrequests_debit_debt = json.getJSONArray("debit_debt");
+                JSONArray jrequests_debit_reason = json.getJSONArray("debit_reason");
                 JSONArray jrequests_credit = json.getJSONArray("credit_senders");
                 JSONArray jrequests_credit_debt = json.getJSONArray("credit_debt");
+                JSONArray jrequests_credit_reason = json.getJSONArray("credit_reason");
                 Log.e("", "came in request update");
 
-                String[] request_list_game = new String[jrequests_game.length()];
-                for (int i = 0; i < request_list_game.length; i++) {
-                    request_list_game[i] = jrequests_game.getString(i);
+                Tab2.requests_game = new String[jrequests_game.length()];
+                Tab2.requests_game_amount = new double[jrequests_game.length()];
+                for (int i = 0; i < jrequests_game.length(); i++) {
+                    Tab2.requests_game[i] = jrequests_game.getString(i);
+                    Tab2.requests_game_amount[i] = jrequests_game_amount.getDouble(i);
                     Log.e("", "i do have a game_request");
                 }
-                Tab2.requests_game = request_list_game;
 
-                String[] request_list_debit = new String[jrequests_debit.length()];
-                for (int i = 0; i < request_list_debit.length; i++) {
-                    request_list_debit[i] = jrequests_debit.getString(i);
+                Tab2.requests_debit = new String[jrequests_debit.length()];
+                Tab2.requests_debit_amount = new double[jrequests_debit.length()];
+                Tab2.requests_debit_reason = new String[jrequests_debit.length()];
+                for (int i = 0; i < jrequests_debit.length(); i++) {
+                    Tab2.requests_debit[i] = jrequests_debit.getString(i);
+                    Tab2.requests_debit_amount[i] = jrequests_debit_debt.getDouble(i);
+                    Tab2.requests_debit_reason[i] = jrequests_debit_reason.getString(i);
                     Log.e("", "i do have a debit_request");
                 }
 
-                Tab2.requests_debit = request_list_debit;
-
-                String[] request_list_credit = new String[jrequests_credit.length()];
-                for (int i = 0; i < request_list_credit.length; i++) {
-                    request_list_credit[i] = jrequests_debit.getString(i);
+                Tab2.requests_credit = new String[jrequests_credit.length()];
+                Tab2.requests_credit_amount = new double[jrequests_credit.length()];
+                Tab2.requests_credit_reason = new String[jrequests_credit.length()];
+                for (int i = 0; i < jrequests_credit.length(); i++) {
+                    Tab2.requests_credit[i] = jrequests_credit.getString(i);
+                    Tab2.requests_credit_amount[i] = jrequests_credit_debt.getDouble(i);
+                    Tab2.requests_credit_reason[i] = jrequests_credit_reason.getString(i);
                     Log.e("", "i do have a credit_request");
                 }
 
-                Tab2.requests_credit = request_list_credit;
-
                 /* create a ListView for game requests */
-                final ListView requestListView_game = (ListView)a.findViewById(R.id.game_request_list);
-                ArrayList<String> arrList_game = new ArrayList<String>();
-                arrList_game.addAll(Arrays.asList(request_list_game));
-                ArrayAdapter<String> listAdapter_game = new ArrayAdapter<String>(ctext, R.layout.simplerow,R.id.rowTextView, arrList_game);
+                ListView gameReqView = (ListView)a.findViewById(R.id.game_request_list);
+                RequestlistAdapter gameReqAdapter = new RequestlistAdapter(ctext, Tab2.requests_game);
+                gameReqAdapter.setType(gameReqAdapter.GAME);
+                gameReqView.setAdapter(gameReqAdapter);
+                RequestlistAdapter.setListViewHeightBasedOnChildren(gameReqView);
 
-                requestListView_game.setAdapter(listAdapter_game);
-
-                requestListView_game.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
-
-                        alertDialogBuilder.setTitle("Accept the game from " + ((TextView) view).getText() + "?");
-
-                        alertDialogBuilder
-                                .setCancelable(true)
-                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        Tab2.add(((TextView) view).getText().toString(), view.getContext());
-                                        view.setVisibility(View.GONE);
-                                    }
-                                })
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        Tab2.deny_request(((TextView) view).getText().toString(), view.getContext());
-                                        view.setVisibility(View.GONE);
-                                    }
-                                });
-
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-
-                        // show it
-                        alertDialog.show();
-                    }
-                });
+                /* create a ListView for credit requests */
+                ListView creditReqView = (ListView)a.findViewById(R.id.credit_request_list);
+                RequestlistAdapter creditReqAdapter = new RequestlistAdapter(ctext, Tab2.requests_credit);
+                creditReqAdapter.setType(creditReqAdapter.CREDIT);
+                creditReqView.setAdapter(creditReqAdapter);
+                RequestlistAdapter.setListViewHeightBasedOnChildren(creditReqView);
 
                 /* create a ListView for debit requests */
+                ListView debitReqView = (ListView)a.findViewById(R.id.debit_request_list);
+                RequestlistAdapter debitReqAdapter = new RequestlistAdapter(ctext, Tab2.requests_debit);
+                debitReqAdapter.setType(debitReqAdapter.DEBIT);
+                debitReqView.setAdapter(debitReqAdapter);
+                RequestlistAdapter.setListViewHeightBasedOnChildren(debitReqView);
+
+                /* create a ListView for debit requests
                 //Activity ab = (Activity)ctext;
                 final ListView requestListView_debit = (ListView)a.findViewById(R.id.debit_request_list);
                 ArrayList<String> arrList_debit = new ArrayList<String>();
@@ -425,7 +407,7 @@ public class OnJSONCompleted {
                     }
                 });
 
-                /* create a ListView for credit requests */
+                /* create a ListView for credit requests
                 //Activity ab = (Activity)ctext;
                 final ListView requestListView_credit = (ListView)a.findViewById(R.id.credit_request_list);
                 ArrayList<String> arrList_credit = new ArrayList<String>();
@@ -462,10 +444,13 @@ public class OnJSONCompleted {
                         // show it
                         alertDialog.show();
                     }
-                });
+                });*/
             }
             else if (type == FRIENDADD){
                 Friends.get_friendlist(FRIENDLISTUPDATE, ctext);
+            }
+            else if (type == GROUPADDUSER){
+                Groups.get_grouplist(GROUPLISTOPEN, ctext);
             }
         }
         catch (JSONException e) {

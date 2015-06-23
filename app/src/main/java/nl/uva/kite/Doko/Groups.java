@@ -103,7 +103,7 @@ public class Groups extends Fragment {
         params.add(new BasicNameValuePair("group_id", group_id));
         params.add(new BasicNameValuePair("adduser", username));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.GROUPADDUSER);
-        jr.execute("http://intotheblu.nl/group_adduser.php");
+        jr.execute("http://intotheblu.nl/group_request_accept.php");
     }
 
     public static void add_request(String friendName, int groupid, String group_name, Context ctext) {

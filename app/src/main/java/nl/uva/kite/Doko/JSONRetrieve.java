@@ -56,7 +56,7 @@ public class JSONRetrieve extends AsyncTask<String,String,String> {
         pDialog.dismiss();
 
         try {
-            if (json.getString("message") != null)
+            if (json.has("message") && json.getString("message") != null)
                 resultMessage = json.getString("message");
         }
         catch (JSONException e) {

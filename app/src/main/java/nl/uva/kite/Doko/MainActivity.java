@@ -251,6 +251,17 @@ public class MainActivity extends AppCompatActivity {
         .replace(R.id.contentFragment, contacts, null).addToBackStack(null).commit();
     } */
 
+    /* places EURO sign in front of double */
+    public static String doubleToEuro(double d) {
+        final String EURO = "\u20AC";
+        String prefix = "";
+        if (d < 0) {
+            /* move minus sign in front of euro sign */
+            prefix = "- ";
+            d = -d;
+        }
+        return String.format(prefix + EURO + " %.2f", d);
+    }
 
     /* opens the tic tac toe game */
     public void OpenTicTacToe(View view) {
