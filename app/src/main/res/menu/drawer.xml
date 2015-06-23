@@ -28,16 +28,16 @@
             <!--android:title="Logout"/>-->
     </group>
 
-    <item
-        android:id="@+id/navigation_subheader"
-        android:title="Subheader">
-        <menu>
-            <item
-                android:id="@+id/navigation_sub_item_1"
-                android:title="Send Feedback"/>
-            <item
-                android:id="@+id/navigation_sub_item_2"
-                android:title="Help"/>
-        </menu>
-    </item>
+    <!--<item-->
+        <!--android:id="@+id/navigation_subheader"-->
+        <!--android:title="Subheader">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/navigation_sub_item_1"-->
+                <!--android:title="Send Feedback"/>-->
+            <!--<item-->
+                <!--android:id="@+id/navigation_sub_item_2"-->
+                <!--android:title="Help"/>-->
+        <!--</menu>-->
+    <!--</item>-->
 </menu>

@@ -2,7 +2,11 @@ package nl.uva.kite.Doko;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.os.Environment;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
@@ -23,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.support.v4.app.Fragment;
@@ -33,12 +38,39 @@ import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+import com.parse.entity.mime.MultipartEntity;
+import com.parse.entity.mime.content.ContentBody;
+import com.parse.entity.mime.content.FileBody;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.Member;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.SocketException;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
     ActionBarDrawerToggle mDrawerToggle;
     Toolbar mToolbar;
+    private Uri fileUri;
+    private int PICK_IMAGE_REQUEST = 1;
 
 
     @Override
@@ -442,7 +476,7 @@ public class MainActivity extends AppCompatActivity {
                     String login = Login.getLoginName();
                     String password = Login.getPassword();
                     List<NameValuePair> params = new ArrayList<>();
-                    params.add(new BasicNameValuePair("username",login ));
+                    params.add(new BasicNameValuePair("username", login));
                     params.add(new BasicNameValuePair("password", password));
                     params.add(new BasicNameValuePair("friend", debitor));
                     params.add(new BasicNameValuePair("debt", debt));
@@ -466,11 +500,14 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     Log.e("", "failed JSON");
                 }
-            }                     });
+            }
+        });
         alert.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.cancel();    }     });
+                        dialog.cancel();
+                    }
+                });
         alert.show();
     }
 
@@ -511,7 +548,7 @@ public class MainActivity extends AppCompatActivity {
                     String login = Login.getLoginName();
                     String password = Login.getPassword();
                     List<NameValuePair> params = new ArrayList<>();
-                    params.add(new BasicNameValuePair("username",login ));
+                    params.add(new BasicNameValuePair("username", login));
                     params.add(new BasicNameValuePair("password", password));
                     params.add(new BasicNameValuePair("friend", creditor));
                     params.add(new BasicNameValuePair("debt", debt));
@@ -535,11 +572,14 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     Log.e("", "failed JSON");
                 }
-            }                     });
+            }
+        });
         alert.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.cancel();    }     });
+                        dialog.cancel();
+                    }
+                });
         alert.show();
     }
 
@@ -631,7 +671,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void uploadImage() {
-        Log.e("", "clicked");
+    public void onClickChooseImage(View view) {
+        Intent intent = new Intent(this, UploadImage.class);
+        startActivity(intent);
     }
+
 }

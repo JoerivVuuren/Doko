@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:orientation="vertical"
-    android:background="@color/ColorPrimaryDark">
+    android:background="@drawable/bg_drawer">
 
     <TextView
         style="@style/TextAppearance.AppCompat.Subhead"

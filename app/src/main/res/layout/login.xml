@@ -4,26 +4,64 @@
     android:layout_height="match_parent"
     >
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@color/ColorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to Doko!"
+            android:id="@+id/textView7"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="#ffffffff"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please login or register to continue.."
+            android:id="@+id/textView8"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_below="@+id/textView7"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/ColorPrimaryDark" />
+    </RelativeLayout>
+
     <Button
         android:id="@+id/register"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_add_credit"
+        android:text="Register"
         android:layout_alignLeft="@+id/login"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/login"
-        android:layout_marginBottom="25dp"
-        android:text="Register" />
-
+        android:layout_marginBottom="25dp"/>
     <Button
         android:id="@+id/login"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_add_credit"
         android:text="Login"
         android:layout_below="@+id/password"
         android:layout_alignLeft="@+id/password"
         android:layout_alignStart="@+id/password"
         android:layout_alignRight="@+id/password"
-        android:layout_alignEnd="@+id/password" />
+        android:layout_alignEnd="@+id/password"
+        android:layout_marginTop="5dp" />
+
 
     <EditText
         android:id="@+id/password"
@@ -35,23 +73,10 @@
         android:layout_centerHorizontal="true">
     </EditText>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
-        android:gravity="center"
-        android:text="Login to Doko"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -60,8 +85,8 @@
         android:layout_height="wrap_content"
         android:text="Password"
         android:layout_below="@+id/username"
-        android:layout_toLeftOf="@+id/textView2"
-        android:layout_toStartOf="@+id/textView2" />
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignStart="@+id/textView1" />
 
     <EditText
         android:id="@+id/username"
@@ -79,10 +104,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
-        android:layout_below="@+id/imageView1"
-        android:layout_alignRight="@+id/TextView01"
-        android:layout_alignEnd="@+id/TextView01"
-        android:layout_marginTop="127dp" />
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/autoLoginCheckBox"
+        android:layout_toStartOf="@+id/autoLoginCheckBox" />
 
     <CheckBox
         android:layout_width="wrap_content"
