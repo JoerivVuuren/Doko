@@ -112,9 +112,4 @@ public class UploadImage extends ActionBarActivity {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
-
-
-
-
-
 }
