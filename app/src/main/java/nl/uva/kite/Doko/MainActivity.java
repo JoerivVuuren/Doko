@@ -418,7 +418,7 @@ public class MainActivity extends AppCompatActivity {
                             jr.execute("http://intotheblu.nl/game_request_add.php");
 
                             JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("message", "You just reveived a new Game request from " + installation.get("username") + "!");
+                            jsonObject.put("message", "You just received a new Game request from " + installation.get("username") + "!");
                             jsonObject.put("friendName", installation.get("username"));
                             jsonObject.put("class", "gamerequest");
                             ParsePush push = new ParsePush();
@@ -446,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText reasonurl = new EditText(this);
         debitorurl.setHint("The name of your debitor");
         debturl.setHint("The amount of debt");
-        reasonurl.setHint("The reason of this credit");
+        reasonurl.setHint("The reason for this credit");
 
         alertLayout.addView(debitorurl);
         alertLayout.addView(debturl);
@@ -468,7 +468,6 @@ public class MainActivity extends AppCompatActivity {
                 String debitor = debitorurl.getText().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
-                int groupID = 3;
                 if (debitor.length() < 1 || debt.length() < 1 || reason.length() < 1)
                     return;
 
@@ -483,13 +482,13 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
                     params.add(new BasicNameValuePair("origin", reason));
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
-                    jr.execute("http://intotheblu.nl/credit_request_add.php");
+                    jr.execute("http://intotheblu.nl/debit_request_add.php");
                     //AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("message", "You have just received debt from " + Login.getLoginName() + "!");
+                    jsonObject.put("message", "You have just received a debit request from " + Login.getLoginName() + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
-                    jsonObject.put("class", "addCredit");
+                    jsonObject.put("class", "addDebit");
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", debitor);
                     push.setQuery(pushQuery); // Set our Installation query
@@ -519,7 +518,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText reasonurl = new EditText(this);
         creditorurl.setHint("The name of the creditor");
         debturl.setHint("The amount of debt");
-        reasonurl.setHint("The reason of this debit");
+        reasonurl.setHint("The reason for this debit");
 
         alertLayout.addView(creditorurl);
         alertLayout.addView(debturl);
@@ -555,13 +554,13 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
                     params.add(new BasicNameValuePair("origin", reason));
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
-                    jr.execute("http://intotheblu.nl/debit_request_add.php");
+                    jr.execute("http://intotheblu.nl/credit_request_add.php");
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("message", "You have just received credit from " + Login.getLoginName() + "!");
+                    jsonObject.put("message", "You have just received a credit request from " + Login.getLoginName() + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
-                    jsonObject.put("class", "addDebit");
+                    jsonObject.put("class", "addCredit");
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", creditor);
                     push.setQuery(pushQuery); // Set our Installation query
@@ -581,23 +580,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         alert.show();
-    }
-
-    public static void AddDebt(String debt, String creditor, String debitor, String reason, int groupID, Context ctext, String debtType) {
-        if (!Login.isLoggedIn() || creditor.equals(debitor))
-            return;
-
-        List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("username", Login.getLoginName()));
-        params.add(new BasicNameValuePair("password", Login.getPassword()));
-        params.add(new BasicNameValuePair("creditor", creditor));
-        params.add(new BasicNameValuePair("debitor", debitor));
-        params.add(new BasicNameValuePair("group_id", "" + groupID));
-        params.add(new BasicNameValuePair("origin", reason));
-        params.add(new BasicNameValuePair("debt", debt));
-        params.add(new BasicNameValuePair("type", debtType));
-        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.DEBTADD);
-        jr.execute("http://intotheblu.nl/debt_add.php");
     }
 
     public void RegisterPush(View View) {

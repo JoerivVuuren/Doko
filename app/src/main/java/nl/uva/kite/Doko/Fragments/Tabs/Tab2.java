@@ -31,6 +31,7 @@ import java.util.List;
 import nl.uva.kite.Doko.Groups;
 import nl.uva.kite.Doko.JSONRetrieve;
 import nl.uva.kite.Doko.Login;
+import nl.uva.kite.Doko.MainActivity;
 import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 
@@ -96,6 +97,76 @@ public class Tab2 extends Fragment {
             }
         });
 
+        final ListView debitReq = (ListView)v.findViewById(R.id.debit_request_list);
+        debitReq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            // do this when an item of the list is clicked
+            public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                final String selectedFromList = (debitReq.getItemAtPosition(position).toString());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+
+                alertDialogBuilder.setTitle("Accept debit from " + selectedFromList + "?");
+
+                alertDialogBuilder
+                        .setCancelable(true)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                addDebt(requests_debit_amount[position], requests_debit[position], Login.getLoginName(),
+                                        requests_debit_reason[position], requests_debit_id[position], Groups.current_group_id,
+                                        view.getContext(), "credit");
+                                view.setVisibility(View.GONE);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                deleteDebtRequest(requests_debit_id[position], "credit", view.getContext());
+                                view.setVisibility(View.GONE);
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+            }
+        });
+
+        final ListView creditReq = (ListView)v.findViewById(R.id.credit_request_list);
+        creditReq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            // do this when an item of the list is clicked
+            public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                final String selectedFromList = (creditReq.getItemAtPosition(position).toString());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+
+                alertDialogBuilder.setTitle("Accept credit from " + selectedFromList + "?");
+
+                alertDialogBuilder
+                        .setCancelable(true)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                addDebt(requests_credit_amount[position], Login.getLoginName(), requests_credit[position],
+                                        requests_credit_reason[position], requests_credit_id[position], Groups.current_group_id,
+                                        view.getContext(), "debit");
+                                view.setVisibility(View.GONE);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                deleteDebtRequest(requests_credit_id[position], "debit", view.getContext());
+                                view.setVisibility(View.GONE);
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+            }
+        });
+
         return v;
     }
 
@@ -134,5 +205,33 @@ public class Tab2 extends Fragment {
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.NONE);
         jr.execute("http://intotheblu.nl/friend_request_delete.php");*/
         Log.e("", "delete request from DB here");
+    }
+
+    public void addDebt(double debt, String creditor, String debitor, String reason, int requestID, int groupID, Context ctext, String debtType) {
+        if (!Login.isLoggedIn() || creditor.equals(debitor))
+            return;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("creditor", creditor));
+        params.add(new BasicNameValuePair("debitor", debitor));
+        params.add(new BasicNameValuePair("request_id", "" + requestID));
+        params.add(new BasicNameValuePair("group_id", "" + groupID));
+        params.add(new BasicNameValuePair("origin", reason));
+        params.add(new BasicNameValuePair("debt", "" + debt));
+        params.add(new BasicNameValuePair("type", debtType));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.DEBTADD);
+        jr.execute("http://intotheblu.nl/debt_add.php");
+    }
+
+    public void deleteDebtRequest(int requestID, String debtType, Context ctext){
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("request_id", "" + requestID));
+        params.add(new BasicNameValuePair("type", debtType));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.NONE);
+        jr.execute("http://intotheblu.nl/debt_request_delete.php");
     }
 }
