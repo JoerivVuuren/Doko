@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="nl.uva.kite.Doko.Settings">
 
@@ -8,6 +8,5 @@
         android:text="Change Profile Picture"
         android:id="@+id/change_pic_button"
         android:layout_gravity="center"
-        android:onClick="onClickUploadImage" />
-
-</FrameLayout>
+        android:onClick="onClickChooseImage" />
+</RelativeLayout>
