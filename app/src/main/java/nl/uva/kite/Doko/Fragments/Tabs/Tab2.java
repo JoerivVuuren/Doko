@@ -36,12 +36,15 @@ import nl.uva.kite.Doko.R;
 
 public class Tab2 extends Fragment {
     public static String[] requests_game;
+    public static int[] requests_game_id;
     public static double[] requests_game_amount;
     public static String[] requests_game_name;
     public static String[] requests_debit;
+    public static int[] requests_debit_id;
     public static double[] requests_debit_amount;
     public static String[] requests_debit_reason;
     public static String[] requests_credit;
+    public static int[] requests_credit_id;
     public static double[] requests_credit_amount;
     public static String[] requests_credit_reason;
 
@@ -64,7 +67,7 @@ public class Tab2 extends Fragment {
         gameReq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             // do this when an item of the list is clicked
-            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
                 final String selectedFromList = (gameReq.getItemAtPosition(position).toString());
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
 
@@ -74,13 +77,13 @@ public class Tab2 extends Fragment {
                         .setCancelable(true)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Tab2.add(selectedFromList, view.getContext());
+                                acceptGame(requests_game_id[position], view.getContext());
                                 view.setVisibility(View.GONE);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Tab2.deny_request(selectedFromList, view.getContext());
+                                denyGame(requests_game_id[position], view.getContext());
                                 view.setVisibility(View.GONE);
                             }
                         });
@@ -110,7 +113,7 @@ public class Tab2 extends Fragment {
     }
 
     /* hoi joeri */
-    public static void add(String friendName, Context ctext) {
+    public static void acceptGame(int gameID, Context ctext) {
         /*if (!Login.isLoggedIn() || friendName.equals(Login.getLoginName()))
             return;
 
@@ -120,10 +123,10 @@ public class Tab2 extends Fragment {
         params.add(new BasicNameValuePair("friend", friendName));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.FRIENDADD);
         jr.execute("http://intotheblu.nl/friend_request_accept.php");*/
-        Log.e("", "add request to DB here");
+        Log.e("", "remove gameID request from DB and start game...");
     }
 
-    public static void deny_request(String friendName, Context ctext){
+    public static void denyGame(int gameID, Context ctext){
         /*List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));

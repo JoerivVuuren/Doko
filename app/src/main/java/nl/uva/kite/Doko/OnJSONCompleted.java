@@ -309,42 +309,48 @@ public class OnJSONCompleted {
                 //doeiets
             }
             else if (type == ALLREQUESTUPDATE) {
-                JSONArray jrequests_game = json.getJSONArray("game_senders");
+                JSONArray jrequests_game = json.getJSONArray("game_sender");
+                JSONArray jrequests_game_id = json.getJSONArray("game_id");
                 JSONArray jrequests_game_amount = json.getJSONArray("game_amount");
-                JSONArray jrequests_debit = json.getJSONArray("debit_senders");
+                JSONArray jrequests_debit = json.getJSONArray("debit_sender");
+                JSONArray jrequests_debit_id = json.getJSONArray("debit_id");
                 JSONArray jrequests_debit_debt = json.getJSONArray("debit_debt");
                 JSONArray jrequests_debit_reason = json.getJSONArray("debit_reason");
-                JSONArray jrequests_credit = json.getJSONArray("credit_senders");
+                JSONArray jrequests_credit = json.getJSONArray("credit_sender");
+                JSONArray jrequests_credit_id = json.getJSONArray("credit_id");
                 JSONArray jrequests_credit_debt = json.getJSONArray("credit_debt");
                 JSONArray jrequests_credit_reason = json.getJSONArray("credit_reason");
                 Log.e("", "came in request update");
 
                 Tab2.requests_game = new String[jrequests_game.length()];
+                Tab2.requests_game_id = new int[jrequests_game.length()];
                 Tab2.requests_game_amount = new double[jrequests_game.length()];
                 for (int i = 0; i < jrequests_game.length(); i++) {
                     Tab2.requests_game[i] = jrequests_game.getString(i);
+                    Tab2.requests_game_id[i] = jrequests_game_id.getInt(i);
                     Tab2.requests_game_amount[i] = jrequests_game_amount.getDouble(i);
-                    Log.e("", "i do have a game_request");
                 }
 
                 Tab2.requests_debit = new String[jrequests_debit.length()];
+                Tab2.requests_debit_id = new int[jrequests_debit.length()];
                 Tab2.requests_debit_amount = new double[jrequests_debit.length()];
                 Tab2.requests_debit_reason = new String[jrequests_debit.length()];
                 for (int i = 0; i < jrequests_debit.length(); i++) {
                     Tab2.requests_debit[i] = jrequests_debit.getString(i);
+                    Tab2.requests_debit_id[i] = jrequests_debit_id.getInt(i);
                     Tab2.requests_debit_amount[i] = jrequests_debit_debt.getDouble(i);
                     Tab2.requests_debit_reason[i] = jrequests_debit_reason.getString(i);
-                    Log.e("", "i do have a debit_request");
                 }
 
                 Tab2.requests_credit = new String[jrequests_credit.length()];
+                Tab2.requests_credit_id = new int[jrequests_credit.length()];
                 Tab2.requests_credit_amount = new double[jrequests_credit.length()];
                 Tab2.requests_credit_reason = new String[jrequests_credit.length()];
                 for (int i = 0; i < jrequests_credit.length(); i++) {
                     Tab2.requests_credit[i] = jrequests_credit.getString(i);
+                    Tab2.requests_credit_id[i] = jrequests_credit_id.getInt(i);
                     Tab2.requests_credit_amount[i] = jrequests_credit_debt.getDouble(i);
                     Tab2.requests_credit_reason[i] = jrequests_credit_reason.getString(i);
-                    Log.e("", "i do have a credit_request");
                 }
 
                 /* create a ListView for game requests */
