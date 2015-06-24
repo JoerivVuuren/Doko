@@ -75,6 +75,7 @@ public class Groups extends Fragment {
             /* get friend list from DB and update list of friends in Fragment */
             Groups.get_group_request_list(OnJSONCompleted.GROUPREQUESTUPDATE, this.getActivity());
             Groups.get_grouplist(OnJSONCompleted.GROUPLISTOPEN, this.getActivity());
+            Groups.get_groupmembers(this.getActivity());
         }
 
         return layout;

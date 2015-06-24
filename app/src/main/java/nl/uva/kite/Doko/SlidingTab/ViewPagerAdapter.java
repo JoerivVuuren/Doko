@@ -4,6 +4,7 @@ package nl.uva.kite.Doko.SlidingTab;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
@@ -29,6 +30,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     //This method return the fragment for the every position in the View Pager
     @Override
     public Fragment getItem(int position) {
+        Log.e("", "got item at pos=" + position);
 
         if(position == 0) // if the position is 0 we are returning the First tab
         {

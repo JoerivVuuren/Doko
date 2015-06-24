@@ -26,7 +26,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
-
+/*
 public class UploadInBackground extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute() {
@@ -80,4 +80,4 @@ public class UploadInBackground extends AsyncTask<String, String, String> {
         httpclient.getConnectionManager().shutdown();
     }
 
-}
+}*/

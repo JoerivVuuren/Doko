@@ -246,15 +246,19 @@ public class OnJSONCompleted {
 
                 /* hide + button if user is not admin */
                 FloatingActionButton fab = (FloatingActionButton)a.findViewById(R.id.fabulous_fab);
-                if (!Groups.current_group_admin_name.equals(Login.getLoginName()))
-                    fab.hide();
-                else
-                    fab.show();
+                if (fab != null) {
+                    if (!Groups.current_group_admin_name.equals(Login.getLoginName()))
+                        fab.hide();
+                    else
+                        fab.show();
+                }
 
                 /* create ListView using MemberListArrayAdapter */
                 ListView memberListView = (ListView)a.findViewById(R.id.groups_list);
-                MemberListArrayAdapter listAdapter = new MemberListArrayAdapter(ctext, Groups.current_group_members);
-                memberListView.setAdapter(listAdapter);
+                if (memberListView != null) {
+                    MemberListArrayAdapter listAdapter = new MemberListArrayAdapter(ctext, Groups.current_group_members);
+                    memberListView.setAdapter(listAdapter);
+                }
             }
             else if(type == GROUPREQUESTUPDATE){
                 /* fill Friends.requests with json response */

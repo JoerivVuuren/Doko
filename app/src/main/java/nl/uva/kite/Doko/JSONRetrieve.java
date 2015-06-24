@@ -26,7 +26,7 @@ public class JSONRetrieve extends AsyncTask<String,String,String> {
     Context ctext;
     String resultMessage = "";
 
-    private ProgressDialog pDialog;
+    //private ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
     JSONObject json;
     List<NameValuePair> params;
@@ -40,11 +40,11 @@ public class JSONRetrieve extends AsyncTask<String,String,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        pDialog = new ProgressDialog(ctext);
+        /*pDialog = new ProgressDialog(ctext);
         pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(true);
-        pDialog.show();
+        pDialog.show();*/
     }
 
     @Override
@@ -53,10 +53,10 @@ public class JSONRetrieve extends AsyncTask<String,String,String> {
         return null;
     }
     protected void onPostExecute(String ab){
-        pDialog.dismiss();
+        //pDialog.dismiss();
 
         try {
-            if (json.has("message") && json.getString("message") != null)
+            if (json.has("message") && !json.isNull("message"))
                 resultMessage = json.getString("message");
         }
         catch (JSONException e) {

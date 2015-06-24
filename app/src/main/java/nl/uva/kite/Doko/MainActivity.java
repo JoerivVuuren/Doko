@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
                             jr.execute("http://intotheblu.nl/friend_request_add.php");
 
                             JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("message", "You just reveived a new Friend request from " + installation.get("username") + "!");
+                            jsonObject.put("message", "You just received a new Friend request from " + installation.get("username") + "!");
                             jsonObject.put("friendName", installation.get("username"));
                             jsonObject.put("class", "friendrequest");
                             ParsePush push = new ParsePush();
