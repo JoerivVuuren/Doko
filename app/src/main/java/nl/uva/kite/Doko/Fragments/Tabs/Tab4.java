@@ -30,7 +30,7 @@ import nl.uva.kite.Doko.TicTacToe;
 public class Tab4 extends Fragment {
     public static String[] game_opponents;
     public static double[] game_wagers;
-    public static int[] game_id;
+    public static String[] game_id;
     
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,14 +71,14 @@ public class Tab4 extends Fragment {
         jr.execute("http://intotheblu.nl/game_list.php");
     }
 
-    public static void get_game_data(int type, int game_id, Context ctext) {
+    public static void get_game_data(int type, String game_id, Context ctext) {
         if (!Login.isLoggedIn())
             return;
 
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));
-        params.add(new BasicNameValuePair("game_id", "" + game_id));
+        params.add(new BasicNameValuePair("game_id", game_id));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, type);
         jr.execute("http://intotheblu.nl/game_get_state.php");
     }

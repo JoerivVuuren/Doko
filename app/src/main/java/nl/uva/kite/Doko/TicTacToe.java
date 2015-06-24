@@ -57,7 +57,7 @@ public class TicTacToe extends Activity implements OnClickListener {
             //getUpdate(getIntent().getStringExtra("game_id") , this);
         }
         else if(classtype.equals("UPDATEGAME")) {
-            String[] fields = null;
+            String[] fields = new String[9];
             fields[0] = getIntent().getStringExtra("veld0");
             fields[1] = getIntent().getStringExtra("veld1");
             fields[2] = getIntent().getStringExtra("veld2");
@@ -92,10 +92,11 @@ public class TicTacToe extends Activity implements OnClickListener {
     }
 
     private void buttonClicked(View v) {
-        if(!Login.getLoginName().equals(current_turn)) {
+        Log.e("", "button clicked by |" + current_turn + "|");
+        if(!current_turn.contains(Login.getLoginName())) {
             return;
         }
-        Log.e("", "button clicked");
+
         Button b = (Button) v;
 
         if (round) {
@@ -181,25 +182,33 @@ public class TicTacToe extends Activity implements OnClickListener {
         jr.execute("http://intotheblu.nl/update_game.php");*/
     }
 
-    public static void getUpdate(String game_id, Context ctext) {
+/*    public static void getUpdate(String game_id, Context ctext) {
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));
         params.add(new BasicNameValuePair("game_id", game_id));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.UPDATEGAME);
         jr.execute("http://intotheblu.nl/game_get_state.php");
-    }
+    }*/
 
     public static void update(String game_id, String[] fields, String turn) {
         Log.e("", "i updated");
-        for(int i = 0; i < fields.length; i ++) {
-            if(fields[i].equals("1")) {
+        for(int i = 0; i < 9; i ++) {
+            Log.e("", "fields is |" + fields[i] + "|");
+            if(fields[i].contains("1")) {
                 array_buttons[i].setText("X");
+                array_buttons[i].setClickable(false);
+                array_buttons[i].setBackgroundColor(Color.LTGRAY);
                 Log.e("", "i even tried to set X");
             }
-            else if(fields[i].equals("2")) {
+            else if(fields[i].contains("2")) {
                 array_buttons[i].setText("O");
+                array_buttons[i].setClickable(false);
+                array_buttons[i].setBackgroundColor(Color.LTGRAY);
                 Log.e("", "i even tried to set O");
+            }
+            else {
+                array_buttons[i].setClickable(true);
             }
         }
         current_turn = turn;
