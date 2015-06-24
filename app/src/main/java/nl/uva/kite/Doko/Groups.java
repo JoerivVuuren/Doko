@@ -75,7 +75,6 @@ public class Groups extends Fragment {
             /* get friend list from DB and update list of friends in Fragment */
             Groups.get_group_request_list(OnJSONCompleted.GROUPREQUESTUPDATE, this.getActivity());
             Groups.get_grouplist(OnJSONCompleted.GROUPLISTOPEN, this.getActivity());
-            Groups.get_groupmembers(this.getActivity());
         }
 
         return layout;
@@ -142,9 +141,9 @@ public class Groups extends Fragment {
 
     /* retrieves list of members of a group */
     public static void get_groupmembers(Context context) {
-        if(!Login.isLoggedIn() || Groups.current_group_id == -1) {
+        if (!Login.isLoggedIn() || Groups.current_group_id == -1)
             return;
-        }
+
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));

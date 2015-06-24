@@ -83,6 +83,8 @@ public class Tab3 extends Fragment {
             }
         });
 
+        /* update group member list */
+        Groups.get_groupmembers(this.getActivity());
 
         return v;
     }
