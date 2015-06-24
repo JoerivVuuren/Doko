@@ -404,6 +404,8 @@ public class MainActivity extends AppCompatActivity {
                         jsonObject.put("message", "You just received a new Game request from " + installation.get("username") + "!");
                         jsonObject.put("friendName", installation.get("username"));
                         jsonObject.put("class", "gamerequest");
+                        jsonObject.put("groupID", Integer.toString(Groups.current_group_id));
+                        jsonObject.put("groupName", Groups.current_group_name);
                         ParsePush push = new ParsePush();
                         pushQuery.whereEqualTo("username", friendName);
                         push.setQuery(pushQuery); // Set our Installation query

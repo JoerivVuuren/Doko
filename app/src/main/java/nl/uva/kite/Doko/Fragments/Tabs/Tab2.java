@@ -184,28 +184,14 @@ public class Tab2 extends Fragment {
         jr.execute("http://intotheblu.nl/all_request_list.php");
     }
 
-    /* hoi joeri */
-    public static void acceptGame(int gameID, Context ctext) {
-        /*if (!Login.isLoggedIn() || friendName.equals(Login.getLoginName()))
-            return;
-
+    public static void denyGame(int gameID, Context ctext){
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));
-        params.add(new BasicNameValuePair("friend", friendName));
-        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.FRIENDADD);
-        jr.execute("http://intotheblu.nl/friend_request_accept.php");*/
-        Log.e("", "remove gameID request from DB and start game...");
-    }
-
-    public static void denyGame(int gameID, Context ctext){
-        /*List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("username", Login.getLoginName()));
-        params.add(new BasicNameValuePair("password", Login.getPassword()));
-        params.add(new BasicNameValuePair("friend", friendName));
+        params.add(new BasicNameValuePair("request_id", "" + gameID));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.NONE);
-        jr.execute("http://intotheblu.nl/friend_request_delete.php");*/
-        Log.e("", "delete request from DB here");
+        jr.execute("http://intotheblu.nl/game_request_delete.php");
+        Log.e("", "delete game request from DB");
     }
 
     public void addDebt(double debt, String creditor, String debitor, String reason, int requestID, int groupID, Context ctext, String debtType) {
