@@ -488,6 +488,8 @@ public class OnJSONCompleted {
                 tryIntent.putExtra("veld6", json.getString("veld6"));
                 tryIntent.putExtra("veld7", json.getString("veld7"));
                 tryIntent.putExtra("veld8", json.getString("veld8"));
+                tryIntent.putExtra("player1", json.getString("player1"));
+                tryIntent.putExtra("player2", json.getString("player2"));
                 tryIntent.putExtra("turn", json.getString("turn"));
 
                 a.startActivity(tryIntent);
