@@ -5,36 +5,55 @@
     android:orientation="horizontal"
     android:padding="5dip" >
 
-    <!-- Name-->
-    <TextView
-        android:id="@+id/request_list_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="First Lastname"
-        android:textColor="#040404"
-        android:typeface="sans"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_alignTop="@+id/request_list_amount"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="27dp"
-        android:layout_marginEnd="27dp" />
+    <!-- Name--> <LinearLayout android:id="@+id/thumbnail"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="3dip"
+    android:layout_alignParentLeft="true"
+    android:layout_marginRight="10dip">
 
-    <TextView
-        android:id="@+id/request_list_reason"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reason"
-        android:textColor="#040404"
-        android:typeface="sans"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/group_list_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/aka"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/request_list_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Lastname"
+            android:textColor="#040404"
+            android:typeface="sans"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:layout_toEndOf="@+id/thumbnail" />
+
+        <TextView
+            android:id="@+id/request_list_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reason"
+            android:textColor="#040404"
+            android:typeface="sans"
+            android:textSize="10sp"
+            android:layout_below="@+id/request_list_name"
+            android:layout_toRightOf="@+id/thumbnail" />
+    </LinearLayout>
+
+</LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,12 +61,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="€ 0,00"
         android:id="@+id/request_list_amount"
-        android:layout_marginRight="37dp"
-        android:layout_marginEnd="37dp"
         android:textColor="@color/colorPositive"
-        android:layout_alignBottom="@+id/request_list_reason"
-        android:layout_toLeftOf="@+id/request_list_name"
-        android:layout_toStartOf="@+id/request_list_name" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="26dp"
+        android:layout_marginEnd="26dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
 

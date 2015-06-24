@@ -109,6 +109,7 @@ public class OnJSONCompleted {
 
                 /* create a ListView for friends */
                 final ListView friendListView = (ListView)a.findViewById(R.id.friends_list);
+                friendListView.setEmptyView((a.findViewById(R.id.noFriends)));
                 ArrayList<String> arrList = new ArrayList<String>();
                 arrList.addAll(Arrays.asList(friend_list));
                 ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.member_list_row,R.id.member_group_list_name, arrList);
@@ -198,7 +199,7 @@ public class OnJSONCompleted {
                     ArrayList<String> arrList = new ArrayList<String>();
                     arrList.addAll(Arrays.asList(group_names));
 
-                    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
+                    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.group_list_row, R.id.group_row_name, arrList);
 
                     groupsListView.setAdapter(listAdapter);
 
