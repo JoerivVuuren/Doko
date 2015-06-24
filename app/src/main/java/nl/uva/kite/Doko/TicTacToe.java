@@ -111,6 +111,23 @@ public class TicTacToe extends Activity implements OnClickListener {
 
         b.setClickable(false);
         b.setBackgroundColor(Color.LTGRAY);
+        if(current_turn == player1){
+            current_turn = player2;
+
+        }else{
+            current_turn = player1;
+        }
+        int[] button_int_val = new int[9];
+        for(int i = 0; i < 9; i ++) {
+            if(array_buttons[i].getText().equals("X")) {
+                button_int_val[i] = 2;
+            } else if(array_buttons[i].getText().equals("X")) {
+                button_int_val[i] = 1;
+            } else {
+                button_int_val[i] = 0;
+            }
+        }
+        setGameData(current_game_id, button_int_val,current_turn, v.getContext());
         total_round++;
         round = !round;
         hero();
@@ -173,17 +190,26 @@ public class TicTacToe extends Activity implements OnClickListener {
         jr.execute("http://intotheblu.nl/game_request_accept.php");
     }
 
-    public static void setGameData(int game_id, int veld0, int veld1, int veld2, int veld3, int veld4, int veld5, int veld6, int veld7, int veld8, String player1, String player2, Double amount, String turn, Context ctext) {
-        if (!Login.isLoggedIn() || player1.equals(player2))
+    public static void setGameData(String game_id, int fields[], String turn, Context ctext) {
+        if (!Login.isLoggedIn())
             return;
 
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));
-        params.add(new BasicNameValuePair("player1", player1));
-        params.add(new BasicNameValuePair("player2", player2));
+        params.add(new BasicNameValuePair("game_id", "" + game_id));
+        params.add(new BasicNameValuePair("veld0", "" + fields[0]));
+        params.add(new BasicNameValuePair("veld1", "" + fields[1]));
+        params.add(new BasicNameValuePair("veld2", "" + fields[2]));
+        params.add(new BasicNameValuePair("veld3", "" + fields[3]));
+        params.add(new BasicNameValuePair("veld4", "" + fields[4]));
+        params.add(new BasicNameValuePair("veld5", "" + fields[5]));
+        params.add(new BasicNameValuePair("veld6", "" + fields[6]));
+        params.add(new BasicNameValuePair("veld7", "" + fields[7]));
+        params.add(new BasicNameValuePair("veld8", "" + fields[8]));
+        params.add(new BasicNameValuePair("turn", turn));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.UPDATEGAME);
-        jr.execute("http://intotheblu.nl/update_game.php");
+        jr.execute("http://intotheblu.nl/game_set_data.php");
     }
 
 /*    public static void getUpdate(String game_id, Context ctext) {
@@ -200,16 +226,16 @@ public class TicTacToe extends Activity implements OnClickListener {
         for(int i = 0; i < 9; i ++) {
             Log.e("", "fields is |" + fields[i] + "|");
             if(fields[i].contains("1")) {
-                array_buttons[i].setText("X");
-                array_buttons[i].setClickable(false);
-                array_buttons[i].setBackgroundColor(Color.LTGRAY);
-                Log.e("", "i even tried to set X");
-            }
-            else if(fields[i].contains("2")) {
                 array_buttons[i].setText("O");
                 array_buttons[i].setClickable(false);
                 array_buttons[i].setBackgroundColor(Color.LTGRAY);
                 Log.e("", "i even tried to set O");
+            }
+            else if(fields[i].contains("2")) {
+                array_buttons[i].setText("X");
+                array_buttons[i].setClickable(false);
+                array_buttons[i].setBackgroundColor(Color.LTGRAY);
+                Log.e("", "i even tried to set X");
             }
             else {
                 array_buttons[i].setClickable(true);
