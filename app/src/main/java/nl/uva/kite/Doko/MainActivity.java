@@ -397,60 +397,73 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SendGameRequest(final View view) {
-        final EditText txtUrl = new EditText(this);
+        LinearLayout alertLayout= new LinearLayout(this);
+        alertLayout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText friendurl = new EditText(this);
+        final EditText wageurl = new EditText(this);
 
         // Set the default text to a link of the Queen
-        txtUrl.setHint("Your friends name");
+        friendurl.setHint("Your friends name");
+        wageurl.setHint("The wager of your game");
+        alertLayout.addView(friendurl);
+        alertLayout.addView(wageurl);
 
-        new AlertDialog.Builder(this)
-                .setTitle("Game request")
-                .setMessage("Please type the username of your friend!")
-                .setView(txtUrl)
-                .setPositiveButton("Invite to Game", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                        ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
-                        //ParseUser currentUser = ParseUser.getCurrentUser();
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setView(alertLayout);
 
-                        String friendName = txtUrl.getText().toString();
-                        if (friendName.length() < 1)
-                            return;
+        alert.setTitle("Play for wager!");
+        alert.setMessage("Play against your buddies!");
 
-                        try {
-                            String login = Login.getLoginName();
-                            String password = Login.getPassword();
-                            // Add game request to database
-                            List<NameValuePair> params = new ArrayList<>();
-                            params.add(new BasicNameValuePair("username",login ));
-                            params.add(new BasicNameValuePair("password", password));
-                            params.add(new BasicNameValuePair("friend", friendName));
-                            params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
-                            JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
-                            jr.execute("http://intotheblu.nl/game_request_add.php");
+        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                    ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
+                    //ParseUser currentUser = ParseUser.getCurrentUser();
 
-                            JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("message", "You just received a new Game request from " + installation.get("username") + "!");
-                            jsonObject.put("friendName", installation.get("username"));
-                            jsonObject.put("class", "gamerequest");
-                            ParsePush push = new ParsePush();
-                            pushQuery.whereEqualTo("username", friendName);
-                            push.setQuery(pushQuery); // Set our Installation query
-                            push.setData(jsonObject);
-                            push.sendInBackground();
-                        } catch (JSONException e) {
-                            Log.e("", "failed JSON");
-                        }
+                    String friendName = friendurl.getText().toString();
+                    String wager = wageurl.getText().toString();
+                    if (friendName.length() < 1)
+                        return;
+
+                    try {
+                        String login = Login.getLoginName();
+                        String password = Login.getPassword();
+                        // Add game request to database
+                        List<NameValuePair> params = new ArrayList<>();
+                        params.add(new BasicNameValuePair("username", login));
+                        params.add(new BasicNameValuePair("password", password));
+                        params.add(new BasicNameValuePair("friend", friendName));
+                        params.add(new BasicNameValuePair("wager", wager));
+                        params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
+                        JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                        jr.execute("http://intotheblu.nl/game_request_add.php");
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("message", "You just received a new Game request from " + installation.get("username") + "!");
+                        jsonObject.put("friendName", installation.get("username"));
+                        jsonObject.put("class", "gamerequest");
+                        ParsePush push = new ParsePush();
+                        pushQuery.whereEqualTo("username", friendName);
+                        push.setQuery(pushQuery); // Set our Installation query
+                        push.setData(jsonObject);
+                        push.sendInBackground();
+                    } catch (JSONException e) {
+                        Log.e("", "failed JSON");
                     }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                }
+            });
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
                     }
-                })
-                .show();
+                });
+        alert.show();
     }
 
     public void AddCredit(final View view) {
-        LinearLayout alertLayout= new LinearLayout(this);
+        LinearLayout alertLayout = new LinearLayout(this);
         alertLayout.setOrientation(LinearLayout.VERTICAL);
         final EditText debitorurl = new EditText(this);
         final EditText debturl = new EditText(this);
@@ -463,7 +476,7 @@ public class MainActivity extends AppCompatActivity {
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
-        if(Groups.current_group_id == -1) {
+        if (Groups.current_group_id == -1) {
             Toast.makeText(view.getContext(), "please choose a group first!", Toast.LENGTH_LONG).show();
             return;
         }
@@ -498,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received a debit request from " + Login.getLoginName() +
-                                   " for " + reason + " in group " + Groups.current_group_name + "!");
+                            " for " + reason + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
                     jsonObject.put("class", "addDebit");
                     ParsePush push = new ParsePush();
@@ -521,7 +534,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void AddDebit(final View view) {
-        LinearLayout alertLayout= new LinearLayout(this);
+        LinearLayout alertLayout = new LinearLayout(this);
         alertLayout.setOrientation(LinearLayout.VERTICAL);
         final EditText creditorurl = new EditText(this);
         final EditText debturl = new EditText(this);
@@ -534,7 +547,7 @@ public class MainActivity extends AppCompatActivity {
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
-        if(Groups.current_group_id == -1) {
+        if (Groups.current_group_id == -1) {
             Toast.makeText(view.getContext(), "please choose a group first!", Toast.LENGTH_LONG).show();
             return;
         }
@@ -569,7 +582,7 @@ public class MainActivity extends AppCompatActivity {
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received a credit request from " + Login.getLoginName() +
-                                   " for " + reason + " in group " + Groups.current_group_name + "!");
+                            " for " + reason + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
                     jsonObject.put("class", "addCredit");
                     ParsePush push = new ParsePush();
@@ -613,7 +626,7 @@ public class MainActivity extends AppCompatActivity {
         if (Groups.current_group_id == -1)
             return;
 
-        LinearLayout alertLayout= new LinearLayout(this);
+        LinearLayout alertLayout = new LinearLayout(this);
         alertLayout.setOrientation(LinearLayout.VERTICAL);
         final EditText memberurl = new EditText(this);
 

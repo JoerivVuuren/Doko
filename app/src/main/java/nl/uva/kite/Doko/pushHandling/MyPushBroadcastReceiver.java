@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import nl.uva.kite.Doko.MainActivity;
 import nl.uva.kite.Doko.R;
+import nl.uva.kite.Doko.TicTacToe;
 
 public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
 
@@ -62,6 +63,10 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
                 builder.setContentTitle("Group request");
                 tryIntent = new Intent(context, MainActivity.class);
                 tryIntent.putExtra("Requests", "addMember");
+            }
+            else if (classType.equals("gameturn")) {
+                tryIntent = new Intent(context, TicTacToe.class);
+                tryIntent.putExtra("gameturn", "begon");
             }
             else {
                 Log.e("", "onpushreceive in de else gekomen helaas...");

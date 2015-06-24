@@ -5,6 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.NotificationCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +28,7 @@ import java.util.Arrays;
 
 import nl.uva.kite.Doko.Adapters.MemberListArrayAdapter;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 
 public class OnJSONCompleted {
     public static final int NONE = -1;
@@ -42,6 +47,9 @@ public class OnJSONCompleted {
     public static final int DEBTADD = 16;
     public static final int ALLREQUESTUPDATE = 17;
     public static final int STARTGAME = 21;
+    public static final int UPDATEGAME = 24;
+    public static final int GAMELISTUPDATE = 25;
+    public static final int LOADGAME = 25;
 
     public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
@@ -454,22 +462,55 @@ public class OnJSONCompleted {
                 Groups.get_grouplist(GROUPLISTOPEN, ctext);
             }
             else if (type == STARTGAME) {
-                int game_id = json.getInt("id");
-                int veld0 = json.getInt("veld0");
-                int veld1 = json.getInt("veld1");
-                int veld2 = json.getInt("veld2");
-                int veld3 = json.getInt("veld3");
-                int veld4 = json.getInt("veld4");
-                int veld5 = json.getInt("veld5");
-                int veld6 = json.getInt("veld6");
-                int veld7 = json.getInt("veld7");
-                int veld8 = json.getInt("veld8");
-                String player1 = json.getString("player1");
-                String player2 = json.getString("player2");
-                double amount = json.getDouble("amount");
-                String turn = json.getString("turn");
+                Intent tryIntent;
+                tryIntent = new Intent(ctext, TicTacToe.class);
+                tryIntent.putExtra("class", "STARTGAME");
+                tryIntent.putExtra("game_id", "" + json.getInt("game_id"));
+                a.startActivity(tryIntent);
+                //tryIntent.putExtra("Requests", "friend");
+                //NotificationCompat.Builder builder = new NotificationCompat.Builder(ctext);
+                //TicTacToe.getUpdate(json.getInt("group_id"), ctext);
+            }
+            else if (type == UPDATEGAME || type == LOADGAME) {
+                Intent tryIntent;
+                tryIntent = new Intent(ctext, TicTacToe.class);
+                tryIntent.putExtra("class", "UPDATEGAME");
+                tryIntent.putExtra("game_id", "" + json.getInt("game_id"));
+                tryIntent.putExtra("veld0", "" + json.getInt("veld0"));
+                tryIntent.putExtra("veld1", "" + json.getInt("veld1"));
+                tryIntent.putExtra("veld2", "" + json.getInt("veld2"));
+                tryIntent.putExtra("veld3", "" + json.getInt("veld3"));
+                tryIntent.putExtra("veld4", "" + json.getInt("veld4"));
+                tryIntent.putExtra("veld5", "" + json.getInt("veld5"));
+                tryIntent.putExtra("veld6", "" + json.getInt("veld6"));
+                tryIntent.putExtra("veld7", "" + json.getInt("veld7"));
+                tryIntent.putExtra("veld8", "" + json.getInt("veld8"));
+                tryIntent.putExtra("turn", "" + json.getInt("turn"));
 
-                TicTacToe.update(game_id, veld0, veld1, veld2, veld3, veld4, veld5, veld6, veld7, veld8, player1, player2, amount, turn);
+                a.startActivity(tryIntent);
+            }
+            else if (type == GAMELISTUPDATE) {
+                JSONArray jrequests_game_opponent = json.getJSONArray("opponent");
+                JSONArray jrequests_game_amount = json.getJSONArray("wager");
+                JSONArray jrequests_game_id = json.getJSONArray("game_id");
+                Log.e("", "some kind of respnse");
+
+                Tab4.game_opponents = new String[jrequests_game_opponent.length()];
+                Tab4.game_wagers = new double[jrequests_game_opponent.length()];
+                Tab4.game_id = new int[jrequests_game_opponent.length()];
+                for (int i = 0; i < jrequests_game_opponent.length(); i++) {
+                    Log.e("", "opponent is: " + jrequests_game_opponent.getString(i));
+                    Tab4.game_opponents[i] = jrequests_game_opponent.getString(i);
+                    Tab4.game_wagers[i] = jrequests_game_amount.getDouble(i);
+                    Tab4.game_id[i] = jrequests_game_id.getInt(i);
+                }
+
+                 /* create a ListView for games */
+                ListView gamesView = (ListView)a.findViewById(R.id.game_list);
+                RequestlistAdapter gamesAdapter = new RequestlistAdapter(ctext, Tab4.game_opponents);
+                gamesAdapter.setType(gamesAdapter.GAMELIST);
+                gamesView.setAdapter(gamesAdapter);
+                RequestlistAdapter.setListViewHeightBasedOnChildren(gamesView);
             }
         }
         catch (JSONException e) {

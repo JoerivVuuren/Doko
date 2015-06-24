@@ -34,6 +34,7 @@ import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.MainActivity;
 import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
+import nl.uva.kite.Doko.TicTacToe;
 
 public class Tab2 extends Fragment {
     public static String[] requests_game;
@@ -78,7 +79,7 @@ public class Tab2 extends Fragment {
                         .setCancelable(true)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                acceptGame(requests_game_id[position], view.getContext());
+                                TicTacToe.startGame(selectedFromList, Login.getLoginName(),requests_game_amount[position], requests_game_id[position], view.getContext());
                                 view.setVisibility(View.GONE);
                             }
                         })

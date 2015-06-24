@@ -14,11 +14,13 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 
 public class RequestlistAdapter extends ArrayAdapter<String> {
     public static int GAME = 1;
     public static int CREDIT = 2;
     public static int DEBIT = 3;
+    public static int GAMELIST = 4;
     private final Context context;
     private final String[] names;
     public int type;
@@ -61,6 +63,12 @@ public class RequestlistAdapter extends ArrayAdapter<String> {
             reason.setText(Tab2.requests_credit_reason[position]);
             amount.setText(MainActivity.doubleToEuro(Tab2.requests_credit_amount[position]));
             opponent.setText(Tab2.requests_credit[position]);
+        }
+        else if (type == GAMELIST) {
+             /* Set reason of debt, amount and opponent */
+            reason.setText("Tic Tac Toe");
+            amount.setText(MainActivity.doubleToEuro(Tab4.game_wagers[position]));
+            opponent.setText(Tab4.game_opponents[position]);
         }
         return rowView;
     }

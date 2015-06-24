@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +23,11 @@ public class TicTacToe extends Activity implements OnClickListener {
 
     // x=true en O=false
     boolean round = true;
+    public static String current_turn;
+    public static String current_game_id;
     int total_round = 0;
-    Button[] array_buttons = null;
-    Button button, button1, button2, button3, button4, button5, button6, button7, button8;
+    public static Button[] array_buttons = null;
+    public static Button button, button1, button2, button3, button4, button5, button6, button7, button8;
 
 
     @Override
@@ -42,7 +45,30 @@ public class TicTacToe extends Activity implements OnClickListener {
         button7 = (Button) findViewById(R.id.button7);
         button8 = (Button) findViewById(R.id.button8);
 
+/*        String menuFragment = getIntent().getStringExtra("gameturn");
+        if(menuFragment.equals("begon")) {
+            getUpdate(game_id);
+        }*/
+
         array_buttons = new Button[] {button, button1, button2, button3, button4, button5, button6, button7, button8};
+
+        String classtype = getIntent().getStringExtra("class");
+        if(classtype.equals("STARTGAME")) {
+            //getUpdate(getIntent().getStringExtra("game_id") , this);
+        }
+        else if(classtype.equals("UPDATEGAME")) {
+            String[] fields = null;
+            fields[0] = getIntent().getStringExtra("veld0");
+            fields[1] = getIntent().getStringExtra("veld1");
+            fields[2] = getIntent().getStringExtra("veld2");
+            fields[3] = getIntent().getStringExtra("veld3");
+            fields[4] = getIntent().getStringExtra("veld4");
+            fields[5] = getIntent().getStringExtra("veld5");
+            fields[6] = getIntent().getStringExtra("veld6");
+            fields[7] = getIntent().getStringExtra("veld7");
+            fields[8] = getIntent().getStringExtra("veld8");
+            update(getIntent().getStringExtra("game_id"), fields, getIntent().getStringExtra("turn"));
+        }
 
         for (Button b : array_buttons) {
             b.setOnClickListener(this);
@@ -66,6 +92,10 @@ public class TicTacToe extends Activity implements OnClickListener {
     }
 
     private void buttonClicked(View v) {
+        if(!Login.getLoginName().equals(current_turn)) {
+            return;
+        }
+        Log.e("", "button clicked");
         Button b = (Button) v;
 
         if (round) {
@@ -122,7 +152,7 @@ public class TicTacToe extends Activity implements OnClickListener {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
-    public static void startGame(String player1, String player2, Context ctext) {
+    public static void startGame(String player1, String player2, double amount, int request_id, Context ctext) {
         if (!Login.isLoggedIn() || player1.equals(player2))
             return;
 
@@ -131,12 +161,49 @@ public class TicTacToe extends Activity implements OnClickListener {
         params.add(new BasicNameValuePair("password", Login.getPassword()));
         params.add(new BasicNameValuePair("player1", player1));
         params.add(new BasicNameValuePair("player2", player2));
+        params.add(new BasicNameValuePair("amount", "" + amount));
+        params.add(new BasicNameValuePair("request_id", "" + request_id));
+        params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.STARTGAME);
         jr.execute("http://intotheblu.nl/game_request_accept.php");
     }
 
-    public static void update(int game_id, int veld0, int veld1, int veld2, int veld3, int veld4, int veld5, int veld6, int veld7, int veld8, String player1, String player2, Double amount, String turn) {
-        //setgamedata
+    public static void setGameData(int game_id, int veld0, int veld1, int veld2, int veld3, int veld4, int veld5, int veld6, int veld7, int veld8, String player1, String player2, Double amount, String turn, Context ctext) {
+/*        if (!Login.isLoggedIn() || player1.equals(player2))
+            return;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("player1", player1));
+        params.add(new BasicNameValuePair("player2", player2));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.UPDATEGAME);
+        jr.execute("http://intotheblu.nl/update_game.php");*/
+    }
+
+    public static void getUpdate(String game_id, Context ctext) {
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("game_id", game_id));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.UPDATEGAME);
+        jr.execute("http://intotheblu.nl/game_get_state.php");
+    }
+
+    public static void update(String game_id, String[] fields, String turn) {
+        Log.e("", "i updated");
+        for(int i = 0; i < fields.length; i ++) {
+            if(fields[i].equals("1")) {
+                array_buttons[i].setText("X");
+                Log.e("", "i even tried to set X");
+            }
+            else if(fields[i].equals("2")) {
+                array_buttons[i].setText("O");
+                Log.e("", "i even tried to set O");
+            }
+        }
+        current_turn = turn;
+        current_game_id = game_id;
     }
 
     private void startAndstop(boolean enable) {
