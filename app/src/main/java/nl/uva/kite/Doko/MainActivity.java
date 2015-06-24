@@ -70,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
     /* creates and sets up the Main screen with tabs, nav drawer */
     public void setUpAndDisplayMainScreen() {
+        if (MainActivity.mContext != null)
+            /* close current main activity */
+            MainActivity.mContext.finish();
+
         MainActivity.mContext = this;
         setContentView(R.layout.activity_homescreen);
 
@@ -440,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
         alertLayout.addView(reasonurl);
 
         if (Groups.current_group_id == -1) {
-            Toast.makeText(view.getContext(), "please choose a group first!", Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), "Please choose a group first!", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -455,8 +459,12 @@ public class MainActivity extends AppCompatActivity {
                 String debitor = debitorurl.getText().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
-                if (debitor.length() < 1 || debt.length() < 1 || reason.length() < 1 || Double.parseDouble(debt) < 0)
+                if (debitor.length() < 1 || debt.length() < 1)
                     return;
+                if (Double.parseDouble(debt) < 0) {
+                    Toast.makeText(view.getContext(), "Enter a positive number!", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 try {
                     String login = Login.getLoginName();
@@ -468,8 +476,10 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("debt", debt));
                     params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
                     params.add(new BasicNameValuePair("origin", reason));
+                    params.add(new BasicNameValuePair("type", "debit"));
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
-                    jr.execute("http://intotheblu.nl/debit_request_add.php");
+                    jr.execute("http://intotheblu.nl/debt_request_add.php");
+
                     //AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
@@ -528,8 +538,13 @@ public class MainActivity extends AppCompatActivity {
                 String creditor = creditorurl.getText().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
-                if (creditor.length() < 1 || debt.length() < 1 || reason.length() < 1 || Double.parseDouble(debt) < 0)
+
+                if (creditor.length() < 1 || debt.length() < 1)
                     return;
+                if (Double.parseDouble(debt) < 0) {
+                    Toast.makeText(view.getContext(), "Enter a positive number!", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 try {
                     String login = Login.getLoginName();
@@ -541,8 +556,10 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("debt", debt));
                     params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
                     params.add(new BasicNameValuePair("origin", reason));
+                    params.add(new BasicNameValuePair("type", "credit"));
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
-                    jr.execute("http://intotheblu.nl/credit_request_add.php");
+                    jr.execute("http://intotheblu.nl/debt_request_add.php");
+
                     //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();

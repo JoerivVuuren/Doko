@@ -50,7 +50,7 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
                 tryIntent = new Intent(context, MainActivity.class);
             }
 
-            if((data.getString("groupID") != null) && (data.getString("groupName") != null)){
+            if(!data.isNull("groupID") && !data.isNull("groupName")){
                 tryIntent.putExtra("groupID", data.getString("groupID"));
                 tryIntent.putExtra("groupName", data.getString("groupName"));
             }
@@ -98,7 +98,7 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
 
             notificationManager.notify("MyTag", 0, builder.build());
         } catch(JSONException e) {
-            Log.e("", "JSONERROR");
+            Log.e("", "No push data");
         }
     }
 
