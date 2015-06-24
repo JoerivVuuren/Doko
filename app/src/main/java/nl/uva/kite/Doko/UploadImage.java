@@ -28,6 +28,11 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+/* Upload Image bron :
+ * http://programmerguru.com/android-tutorial/how-to-upload-image-to-php-server/
+ * upload foto van android -> php file -> server
+ */
+
 @SuppressLint("NewApi")
 public class UploadImage extends Activity {
     ProgressDialog prgDialog;
