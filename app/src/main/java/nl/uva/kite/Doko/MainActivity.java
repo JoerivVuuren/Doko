@@ -219,6 +219,11 @@ public class MainActivity extends AppCompatActivity {
         //        getSupportActionBar().setIcon(R.drawable.ic_action);
         //        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         String menuFragment = getIntent().getStringExtra("Requests");
+        /*if((getIntent().getStringExtra("Groupid") != null) && (getIntent().getStringExtra("Groupname") != null)){
+            int newGroupID = Integer.parseInt(getIntent().getStringExtra("Groupid"));
+            String newGroupName = getIntent().getStringExtra("Groupname");
+            Groups.activateGroup(newGroupID, newGroupName);
+        }*/
 
         //android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         //android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
@@ -514,6 +519,8 @@ public class MainActivity extends AppCompatActivity {
                             " for " + reason + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
                     jsonObject.put("class", "addDebit");
+                    /*jsonObject.put("groupID", Integer.toString(Groups.current_group_id));
+                    jsonObject.put("groupName", Groups.current_group_name);*/
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", debitor);
                     push.setQuery(pushQuery); // Set our Installation query
@@ -585,6 +592,8 @@ public class MainActivity extends AppCompatActivity {
                             " for " + reason + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
                     jsonObject.put("class", "addCredit");
+                    /*jsonObject.put("groupID", Integer.toString(Groups.current_group_id));
+                    jsonObject.put("groupName", Groups.current_group_name);*/
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", creditor);
                     push.setQuery(pushQuery); // Set our Installation query

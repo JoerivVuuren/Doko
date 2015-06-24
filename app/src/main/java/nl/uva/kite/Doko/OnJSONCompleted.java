@@ -69,6 +69,9 @@ public class OnJSONCompleted {
 
                     /* close Login activity and open MainActivity */
                     Intent intent = new Intent(ctext, MainActivity.class);
+                    if (Login.intentExtra != null && Login.intentExtra.length() > 0)
+                        intent.putExtra("Requests", Login.intentExtra);
+
                     a.finish();
                     ctext.startActivity(intent);
                 }

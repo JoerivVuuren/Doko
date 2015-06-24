@@ -12,6 +12,7 @@ import com.parse.ParsePushBroadcastReceiver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.MainActivity;
 import nl.uva.kite.Doko.R;
 import nl.uva.kite.Doko.TicTacToe;
@@ -31,37 +32,51 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
         JSONObject data = getDataFromIntent(intent);
         // Do something with the data. To create a notification do:
         try {
+            //String groupID, groupName;
             // Data used for the notification itself
             String friendName = data.getString("friendName");
             String message = data.getString("message");
             String classType = data.getString("class");
+
+            /*if((data.getString("groupID") != null) && (data.getString("groupName") != null)){
+                groupID = data.getString("groupID");
+                groupName = data.getString("groupName");
+            }*/
+
             Log.e("", "onpushreceive classtype is: " + classType);
 
             Intent tryIntent;
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+            if (!Login.isLoggedIn()) {
+                tryIntent = new Intent(context, Login.class);
+            }
+            else {
+                tryIntent = new Intent(context, MainActivity.class);
+            }
+
             if(classType.equals("friendrequest")) {
                 builder.setContentTitle("Friend Request");
-                tryIntent = new Intent(context, MainActivity.class);
                 tryIntent.putExtra("Requests", "friend");
             }
             else if(classType.equals("gamerequest")) {
                 builder.setContentTitle("Game Request");
-                tryIntent = new Intent(context, MainActivity.class);
                 tryIntent.putExtra("Requests", "game");
             }
             else if(classType.equals("addDebit")){
                 builder.setContentTitle("Debt request");
-                tryIntent = new Intent(context, MainActivity.class);
                 tryIntent.putExtra("Requests", "debt");
+                /*tryIntent.putExtra("Groupid", data.getString("groupID"));
+                tryIntent.putExtra("Groupname", data.getString("groupName"));*/
             }
             else if(classType.equals("addCredit")){
                 builder.setContentTitle("Credit request");
-                tryIntent = new Intent(context, MainActivity.class);
                 tryIntent.putExtra("Requests", "credit");
+                /*tryIntent.putExtra("Groupid", data.getString("groupID"));
+                tryIntent.putExtra("Groupname", data.getString("groupName"));*/
             }
             else if(classType.equals("addMember")) {
                 builder.setContentTitle("Group request");
-                tryIntent = new Intent(context, MainActivity.class);
                 tryIntent.putExtra("Requests", "addMember");
             }
             else if (classType.equals("gameturn")) {

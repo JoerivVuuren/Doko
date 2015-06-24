@@ -120,7 +120,7 @@ public class Tab2 extends Fragment {
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                deleteDebtRequest(requests_debit_id[position], "credit", view.getContext());
+                                deleteDebtRequest(requests_debit_id[position], "debit", view.getContext());
                                 view.setVisibility(View.GONE);
                             }
                         });
@@ -155,7 +155,7 @@ public class Tab2 extends Fragment {
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                deleteDebtRequest(requests_credit_id[position], "debit", view.getContext());
+                                deleteDebtRequest(requests_credit_id[position], "credit", view.getContext());
                                 view.setVisibility(View.GONE);
                             }
                         });

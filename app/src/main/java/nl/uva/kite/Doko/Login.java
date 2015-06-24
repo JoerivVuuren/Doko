@@ -19,6 +19,7 @@ import android.widget.EditText;
 
 public class Login extends Activity implements OnClickListener {
     public static Context mContext;
+    public static String intentExtra;
     public static SecurePreferences securePreferences;
     private static boolean loggedIn = false;
     private static String loginName = "";
@@ -29,6 +30,7 @@ public class Login extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
 
         mContext = this;
+        intentExtra = getIntent().getStringExtra("Requests");
         securePreferences = new SecurePreferences(this, "Doko-preferences", "DokoFO2opPOA@#F=/00000000", true);
 
         setContentView(R.layout.login);
