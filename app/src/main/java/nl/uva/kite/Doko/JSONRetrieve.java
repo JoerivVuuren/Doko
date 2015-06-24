@@ -60,7 +60,7 @@ public class JSONRetrieve extends AsyncTask<String,String,String> {
                 resultMessage = json.getString("message");
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("", "failed JSON");
         }
         if (resultMessage.length() > 0)
             Toast.makeText(ctext, resultMessage, Toast.LENGTH_LONG).show();

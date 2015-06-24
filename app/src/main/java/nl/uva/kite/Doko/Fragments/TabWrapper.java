@@ -62,6 +62,7 @@ public class TabWrapper extends android.support.v4.app.Fragment {
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                Log.e("", "tab selected=" + position);
                 if (position == 3) {
                     Tab3 tab3 = new Tab3();
                     android.support.v4.app.FragmentManager fragmentmanager = getFragmentManager();
