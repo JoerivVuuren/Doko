@@ -24,8 +24,6 @@ import nl.uva.kite.Doko.R;
 
 public class Tab3 extends Fragment {
     public static ListView listView;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private Handler handler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

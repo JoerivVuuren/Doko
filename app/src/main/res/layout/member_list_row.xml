@@ -61,5 +61,6 @@
         android:layout_centerVertical="true"
         android:layout_alignRight="@+id/member_group_list_user_level"
         android:layout_alignEnd="@+id/member_group_list_user_level"
-        android:textColor="@color/colorPositive" />
+        android:textColor="@color/colorPositive"
+        android:textStyle="bold" />
 </RelativeLayout>

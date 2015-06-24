@@ -65,7 +65,7 @@ public class Tab1 extends Fragment {
 
 
 
-        WallAdapter wa = new WallAdapter(generateStuff(16));
+        WallAdapter wa = new WallAdapter(generateStuff(4));
         mRecyclerView.setAdapter(wa);
         return v;
     }
@@ -74,8 +74,12 @@ public class Tab1 extends Fragment {
         List<WallInfo> dataSet = new ArrayList<>();
         for(int i = 0 ; i < size ; i++){
             WallInfo wi = new WallInfo();
-            wi.vPosterName = "Chiquita Banaan";
-            wi.vMessage = "Chiquita bananen hebben  wel 30 gram suiker! :O :O :O";
+            wi.vType = i;
+            wi.vAmount = 69.99;
+            wi.vGameName = "Tic Tac Toe";
+            wi.vUserName = "Chiquita Banaan";
+            wi.vOpponentName = "Matthijs Bes";
+            wi.vGroupName = Groups.current_group_name;
             dataSet.add(wi);
         }
         return dataSet;

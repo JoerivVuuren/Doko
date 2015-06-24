@@ -49,7 +49,7 @@ public class OnJSONCompleted {
     public static final int STARTGAME = 21;
     public static final int UPDATEGAME = 24;
     public static final int GAMELISTUPDATE = 25;
-    public static final int LOADGAME = 25;
+    public static final int LOADGAME = 26;
 
     public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
@@ -480,21 +480,23 @@ public class OnJSONCompleted {
                 //NotificationCompat.Builder builder = new NotificationCompat.Builder(ctext);
                 //TicTacToe.getUpdate(json.getInt("group_id"), ctext);
             }
-            else if (type == UPDATEGAME || type == LOADGAME) {
+            else if (/*type == UPDATEGAME || */type == LOADGAME) {
                 Intent tryIntent;
                 tryIntent = new Intent(ctext, TicTacToe.class);
                 tryIntent.putExtra("class", "UPDATEGAME");
-                tryIntent.putExtra("game_id", "" + json.getInt("game_id"));
-                tryIntent.putExtra("veld0", "" + json.getInt("veld0"));
-                tryIntent.putExtra("veld1", "" + json.getInt("veld1"));
-                tryIntent.putExtra("veld2", "" + json.getInt("veld2"));
-                tryIntent.putExtra("veld3", "" + json.getInt("veld3"));
-                tryIntent.putExtra("veld4", "" + json.getInt("veld4"));
-                tryIntent.putExtra("veld5", "" + json.getInt("veld5"));
-                tryIntent.putExtra("veld6", "" + json.getInt("veld6"));
-                tryIntent.putExtra("veld7", "" + json.getInt("veld7"));
-                tryIntent.putExtra("veld8", "" + json.getInt("veld8"));
-                tryIntent.putExtra("turn", "" + json.getInt("turn"));
+                tryIntent.putExtra("game_id", json.getString("game_id"));
+                tryIntent.putExtra("veld0", json.getString("veld0"));
+                tryIntent.putExtra("veld1", json.getString("veld1"));
+                tryIntent.putExtra("veld2", json.getString("veld2"));
+                tryIntent.putExtra("veld3", json.getString("veld3"));
+                tryIntent.putExtra("veld4", json.getString("veld4"));
+                tryIntent.putExtra("veld5", json.getString("veld5"));
+                tryIntent.putExtra("veld6", json.getString("veld6"));
+                tryIntent.putExtra("veld7", json.getString("veld7"));
+                tryIntent.putExtra("veld8", json.getString("veld8"));
+                tryIntent.putExtra("player1", json.getString("player1"));
+                tryIntent.putExtra("player2", json.getString("player2"));
+                tryIntent.putExtra("turn", json.getString("turn"));
 
                 a.startActivity(tryIntent);
             }
@@ -502,16 +504,16 @@ public class OnJSONCompleted {
                 JSONArray jrequests_game_opponent = json.getJSONArray("opponent");
                 JSONArray jrequests_game_amount = json.getJSONArray("wager");
                 JSONArray jrequests_game_id = json.getJSONArray("game_id");
-                Log.e("", "some kind of respnse");
+                Log.e("", "some kind of respnse" + jrequests_game_opponent.length());
 
                 Tab4.game_opponents = new String[jrequests_game_opponent.length()];
                 Tab4.game_wagers = new double[jrequests_game_opponent.length()];
-                Tab4.game_id = new int[jrequests_game_opponent.length()];
+                Tab4.game_id = new String[jrequests_game_opponent.length()];
                 for (int i = 0; i < jrequests_game_opponent.length(); i++) {
                     Log.e("", "opponent is: " + jrequests_game_opponent.getString(i));
                     Tab4.game_opponents[i] = jrequests_game_opponent.getString(i);
                     Tab4.game_wagers[i] = jrequests_game_amount.getDouble(i);
-                    Tab4.game_id[i] = jrequests_game_id.getInt(i);
+                    Tab4.game_id[i] = jrequests_game_id.getString(i);
                 }
 
                  /* create a ListView for games */
