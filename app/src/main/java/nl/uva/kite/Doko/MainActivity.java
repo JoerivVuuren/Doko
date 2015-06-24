@@ -120,28 +120,9 @@ public class MainActivity extends AppCompatActivity {
         /* update groups list */
         Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, this);
 
-        /* activate last selected group_id */
-        if (Login.securePreferences.getString("group_id") != null &&
-            Login.securePreferences.getString("group_name") != null) {
-            int group_id = Integer.parseInt(Login.securePreferences.getString("group_id"));
-            String group_name = Login.securePreferences.getString("group_name");
-            if (group_id > -1)
-                Groups.activateGroup(group_id, group_name);
-        }
-
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-
-        Typeface titleTF = Typeface.createFromAsset(getAssets(), "fonts/Crescent-Regular.ttf");
-        SpannableStringBuilder SS = new SpannableStringBuilder("Doko");
-        //        change title to current group name if there is an active group
-        if (Groups.current_group_name != null){
-            SS = new SpannableStringBuilder(Groups.current_group_name);
-        }
-        SS.setSpan (new CustomTypefaceSpan("", titleTF), 0, SS.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-        getSupportActionBar().setTitle(SS);
-
 
         // Load up a starting fragment in our fragment container
         android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
@@ -219,11 +200,30 @@ public class MainActivity extends AppCompatActivity {
         //        getSupportActionBar().setIcon(R.drawable.ic_action);
         //        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         String menuFragment = getIntent().getStringExtra("Requests");
-        /*if((getIntent().getStringExtra("Groupid") != null) && (getIntent().getStringExtra("Groupname") != null)){
-            int newGroupID = Integer.parseInt(getIntent().getStringExtra("Groupid"));
-            String newGroupName = getIntent().getStringExtra("Groupname");
-            Groups.activateGroup(newGroupID, newGroupName);
-        }*/
+        if (getIntent().getStringExtra("groupID") != null && getIntent().getStringExtra("groupName") != null) {
+            int newGroupID = Integer.parseInt(getIntent().getStringExtra("groupID"));
+            String newGroupName = getIntent().getStringExtra("groupName");
+            if (newGroupID > -1)
+                Groups.activateGroup(newGroupID, newGroupName);
+        }
+
+        /* activate last selected group_id */
+        if (Login.securePreferences.getString("group_id") != null &&
+            Login.securePreferences.getString("group_name") != null) {
+            int group_id = Integer.parseInt(Login.securePreferences.getString("group_id"));
+            String group_name = Login.securePreferences.getString("group_name");
+            if (group_id > -1)
+                Groups.activateGroup(group_id, group_name);
+        }
+
+        //        change title to current group name if there is an active group
+        Typeface titleTF = Typeface.createFromAsset(getAssets(), "fonts/Crescent-Regular.ttf");
+        SpannableStringBuilder SS = new SpannableStringBuilder("Doko");
+        if (Groups.current_group_name != null){
+            SS = new SpannableStringBuilder(Groups.current_group_name);
+        }
+        SS.setSpan (new CustomTypefaceSpan("", titleTF), 0, SS.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        getSupportActionBar().setTitle(SS);
 
         //android.support.v4.app.FragmentManager fragmentmanager = getSupportFragmentManager();
         //android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentmanager.beginTransaction();
@@ -519,8 +519,8 @@ public class MainActivity extends AppCompatActivity {
                             " for " + reason + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
                     jsonObject.put("class", "addDebit");
-                    /*jsonObject.put("groupID", Integer.toString(Groups.current_group_id));
-                    jsonObject.put("groupName", Groups.current_group_name);*/
+                    jsonObject.put("groupID", Integer.toString(Groups.current_group_id));
+                    jsonObject.put("groupName", Groups.current_group_name);
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", debitor);
                     push.setQuery(pushQuery); // Set our Installation query
@@ -592,8 +592,8 @@ public class MainActivity extends AppCompatActivity {
                             " for " + reason + " in group " + Groups.current_group_name + "!");
                     jsonObject.put("friendName", Login.getLoginName());
                     jsonObject.put("class", "addCredit");
-                    /*jsonObject.put("groupID", Integer.toString(Groups.current_group_id));
-                    jsonObject.put("groupName", Groups.current_group_name);*/
+                    jsonObject.put("groupID", Integer.toString(Groups.current_group_id));
+                    jsonObject.put("groupName", Groups.current_group_name);
                     ParsePush push = new ParsePush();
                     pushQuery.whereEqualTo("username", creditor);
                     push.setQuery(pushQuery); // Set our Installation query

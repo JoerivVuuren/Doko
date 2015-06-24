@@ -38,11 +38,6 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
             String message = data.getString("message");
             String classType = data.getString("class");
 
-            /*if((data.getString("groupID") != null) && (data.getString("groupName") != null)){
-                groupID = data.getString("groupID");
-                groupName = data.getString("groupName");
-            }*/
-
             Log.e("", "onpushreceive classtype is: " + classType);
 
             Intent tryIntent;
@@ -53,6 +48,11 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
             }
             else {
                 tryIntent = new Intent(context, MainActivity.class);
+            }
+
+            if((data.getString("groupID") != null) && (data.getString("groupName") != null)){
+                tryIntent.putExtra("groupID", data.getString("groupID"));
+                tryIntent.putExtra("groupName", data.getString("groupName"));
             }
 
             if(classType.equals("friendrequest")) {
@@ -66,14 +66,10 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
             else if(classType.equals("addDebit")){
                 builder.setContentTitle("Debt request");
                 tryIntent.putExtra("Requests", "debt");
-                /*tryIntent.putExtra("Groupid", data.getString("groupID"));
-                tryIntent.putExtra("Groupname", data.getString("groupName"));*/
             }
             else if(classType.equals("addCredit")){
                 builder.setContentTitle("Credit request");
                 tryIntent.putExtra("Requests", "credit");
-                /*tryIntent.putExtra("Groupid", data.getString("groupID"));
-                tryIntent.putExtra("Groupname", data.getString("groupName"));*/
             }
             else if(classType.equals("addMember")) {
                 builder.setContentTitle("Group request");

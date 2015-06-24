@@ -72,6 +72,12 @@ public class OnJSONCompleted {
                     if (Login.intentExtra != null && Login.intentExtra.length() > 0)
                         intent.putExtra("Requests", Login.intentExtra);
 
+                    if (Login.intentExtraGroupID != null && Login.intentExtraGroupID.length() > 0)
+                        intent.putExtra("groupID", Login.intentExtraGroupID);
+
+                    if (Login.intentExtraGroupName != null && Login.intentExtraGroupName.length() > 0)
+                        intent.putExtra("groupName", Login.intentExtraGroupName);
+
                     a.finish();
                     ctext.startActivity(intent);
                 }

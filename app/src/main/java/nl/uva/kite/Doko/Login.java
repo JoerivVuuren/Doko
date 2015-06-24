@@ -20,6 +20,8 @@ import android.widget.EditText;
 public class Login extends Activity implements OnClickListener {
     public static Context mContext;
     public static String intentExtra;
+    public static String intentExtraGroupID;
+    public static String intentExtraGroupName;
     public static SecurePreferences securePreferences;
     private static boolean loggedIn = false;
     private static String loginName = "";
@@ -31,6 +33,8 @@ public class Login extends Activity implements OnClickListener {
 
         mContext = this;
         intentExtra = getIntent().getStringExtra("Requests");
+        intentExtraGroupID = getIntent().getStringExtra("groupID");
+        intentExtraGroupName = getIntent().getStringExtra("groupName");
         securePreferences = new SecurePreferences(this, "Doko-preferences", "DokoFO2opPOA@#F=/00000000", true);
 
         setContentView(R.layout.login);
@@ -108,6 +112,8 @@ public class Login extends Activity implements OnClickListener {
         setLoginPass("");
         securePreferences.put("autologin", "0");
         securePreferences.put("password", "");
+        securePreferences.put("group_name", "");
+        securePreferences.put("group_id", "-1");
 
         /* close current activity */
         Activity a = (Activity)ctext;

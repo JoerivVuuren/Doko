@@ -222,7 +222,7 @@ public class Tab2 extends Fragment {
         params.add(new BasicNameValuePair("origin", reason));
         params.add(new BasicNameValuePair("debt", "" + debt));
         params.add(new BasicNameValuePair("type", debtType));
-        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.DEBTADD);
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.NONE);
         jr.execute("http://intotheblu.nl/debt_add.php");
     }
 
