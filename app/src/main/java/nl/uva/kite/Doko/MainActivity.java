@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
 
                     String friendName = friendurl.getText().toString();
                     String wager = wageurl.getText().toString();
-                    if (friendName.length() < 1)
+                    if (friendName.length() < 1 || friendName.equals(Login.getLoginName()))
                         return;
 
                     try {
@@ -461,6 +461,10 @@ public class MainActivity extends AppCompatActivity {
                 String reason = reasonurl.getText().toString().trim();
                 if (debitor.length() < 1 || debt.length() < 1)
                     return;
+                if (debitor.equals(Login.getLoginName())) {
+                    Toast.makeText(view.getContext(), "You cannot create money out of thin air!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (Double.parseDouble(debt) < 0) {
                     Toast.makeText(view.getContext(), "Enter a positive number!", Toast.LENGTH_LONG).show();
                     return;
@@ -480,7 +484,6 @@ public class MainActivity extends AppCompatActivity {
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                     jr.execute("http://intotheblu.nl/debt_request_add.php");
 
-                    //AddDebt(debt, Login.getLoginName(), debitor, reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received a debit request from " + Login.getLoginName() +
@@ -541,6 +544,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (creditor.length() < 1 || debt.length() < 1)
                     return;
+                if (creditor.equals(Login.getLoginName())) {
+                    Toast.makeText(view.getContext(), "You cannot create money out of thin air!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (Double.parseDouble(debt) < 0) {
                     Toast.makeText(view.getContext(), "Enter a positive number!", Toast.LENGTH_LONG).show();
                     return;
@@ -560,7 +567,6 @@ public class MainActivity extends AppCompatActivity {
                     JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
                     jr.execute("http://intotheblu.nl/debt_request_add.php");
 
-                    //AddDebt(debt, creditor, Login.getLoginName(), reason, groupID, view.getContext());
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("message", "You have just received a credit request from " + Login.getLoginName() +

@@ -5,10 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.NotificationCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +22,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import nl.uva.kite.Doko.Adapters.HistoryListArrayAdapter;
+import nl.uva.kite.Doko.Adapters.ListViewHeightFix;
 import nl.uva.kite.Doko.Adapters.MemberListArrayAdapter;
+import nl.uva.kite.Doko.Adapters.RequestListArrayAdapter;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 
@@ -336,7 +335,12 @@ public class OnJSONCompleted {
                 JSONArray jrequests_credit_id = json.getJSONArray("credit_id");
                 JSONArray jrequests_credit_debt = json.getJSONArray("credit_debt");
                 JSONArray jrequests_credit_reason = json.getJSONArray("credit_reason");
-                Log.e("", "came in request update");
+
+                JSONArray jrequests_h_opponent = json.getJSONArray("h_opponent");
+                JSONArray jrequests_h_group_id = json.getJSONArray("h_group_id");
+                JSONArray jrequests_h_amount = json.getJSONArray("h_amount");
+                JSONArray jrequests_h_datetime = json.getJSONArray("h_datetime");
+                JSONArray jrequests_h_reason = json.getJSONArray("h_reason");
 
                 Tab2.requests_game = new String[jrequests_game.length()];
                 Tab2.requests_game_id = new int[jrequests_game.length()];
@@ -369,105 +373,46 @@ public class OnJSONCompleted {
                     Tab2.requests_credit_reason[i] = jrequests_credit_reason.getString(i);
                 }
 
+                Tab2.h_opponent = new String[jrequests_h_opponent.length()];
+                Tab2.h_group_name = new String[jrequests_h_opponent.length()];
+                Tab2.h_amount = new double[jrequests_h_opponent.length()];
+                Tab2.h_datetime = new String[jrequests_h_opponent.length()];
+                Tab2.h_reason = new String[jrequests_h_opponent.length()];
+                for (int i = jrequests_h_opponent.length() - 1; i >= 0; i--) {
+                    int reverseIndex = jrequests_h_opponent.length() - 1 - i;
+                    Tab2.h_opponent[reverseIndex] = jrequests_h_opponent.getString(i);
+                    Tab2.h_group_name[reverseIndex] = Groups.groupIDtoName(Integer.parseInt(jrequests_h_group_id.getString(i)));
+                    Tab2.h_amount[reverseIndex] = jrequests_h_amount.getDouble(i);
+                    Tab2.h_datetime[reverseIndex] = jrequests_h_datetime.getString(i);
+                    Tab2.h_reason[reverseIndex] = jrequests_h_reason.getString(i);
+                }
+
                 /* create a ListView for game requests */
                 ListView gameReqView = (ListView)a.findViewById(R.id.game_request_list);
-                RequestlistAdapter gameReqAdapter = new RequestlistAdapter(ctext, Tab2.requests_game);
+                RequestListArrayAdapter gameReqAdapter = new RequestListArrayAdapter(ctext, Tab2.requests_game);
                 gameReqAdapter.setType(gameReqAdapter.GAME);
                 gameReqView.setAdapter(gameReqAdapter);
-                RequestlistAdapter.setListViewHeightBasedOnChildren(gameReqView);
+                ListViewHeightFix.setListViewHeightBasedOnChildren(gameReqView);
 
                 /* create a ListView for credit requests */
                 ListView creditReqView = (ListView)a.findViewById(R.id.credit_request_list);
-                RequestlistAdapter creditReqAdapter = new RequestlistAdapter(ctext, Tab2.requests_credit);
+                RequestListArrayAdapter creditReqAdapter = new RequestListArrayAdapter(ctext, Tab2.requests_credit);
                 creditReqAdapter.setType(creditReqAdapter.CREDIT);
                 creditReqView.setAdapter(creditReqAdapter);
-                RequestlistAdapter.setListViewHeightBasedOnChildren(creditReqView);
+                ListViewHeightFix.setListViewHeightBasedOnChildren(creditReqView);
 
                 /* create a ListView for debit requests */
                 ListView debitReqView = (ListView)a.findViewById(R.id.debit_request_list);
-                RequestlistAdapter debitReqAdapter = new RequestlistAdapter(ctext, Tab2.requests_debit);
+                RequestListArrayAdapter debitReqAdapter = new RequestListArrayAdapter(ctext, Tab2.requests_debit);
                 debitReqAdapter.setType(debitReqAdapter.DEBIT);
                 debitReqView.setAdapter(debitReqAdapter);
-                RequestlistAdapter.setListViewHeightBasedOnChildren(debitReqView);
+                ListViewHeightFix.setListViewHeightBasedOnChildren(debitReqView);
 
-                /* create a ListView for debit requests
-                //Activity ab = (Activity)ctext;
-                final ListView requestListView_debit = (ListView)a.findViewById(R.id.debit_request_list);
-                ArrayList<String> arrList_debit = new ArrayList<String>();
-                arrList_debit.addAll(Arrays.asList(request_list_debit));
-                ArrayAdapter<String> listAdapter_debit = new ArrayAdapter<String>(ctext, R.layout.simplerow, R.id.rowTextView, arrList_debit);
-
-                requestListView_debit.setAdapter(listAdapter_debit);
-
-                requestListView_debit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
-
-                        alertDialogBuilder.setTitle("Accept the debit from " + ((TextView) view).getText() + "?");
-
-                        alertDialogBuilder
-                                .setCancelable(true)
-                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        Tab2.add(((TextView) view).getText().toString(), view.getContext());
-                                        view.setVisibility(View.GONE);
-
-                                    }
-                                })
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        Tab2.deny_request(((TextView) view).getText().toString(), view.getContext());
-                                        view.setVisibility(View.GONE);
-                                    }
-                                });
-
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-
-                        // show it
-                        alertDialog.show();
-                    }
-                });
-
-                /* create a ListView for credit requests
-                //Activity ab = (Activity)ctext;
-                final ListView requestListView_credit = (ListView)a.findViewById(R.id.credit_request_list);
-                ArrayList<String> arrList_credit = new ArrayList<String>();
-                arrList_credit.addAll(Arrays.asList(request_list_credit));
-                ArrayAdapter<String> listAdapter_debt = new ArrayAdapter<String>(ctext, R.layout.simplerow, R.id.rowTextView, arrList_credit);
-
-                requestListView_credit.setAdapter(listAdapter_debt);
-
-                requestListView_credit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
-
-                        alertDialogBuilder.setTitle("Accept the credit from " + ((TextView) view).getText() + "?");
-
-                        alertDialogBuilder
-                                .setCancelable(true)
-                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        Tab2.add(((TextView) view).getText().toString(), view.getContext());
-                                        view.setVisibility(View.GONE);
-                                    }
-                                })
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        Tab2.deny_request(((TextView) view).getText().toString(), view.getContext());
-                                        view.setVisibility(View.GONE);
-                                    }
-                                });
-
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-
-                        // show it
-                        alertDialog.show();
-                    }
-                });*/
+                /* create a ListView for my history */
+                ListView meHistoryView = (ListView)a.findViewById(R.id.me_history_list);
+                HistoryListArrayAdapter meHistoryAdapter = new HistoryListArrayAdapter(ctext, Tab2.h_opponent);
+                meHistoryView.setAdapter(meHistoryAdapter);
+                ListViewHeightFix.setListViewHeightBasedOnChildren(meHistoryView);
             }
             else if (type == FRIENDADD){
                 Friends.get_friendlist(FRIENDLISTUPDATE, ctext);
@@ -523,10 +468,10 @@ public class OnJSONCompleted {
 
                  /* create a ListView for games */
                 ListView gamesView = (ListView)a.findViewById(R.id.game_list);
-                RequestlistAdapter gamesAdapter = new RequestlistAdapter(ctext, Tab4.game_opponents);
+                RequestListArrayAdapter gamesAdapter = new RequestListArrayAdapter(ctext, Tab4.game_opponents);
                 gamesAdapter.setType(gamesAdapter.GAMELIST);
                 gamesView.setAdapter(gamesAdapter);
-                RequestlistAdapter.setListViewHeightBasedOnChildren(gamesView);
+                ListViewHeightFix.setListViewHeightBasedOnChildren(gamesView);
             }
         }
         catch (JSONException e) {

@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.content.Context;
 import android.view.View;
@@ -169,8 +168,6 @@ public class Groups extends Fragment {
         Groups.current_group_id = id;
         Groups.current_group_name = name;
 
-        if (Login.securePreferences == null)
-            Log.e("", " ik ben null");
         /* save group_id for next App start */
         Login.securePreferences.put("group_id", "" + id);
         Login.securePreferences.put("group_name", name);

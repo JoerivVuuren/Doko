@@ -1,22 +1,19 @@
-/* TUTORIAL USED: http://www.vogella.com/tutorials/AndroidListView/article.html#adapterown_example
- *
- * SOURCE for setListViewHeightBasedOnChildren(): http://stackoverflow.com/a/24710369 */
-package nl.uva.kite.Doko;
+/* TUTORIAL USED: http://www.vogella.com/tutorials/AndroidListView/article.html#adapterown_example */
+package nl.uva.kite.Doko.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
+import nl.uva.kite.Doko.MainActivity;
+import nl.uva.kite.Doko.R;
 
-public class RequestlistAdapter extends ArrayAdapter<String> {
+public class RequestListArrayAdapter extends ArrayAdapter<String> {
     public static int GAME = 1;
     public static int CREDIT = 2;
     public static int DEBIT = 3;
@@ -25,7 +22,7 @@ public class RequestlistAdapter extends ArrayAdapter<String> {
     private final String[] names;
     public int type;
 
-    public RequestlistAdapter(Context context, String[] names) {
+    public RequestListArrayAdapter(Context context, String[] names) {
         super(context, -1, names);
         this.context = context;
         this.names = names;
@@ -75,25 +72,5 @@ public class RequestlistAdapter extends ArrayAdapter<String> {
 
     public void setType(int t) {
         this.type = t;
-    }
-
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            // pre-condition
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight
-                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
     }
 }

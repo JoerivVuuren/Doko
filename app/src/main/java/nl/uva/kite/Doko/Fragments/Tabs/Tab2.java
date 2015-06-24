@@ -37,10 +37,10 @@ import nl.uva.kite.Doko.R;
 import nl.uva.kite.Doko.TicTacToe;
 
 public class Tab2 extends Fragment {
+    /* requests data */
     public static String[] requests_game;
     public static int[] requests_game_id;
     public static double[] requests_game_amount;
-    public static String[] requests_game_name;
     public static String[] requests_debit;
     public static int[] requests_debit_id;
     public static double[] requests_debit_amount;
@@ -49,6 +49,13 @@ public class Tab2 extends Fragment {
     public static int[] requests_credit_id;
     public static double[] requests_credit_amount;
     public static String[] requests_credit_reason;
+
+    /* history data */
+    public static String[] h_opponent;
+    public static String[] h_group_name;
+    public static double[] h_amount;
+    public static String[] h_datetime;
+    public static String[] h_reason;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -171,7 +178,7 @@ public class Tab2 extends Fragment {
         return v;
     }
 
-    /* retrieves the user's friend request list from DB */
+    /* retrieves the user's request lists and history from DB */
     public static void get_request_list(int type, Context ctext) {
         if (!Login.isLoggedIn())
             return;
@@ -181,7 +188,7 @@ public class Tab2 extends Fragment {
         params.add(new BasicNameValuePair("password", Login.getPassword()));
         params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, type);
-        jr.execute("http://intotheblu.nl/all_request_list.php");
+        jr.execute("http://intotheblu.nl/me_requests_and_history.php");
     }
 
     public static void denyGame(int gameID, Context ctext){
