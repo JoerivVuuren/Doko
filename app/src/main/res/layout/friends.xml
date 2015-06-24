@@ -12,10 +12,15 @@
         android:layout_alignParentTop="true">
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
-            android:text="Friend Requests"
-            android:textStyle="bold"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Friendship requests"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/pFullLightGreen"
+            android:layout_marginTop="5dp" />
 
         <ListView
             android:id="@+id/requests_list"
@@ -26,10 +31,14 @@
             android:layout_toRightOf="@+id/friends_text" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
-            android:text="Friends"
-            android:textStyle="bold"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="My Friends"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/pFullLightGreen" />
 
         <ListView
             android:id="@+id/friends_list"

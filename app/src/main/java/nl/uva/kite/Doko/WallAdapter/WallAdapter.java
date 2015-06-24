@@ -33,7 +33,7 @@ public class WallAdapter extends RecyclerView.Adapter<WallAdapter.WallViewHolder
         switch(wi.vType){
 //          Creating group
             case 0:
-                WallViewHolder.vMessage.setText("Today I " + wi.vUserName + " created the group "
+                WallViewHolder.vMessage.setText("Today I, " + wi.vUserName + " created the group "
                         + wi.vGroupName + "!");
                 break;
 //          Winning a game

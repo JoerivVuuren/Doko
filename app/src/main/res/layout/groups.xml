@@ -3,33 +3,40 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     tools:context="nl.uva.kite.Doko.Groups"
-    android:id="@+id/groups">
+    android:id="@+id/groups"
+    android:gravity="center_horizontal">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Group Requests"
+            android:layout_gravity="center_horizontal"
             android:textStyle="bold"
-            android:longClickable="false"
-            android:text="Group Requests" />
+            android:layout_marginTop="5dp" />
 
         <ListView
             android:id="@+id/requests_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:drawSelectorOnTop="false"
-            />
+            android:layout_marginTop="5dp"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:longClickable="false"
-            android:text="Groups" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="My Groups"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,7 +48,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:drawSelectorOnTop="false"
-            />
+            android:divider="@null"
+            android:dividerHeight="0dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 
