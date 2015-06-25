@@ -9,7 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import nl.uva.kite.Doko.DownloadImageTask;
 import nl.uva.kite.Doko.Groups;
+import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.R;
 
 public class MemberListArrayAdapter extends ArrayAdapter<String> {
@@ -45,10 +47,11 @@ public class MemberListArrayAdapter extends ArrayAdapter<String> {
             memberUserLevel.setText("Administrator");
 
         /* set member profile picture */
-        if (Groups.current_group_pictures[position].equals("artin.jpg"))
-            memberPic.setImageResource(R.drawable.artin);
-        else
-            memberPic.setImageResource(R.drawable.aka);
+        DownloadImageTask downloadImageTask = new DownloadImageTask();
+        //extensie nog niet dynamisch: gebruik Groups.current_group_pictures[position]
+        //TODO: picturenaam updaten
+        downloadImageTask.setImageFromURL(memberPic, "http://intotheblu.nl/image/" + Groups.current_group_pictures[position]);
+
 
         return rowView;
     }

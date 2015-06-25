@@ -2,11 +2,14 @@ package nl.uva.kite.Doko;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -28,6 +31,9 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 /* Upload Image bron :
  * http://programmerguru.com/android-tutorial/how-to-upload-image-to-php-server/
  * upload foto van android -> php file -> server
@@ -38,9 +44,10 @@ public class UploadImage extends Activity {
     ProgressDialog prgDialog;
     String encodedString;
     RequestParams params = new RequestParams();
-    String imgPath, fileName;
+    String imgPath, fileName, extensionType;
     Bitmap bitmap;
     private static int RESULT_LOAD_IMG = 1;
+    int indexOfLastDot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +93,13 @@ public class UploadImage extends Activity {
                 imgView.setImageBitmap(BitmapFactory
                         .decodeFile(imgPath));
                 // Get the Image's file name
-                String fileNameSegments[] = imgPath.split("/");
-                fileName = fileNameSegments[fileNameSegments.length - 1];
+                indexOfLastDot = imgPath.lastIndexOf(".");
+                Log.e("", "index " + indexOfLastDot);
+                extensionType = imgPath.substring(indexOfLastDot, imgPath.length());
+                fileName = Login.getLoginName() + extensionType;
+                Log.e("", "fileName = " + fileName);
                 // Put file name in Async Http Post Param which will used in Php web app
                 params.put("filename", fileName);
-
             } else {
                 Toast.makeText(this, "You haven't picked Image",
                         Toast.LENGTH_LONG).show();
@@ -98,6 +107,7 @@ public class UploadImage extends Activity {
         } catch (Exception e) {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
                     .show();
+            Log.e("", e.toString());
         }
 
     }
@@ -171,6 +181,7 @@ public class UploadImage extends Activity {
                     public void onSuccess(String response) {
                         // Hide Progress Dialog
                         prgDialog.hide();
+                        updateFileNameDB();
                         Toast.makeText(getApplicationContext(), response,
                                 Toast.LENGTH_LONG).show();
                     }
@@ -216,6 +227,16 @@ public class UploadImage extends Activity {
             prgDialog.dismiss();
         }
     }
+
+    public void updateFileNameDB() {
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("filename", fileName));
+        JSONRetrieve jr = new JSONRetrieve(this, params, OnJSONCompleted.NONE);
+        jr.execute("http://intotheblu.nl/update_pic_name.php");
+    }
+
 }
 
 
@@ -309,6 +330,7 @@ public class UploadImage extends ActionBarActivity {
 
     public void onClickUploadImage(View view) {
         String filepath = getPath(fileUri);
+        Log.e("", fileUri.getPath());
         UploadInBackground myAsync = new UploadInBackground();
         myAsync.execute(filepath);
     }
