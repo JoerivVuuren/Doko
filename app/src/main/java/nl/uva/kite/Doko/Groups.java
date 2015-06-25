@@ -16,6 +16,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
+
 public class Groups extends Fragment {
     private RelativeLayout layout;
     public static ListView listView;
@@ -161,6 +163,23 @@ public class Groups extends Fragment {
         params.add(new BasicNameValuePair("password", Login.getPassword()));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, type);
         jr.execute("http://intotheblu.nl/group_request_list.php");
+    }
+
+    /* retrieves the clicked user's history from DB */
+    public static void get_history_user(int group_id, String user, View view) {
+        if (!Login.isLoggedIn())
+            return;
+
+        /* save view in Tab3 for popup with user history */
+        Tab3.thisView = view;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("group_id", "" + group_id));
+        params.add(new BasicNameValuePair("user", user));
+        JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.POPUPUSERHISTORY);
+        jr.execute("http://intotheblu.nl/debt_get_history_groupuser.php");
     }
 
     /* activates group */
