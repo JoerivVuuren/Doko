@@ -52,6 +52,7 @@ public class Tab2 extends Fragment {
 
     /* history data */
     public static String[] h_opponent;
+    public static int[] h_group_id;
     public static String[] h_group_name;
     public static double[] h_amount;
     public static String[] h_datetime;

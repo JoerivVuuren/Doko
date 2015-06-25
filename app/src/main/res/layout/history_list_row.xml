@@ -6,16 +6,6 @@
     android:padding="5dip" >
 
     <TextView
-        android:id="@+id/history_list_group_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Group"
-        android:textColor="#040404"
-        android:typeface="sans"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/history_list_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,9 +14,7 @@
         android:typeface="sans"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/history_list_group_name"
-        android:layout_toEndOf="@+id/history_list_group_name" />
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/history_list_reason"
@@ -37,8 +25,8 @@
         android:typeface="sans"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_alignTop="@+id/history_list_datetime"
-        android:layout_centerHorizontal="true" />
+        android:layout_toLeftOf="@+id/history_list_datetime"
+        android:layout_toStartOf="@+id/history_list_datetime" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,8 +36,8 @@
         android:text="€ 0,00"
         android:id="@+id/history_list_amount"
         android:textColor="@color/colorPositive"
-        android:layout_toRightOf="@+id/history_list_reason"
-        android:layout_toEndOf="@+id/history_list_reason" />
+        android:layout_alignBottom="@+id/history_list_datetime"
+        android:layout_centerHorizontal="true" />
 
 
     <TextView

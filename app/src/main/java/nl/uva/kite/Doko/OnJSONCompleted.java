@@ -373,6 +373,7 @@ public class OnJSONCompleted {
                 }
 
                 Tab2.h_opponent = new String[jrequests_h_opponent.length()];
+                Tab2.h_group_id = new int[jrequests_h_opponent.length()];
                 Tab2.h_group_name = new String[jrequests_h_opponent.length()];
                 Tab2.h_amount = new double[jrequests_h_opponent.length()];
                 Tab2.h_datetime = new String[jrequests_h_opponent.length()];
@@ -380,7 +381,8 @@ public class OnJSONCompleted {
                 for (int i = jrequests_h_opponent.length() - 1; i >= 0; i--) {
                     int reverseIndex = jrequests_h_opponent.length() - 1 - i;
                     Tab2.h_opponent[reverseIndex] = jrequests_h_opponent.getString(i);
-                    Tab2.h_group_name[reverseIndex] = Groups.groupIDtoName(Integer.parseInt(jrequests_h_group_id.getString(i)));
+                    Tab2.h_group_id[reverseIndex] = Integer.parseInt(jrequests_h_group_id.getString(i));
+                    Tab2.h_group_name[reverseIndex] = Groups.groupIDtoName(Tab2.h_group_id[reverseIndex]);
                     Tab2.h_amount[reverseIndex] = jrequests_h_amount.getDouble(i);
                     Tab2.h_datetime[reverseIndex] = jrequests_h_datetime.getString(i);
                     Tab2.h_reason[reverseIndex] = jrequests_h_reason.getString(i);

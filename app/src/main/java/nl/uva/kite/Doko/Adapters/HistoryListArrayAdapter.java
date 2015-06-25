@@ -31,12 +31,10 @@ public class HistoryListArrayAdapter extends ArrayAdapter<String> {
         TextView opponent = (TextView)rowView.findViewById(R.id.history_list_name);
         TextView amount = (TextView)rowView.findViewById(R.id.history_list_amount);
         TextView reason = (TextView)rowView.findViewById(R.id.history_list_reason);
-        TextView groupName = (TextView)rowView.findViewById(R.id.history_list_group_name);
         TextView dateTime = (TextView)rowView.findViewById(R.id.history_list_datetime);
 
         opponent.setText(names[position]);
         reason.setText(Tab2.h_reason[position]);
-        groupName.setText(Tab2.h_group_name[position]);
         dateTime.setText(Tab2.h_datetime[position]);
         amount.setText(MainActivity.doubleToEuro(Tab2.h_amount[position]));
 
