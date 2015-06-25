@@ -5,12 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,8 +14,6 @@ import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseInstallation;
-import com.parse.ParsePush;
-import com.parse.ParseQuery;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -40,7 +33,7 @@ import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
-import nl.uva.kite.Doko.WallAdapter.WallAdapter;
+import nl.uva.kite.Doko.Adapters.WallAdapter;
 
 public class OnJSONCompleted {
     public static final int NONE = -1;

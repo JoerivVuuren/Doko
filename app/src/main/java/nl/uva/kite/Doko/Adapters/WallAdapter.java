@@ -1,4 +1,4 @@
-package nl.uva.kite.Doko.WallAdapter;
+package nl.uva.kite.Doko.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

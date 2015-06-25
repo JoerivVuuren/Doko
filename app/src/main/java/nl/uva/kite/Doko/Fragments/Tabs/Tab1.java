@@ -11,13 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import nl.uva.kite.Doko.Groups;
@@ -25,8 +23,8 @@ import nl.uva.kite.Doko.JSONRetrieve;
 import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
-import nl.uva.kite.Doko.WallAdapter.WallAdapter;
-import nl.uva.kite.Doko.WallAdapter.WallInfo;
+import nl.uva.kite.Doko.Adapters.WallAdapter;
+import nl.uva.kite.Doko.Adapters.WallInfo;
 
 
 public class Tab1 extends Fragment {

@@ -1,4 +1,4 @@
-package nl.uva.kite.Doko.WallAdapter;
+package nl.uva.kite.Doko.Adapters;
 
 /**
  * Created by whenislunch on 22-6-15.
