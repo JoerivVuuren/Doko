@@ -14,7 +14,10 @@
         android:typeface="sans"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp" />
 
     <TextView
         android:id="@+id/history_list_reason"
@@ -23,10 +26,12 @@
         android:text="Reason"
         android:textColor="#040404"
         android:typeface="sans"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_toLeftOf="@+id/history_list_datetime"
-        android:layout_toStartOf="@+id/history_list_datetime" />
+        android:textSize="14sp"
+        android:layout_below="@+id/history_list_datetime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="7dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,8 +41,9 @@
         android:text="€ 0,00"
         android:id="@+id/history_list_amount"
         android:textColor="@color/colorPositive"
-        android:layout_alignBottom="@+id/history_list_datetime"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/history_list_reason"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
     <TextView
@@ -47,9 +53,8 @@
         android:text="date time"
         android:textColor="#040404"
         android:typeface="sans"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_centerVertical="true"
+        android:textSize="12sp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 

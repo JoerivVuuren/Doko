@@ -112,6 +112,8 @@ public class Tab3 extends Fragment {
 
         /* create a ListView for user's history */
         ListView historyView = (ListView)popupView.findViewById(R.id.popup_user_history);
+        TextView noHistory = (TextView)a.findViewById(R.id.no_user_history);
+        historyView.setEmptyView(noHistory);
         UserHistoryArrayAdapter historyAdapter = new UserHistoryArrayAdapter(thisView.getContext(), h_opponent);
         historyView.setAdapter(historyAdapter);
         ListViewHeightFix.setListViewHeightBasedOnChildren(historyView);

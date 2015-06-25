@@ -107,7 +107,7 @@
         <ListView
             android:id="@+id/mygroups_list"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:drawSelectorOnTop="false" />
     </android.support.v4.widget.SwipeRefreshLayout>
         </LinearLayout>

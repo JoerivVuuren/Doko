@@ -324,7 +324,7 @@ public class OnJSONCompleted {
             else if (type == GROUPCREATE) {
                 /* activate new group id */
                 Groups.activateGroup(Integer.parseInt(json.getString("group_id")), json.getString("group_name"));
-                Tab1.wall_add(Login.getLoginName(), "abc", 0.0, 1, Integer.parseInt(json.getString("group_id")), ctext);
+
                 /* restart MainActivity */
                 Intent intent = new Intent(ctext, MainActivity.class);
                 a.finish();
@@ -423,6 +423,8 @@ public class OnJSONCompleted {
 
                 /* create a ListView for my history */
                 ListView meHistoryView = (ListView)a.findViewById(R.id.me_history_list);
+                TextView noHistory = (TextView)a.findViewById(R.id.empty_history);
+                meHistoryView.setEmptyView(noHistory);
                 HistoryListArrayAdapter meHistoryAdapter = new HistoryListArrayAdapter(ctext, Tab2.h_opponent);
                 meHistoryView.setAdapter(meHistoryAdapter);
                 ListViewHeightFix.setListViewHeightBasedOnChildren(meHistoryView);

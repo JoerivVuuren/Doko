@@ -73,18 +73,6 @@
                                 android:layout_marginLeft="5dp"
                                 android:textIsSelectable="false" />
 
-                            TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Member since: June 2015"
-                                android:layout_centerVertical="true"
-                                android:textColor="#333333"
-                                android:layout_centerHorizontal="true"
-                                android:textSize="14dp"
-                                android:layout_marginTop="0dp"
-                                android:layout_marginLeft="5dp"
-                                android:textIsSelectable="false" />
                         </LinearLayout>
 
                         <TableRow
@@ -156,11 +144,6 @@
                         android:layout_marginBottom="5dp"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-
-
-
-
-
 
             <LinearLayout
                 android:orientation="vertical"
@@ -358,6 +341,22 @@
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:elevation="4dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
+
 
         <LinearLayout
             android:orientation="vertical"
@@ -367,9 +366,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="History"
-                android:textColor="#000000"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="My History"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"/>
 
             <ListView
                 android:id="@+id/me_history_list"
@@ -377,7 +383,23 @@
                 android:layout_height="wrap_content"
                 android:dividerHeight="0dp"
                 android:focusable="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="You have no previous debts to track!"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/pFullLightGreen"
+                android:textSize="14sp"
+                android:id="@+id/empty_history"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
         </LinearLayout>
+        </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

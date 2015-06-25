@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/activityBackground">
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="10dp"
+        android:layout_margin="10dp">
+
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -13,13 +22,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/popup_user_name"
+             <TextView
                 android:layout_width="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="User history"
-                android:textColor="#000000"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="User History"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/popup_user_name"
+                 android:textSize="16sp" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"/>
 
             <ListView
                 android:id="@+id/popup_user_history"
@@ -27,8 +43,22 @@
                 android:layout_height="wrap_content"
                 android:dividerHeight="0dp"
                 android:focusable="true" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="You have debt history with this user.."
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/pFullLightGreen"
+                android:textSize="14sp"
+                android:id="@+id/no_user_history"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
         </LinearLayout>
 
     </ScrollView>
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>
