@@ -1,5 +1,6 @@
 package nl.uva.kite.Doko.Fragments.Tabs;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -12,21 +13,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import nl.uva.kite.Doko.Groups;
+import nl.uva.kite.Doko.JSONRetrieve;
 import nl.uva.kite.Doko.Login;
+import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 import nl.uva.kite.Doko.WallAdapter.WallAdapter;
 import nl.uva.kite.Doko.WallAdapter.WallInfo;
 
 
 public class Tab1 extends Fragment {
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    public static RecyclerView mRecyclerView;
+    public static RecyclerView.LayoutManager mLayoutManager;
+    public static RecyclerView.Adapter mAdapter;
+    public static WallAdapter wa;
+
+    /* wall data */
+    public static String[] w_player1;
+    public static String[] w_player2;
+    public static double[] w_amount;
+    public static String[] w_datetime;
+    public static int[] w_type;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,8 +64,7 @@ public class Tab1 extends Fragment {
                     public void onRefresh() {
                         swipeView.setRefreshing(true);
                         if (Login.isLoggedIn()) {
-////                            update the list!
-//                            Groups.get_groupmembers(listView.getContext());
+                            wall_get_list(swipeView.getContext());
                         }
                         (new Handler()).postDelayed(new Runnable() {
                             @Override
@@ -63,22 +76,57 @@ public class Tab1 extends Fragment {
                     }
                 });
 
+        /* update wall info */
+        wall_get_list(v.getContext());
 
-
-        WallAdapter wa = new WallAdapter(generateStuff(4));
-        mRecyclerView.setAdapter(wa);
         return v;
     }
 
-    private List generateStuff(int size){
+    /* retrieves the wall for this group from DB */
+    public static void wall_get_list(Context ctext) {
+        if (!Login.isLoggedIn() || Groups.current_group_id < 0)
+            return;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.WALLLIST);
+        jr.execute("http://intotheblu.nl/wall_list.php");
+    }
+
+    /* adds a new wall item */
+    public static void wall_add(String player1, String player2, double amount, int typ, Context ctext) {
+        if (!Login.isLoggedIn() || Groups.current_group_id < 0)
+            return;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
+        params.add(new BasicNameValuePair("player1", player1));
+
+        if (player2 != null)
+            params.add(new BasicNameValuePair("player2", player2));
+
+        params.add(new BasicNameValuePair("amount", "" + amount));
+        params.add(new BasicNameValuePair("type", "" + typ));
+
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.WALLADD);
+        jr.execute("http://intotheblu.nl/wall_add.php");
+    }
+
+    public static List generate_wall(Context ctext){
         List<WallInfo> dataSet = new ArrayList<>();
-        for(int i = 0 ; i < size ; i++){
+
+        for (int i = 0; w_player1 != null && i < w_player1.length; i++){
             WallInfo wi = new WallInfo();
-            wi.vType = i;
-            wi.vAmount = 69.99;
+            wi.vType = w_type[i];
+            wi.vAmount = w_amount[i];
             wi.vGameName = "Tic Tac Toe";
-            wi.vUserName = "Chiquita Banaan";
-            wi.vOpponentName = "Matthijs Bes";
+            wi.vDateTime = w_datetime[i];
+            wi.vUserName = w_player1[i];
+            wi.vOpponentName = w_player2[i];
             wi.vGroupName = Groups.current_group_name;
             dataSet.add(wi);
         }

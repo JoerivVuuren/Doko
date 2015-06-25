@@ -5,6 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +31,11 @@ import nl.uva.kite.Doko.Adapters.HistoryListArrayAdapter;
 import nl.uva.kite.Doko.Adapters.ListViewHeightFix;
 import nl.uva.kite.Doko.Adapters.MemberListArrayAdapter;
 import nl.uva.kite.Doko.Adapters.RequestListArrayAdapter;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
+import nl.uva.kite.Doko.WallAdapter.WallAdapter;
 
 public class OnJSONCompleted {
     public static final int NONE = -1;
@@ -51,6 +57,8 @@ public class OnJSONCompleted {
     public static final int GAMELISTUPDATE = 25;
     public static final int LOADGAME = 26;
     public static final int POPUPUSERHISTORY = 30;
+    public static final int WALLLIST = 31;
+    public static final int WALLADD = 32;
 
     public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
@@ -323,7 +331,8 @@ public class OnJSONCompleted {
                 ctext.startActivity(intent);
             }
             else if (type == DEBTADD) {
-                //doeiets
+                /* update group member list */
+                Groups.get_groupmembers(ctext);
             }
             else if (type == ALLREQUESTUPDATE) {
                 JSONArray jrequests_game = json.getJSONArray("game_sender");
@@ -477,7 +486,6 @@ public class OnJSONCompleted {
                 gamesView.setAdapter(gamesAdapter);
                 ListViewHeightFix.setListViewHeightBasedOnChildren(gamesView);
             }
-
             else if (type == POPUPUSERHISTORY) {
 
                 /* fill Tab3.* with json response */
@@ -499,6 +507,36 @@ public class OnJSONCompleted {
                 }
 
                 Tab3.showPopup(json.getString("user"), a);
+            }
+            else if (type == WALLLIST) {
+
+                /* fill Tab1.* with json response */
+                JSONArray jrequests_w_player1 = json.getJSONArray("player1");
+                JSONArray jrequests_w_player2 = json.getJSONArray("player2");
+                JSONArray jrequests_w_amount = json.getJSONArray("amount");
+                JSONArray jrequests_w_datetime = json.getJSONArray("datetime");
+                JSONArray jrequests_w_type = json.getJSONArray("type");
+
+                Tab1.w_player1 = new String[jrequests_w_player1.length()];
+                Tab1.w_player2 = new String[jrequests_w_player1.length()];
+                Tab1.w_amount = new double[jrequests_w_player1.length()];
+                Tab1.w_datetime = new String[jrequests_w_player1.length()];
+                Tab1.w_type = new int[jrequests_w_player1.length()];
+                for (int i = jrequests_w_player1.length() - 1; i >= 0; i--) {
+                    int reverseIndex = jrequests_w_player1.length() - 1 - i;
+                    Tab1.w_player1[reverseIndex] = jrequests_w_player1.getString(i);
+                    Tab1.w_player2[reverseIndex] = jrequests_w_player2.getString(i);
+                    Tab1.w_amount[reverseIndex] = jrequests_w_amount.getDouble(i);
+                    Tab1.w_datetime[reverseIndex] = jrequests_w_datetime.getString(i);
+                    Tab1.w_type[reverseIndex] = jrequests_w_type.getInt(i);
+                }
+
+                Tab1.wa = new WallAdapter(Tab1.generate_wall(ctext));
+                Tab1.mRecyclerView.setAdapter(Tab1.wa);
+            }
+            else if (type == WALLADD) {
+                /* refresh wall */
+                Tab1.wall_get_list(ctext);
             }
         }
         catch (JSONException e) {

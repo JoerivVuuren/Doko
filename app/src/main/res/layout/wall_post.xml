@@ -69,7 +69,8 @@
                             android:textSize="14dp"
                             android:layout_marginTop="0dp"
                             android:layout_marginLeft="5dp"
-                            android:textIsSelectable="false" />
+                            android:textIsSelectable="false"
+                            android:id="@+id/wall_post_datetime" />
                     </LinearLayout>
 
                     <TableRow

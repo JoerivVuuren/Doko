@@ -9,6 +9,7 @@ public class WallInfo {
     public String vGroupName;
     public String vGameName;
     public String vOpponentName;
+    public String vDateTime;
     public double vAmount;
 
 }
