@@ -74,6 +74,8 @@ public class Tab2 extends Fragment {
 //        friendRequestsLv.setAdapter(listAdapter);
 
         final ListView gameReq = (ListView)v.findViewById(R.id.game_request_list);
+        TextView noGameRequest = (TextView)v.findViewById(R.id.empty_game_request);
+        gameReq.setEmptyView(noGameRequest);
         gameReq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             // do this when an item of the list is clicked
@@ -107,6 +109,8 @@ public class Tab2 extends Fragment {
         });
 
         final ListView debitReq = (ListView)v.findViewById(R.id.debit_request_list);
+        TextView noDebitReq = (TextView)v.findViewById(R.id.empty_debit_request);
+        debitReq.setEmptyView(noDebitReq);
         debitReq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             // do this when an item of the list is clicked
@@ -142,6 +146,8 @@ public class Tab2 extends Fragment {
         });
 
         final ListView creditReq = (ListView)v.findViewById(R.id.credit_request_list);
+        TextView noCreditReq = (TextView)v.findViewById(R.id.empty_credit_request);
+        creditReq.setEmptyView(noCreditReq);
         creditReq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             // do this when an item of the list is clicked

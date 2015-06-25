@@ -141,6 +141,17 @@
                         android:layout_height="wrap_content"
                         android:dividerHeight="0dp"
                         android:focusable="true" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="You have no pending game requests"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/pFullLightGreen"
+                        android:textSize="14sp"
+                        android:id="@+id/empty_game_request"
+                        android:gravity="center_horizontal"
+                        android:visibility="gone"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -213,12 +224,27 @@
                 android:focusable="true"
                 android:headerDividersEnabled="false"
                 android:footerDividersEnabled="false" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:text="You have no pending credit requests"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@color/pFullLightGreen"
+                                    android:textSize="14sp"
+                                    android:id="@+id/empty_credit_request"
+                                    android:gravity="center_horizontal"
+                                    android:visibility="gone"/>
                             </TableRow>
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="1dp"
+                                android:background="?android:attr/listDivider"/>
 
 
                             <Button
                                 android:id="@+id/btnAddCredit"
-                                android:layout_width="140dp"
+                                android:layout_width="180dp"
                                 android:layout_height="wrap_content"
                                 android:textColor="#ffffff"
                                 android:layout_gravity="center_horizontal"
@@ -292,11 +318,25 @@
                                     android:layout_height="wrap_content"
                                     android:dividerHeight="0dp"
                                     android:focusable="true" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:text="You have no pending debit requests"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@color/pFullLightGreen"
+                                    android:textSize="14sp"
+                                    android:id="@+id/empty_debit_request"
+                                    android:gravity="center_horizontal"
+                                    android:visibility="gone"/>
                             </TableRow>
-
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="1dp"
+                                android:background="?android:attr/listDivider"/>
                             <Button
                                 android:id="@+id/btnAddDebit"
-                                android:layout_width="140dp"
+                                android:layout_width="180dp"
                                 android:layout_height="wrap_content"
                                 android:textColor="#ffffff"
                                 android:layout_gravity="center_horizontal"
