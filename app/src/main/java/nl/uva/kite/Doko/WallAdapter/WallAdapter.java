@@ -30,6 +30,7 @@ public class WallAdapter extends RecyclerView.Adapter<WallAdapter.WallViewHolder
         WallInfo wi = wallList.get(i);
 //        username is always the same
         WallViewHolder.vUserName.setText(wi.vUserName);
+        WallViewHolder.vDateTime.setText(wi.vDateTime);
 //        choose the type of post and continue appropriately
         switch(wi.vType){
 //          Creating group
