@@ -79,4 +79,8 @@ public class Friends extends Fragment {
         JSONRetrieve jr = new JSONRetrieve(ctext, params, type);
         jr.execute("http://intotheblu.nl/friend_request_list.php");
     }
+
+    public static String[] getFriendList() {
+        return friends;
+    }
 }

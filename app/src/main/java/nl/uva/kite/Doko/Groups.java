@@ -210,4 +210,8 @@ public class Groups extends Fragment {
 
         return "";
     }
+
+    public static String[] getGroupMemberList() {
+        return current_group_members;
+    }
 }
