@@ -57,11 +57,16 @@ public class WallAdapter extends RecyclerView.Adapter<WallAdapter.WallViewHolder
                 break;
 //            added a debt
             case 5:
-                WallViewHolder.vMessage.setText(wi.vUserName + " has opened a debt of " + MainActivity.doubleToEuro(wi.vAmount) +
-                " to " + wi.vOpponentName + "!");
+                WallViewHolder.vMessage.setText(wi.vUserName + " has opened a debt of " +
+                        MainActivity.doubleToEuro(wi.vAmount) + " to " + wi.vOpponentName + "!");
                 break;
             case 6:
                 WallViewHolder.vMessage.setText(wi.vOpponentName + " was added to the group!");
+                break;
+            case 7:
+//                tie!
+                WallViewHolder.vMessage.setText("After having played a game of " + wi.vGameName +
+                        " with " + wi.vOpponentName + " it ended in a tie and neither of us won!");
         }
     }
 
@@ -81,7 +86,6 @@ public class WallAdapter extends RecyclerView.Adapter<WallAdapter.WallViewHolder
         static protected String vOpponentName;
         static protected int vType;
         static protected double vAmount;
-//        static protected double vAmount;
 
         public WallViewHolder(View v) {
             super(v);
