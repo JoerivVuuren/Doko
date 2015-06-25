@@ -9,13 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="Sasha van Ewijk"
+        android:text="Username"
         android:textColor="@android:color/white"
         android:typeface="sans"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="16dp" />
+        android:layout_marginLeft="16dp"
+        android:id="@+id/drawer_username" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="70dp"

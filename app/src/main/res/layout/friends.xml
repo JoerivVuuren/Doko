@@ -29,19 +29,18 @@
             android:layout_width="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Friendship requests"
-            android:layout_gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Friendship Requests"
             android:textStyle="bold"
-            android:textColor="@color/pFullLightGreen"
-            android:layout_marginTop="5dp" />
+            android:layout_marginLeft="10dp" />
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"/>
 
         <ListView
-            android:id="@+id/requests_list"
+            android:id="@+id/friend_request_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:drawSelectorOnTop="false"
@@ -57,6 +56,8 @@
             android:textSize="14sp"
             android:id="@+id/empty_friend_invite"
             android:gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:visibility="gone"/>
         </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -82,11 +83,15 @@
             android:layout_width="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="My Friends"
-            android:layout_gravity="center_horizontal"
             android:textStyle="bold"
-            android:textColor="@color/pFullLightGreen" />
+            android:layout_marginLeft="10dp" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"/>
+
 
         <ListView
             android:id="@+id/friends_list"
@@ -112,6 +117,10 @@
     <TextView android:text="" android:layout_width="wrap_content" android:id="@+id/friends_text"
         android:layout_height="wrap_content" android:maxLines="100" />
 
+
+    </android.support.v7.widget.CardView>
+
+    </LinearLayout>
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/friends_fab"
         android:onClick="SendFriendRequest"
@@ -126,7 +135,4 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="false"
         android:layout_margin="24dp" />
-    </android.support.v7.widget.CardView>
-    </LinearLayout>
-
 </RelativeLayout>

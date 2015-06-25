@@ -9,37 +9,95 @@ android:background="@color/activityBackground"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
         android:id="@+id/linearLayout2">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tic Tac Toe"
-            android:onClick="OpenTicTacToe"
-            android:id ="@+id/ttt_button" />
+        <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="4dp"
+        android:layout_marginBottom="5dp"
+        android:background="#ffffff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp">
 
-        <Button
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
             android:layout_width="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
-            android:text="Send a game request"
-            android:onClick="SendGameRequest"
-            android:id ="@+id/game_req_button" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Play A New Game!"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/playnew_string" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register device for parse push"
-            android:onClick="RegisterPush"
-            android:id ="@+id/reg_push_button"
-            android:singleLine="false" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:clickable="true">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="SendGameRequest">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tic-Tac-Toe!"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+        </TableRow>
+
+
+    </LinearLayout>
+        </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="4dp"
+        android:layout_marginBottom="5dp"
+        android:background="#ffffff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:layout_width="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Game List"
-            android:textColor="#000000"/>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Active Games"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"/>
+
 
         <ListView
             android:id="@+id/game_list"
@@ -47,6 +105,21 @@ android:background="@color/activityBackground"
             android:layout_height="wrap_content"
             android:dividerHeight="0dp"
             android:focusable="true" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="You have no active games!"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/pFullLightGreen"
+            android:textSize="14sp"
+            android:id="@+id/empty_active_games"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+        </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
 </RelativeLayout>

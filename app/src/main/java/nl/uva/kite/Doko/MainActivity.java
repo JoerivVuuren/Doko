@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.Parse;
@@ -84,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
         MainActivity.mContext = this;
         setContentView(R.layout.activity_homescreen);
+        /* change drawer username */
+        TextView drawerUsername = (TextView) findViewById(R.id.drawer_username);
+        drawerUsername.setText(Login.getLoginName());
 
         /* update groups list */
         Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, this);

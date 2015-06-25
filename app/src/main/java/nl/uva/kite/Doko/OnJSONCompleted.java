@@ -154,14 +154,16 @@ public class OnJSONCompleted {
                 Friends.requests = request_list;
 
                 /* create a ListView for requests */
-                final ListView requestListView = (ListView)a.findViewById(R.id.requests_list);
+                final ListView friendRequestListView = (ListView)a.findViewById(R.id.friend_request_list);
+                TextView noFriendInvite = (TextView)a.findViewById(R.id.empty_friend_invite);
+                friendRequestListView.setEmptyView(noFriendInvite);
                 ArrayList<String> arrList = new ArrayList<String>();
                 arrList.addAll(Arrays.asList(request_list));
                 ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.simplerow, arrList);
 
-                requestListView.setAdapter(listAdapter);
+                friendRequestListView.setAdapter(listAdapter);
 
-                requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                friendRequestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctext);
@@ -308,13 +310,13 @@ public class OnJSONCompleted {
                                 .setCancelable(true)
                                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
-                                        Groups.adduser(Login.getLoginName(), id_list[id+1], view.getContext());
+                                        Groups.adduser(Login.getLoginName(), id_list[position], view.getContext());
                                         view.setVisibility(View.GONE);
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Groups.deny_request(id_list[id+1], view.getContext());
+                                        Groups.deny_request(id_list[position], view.getContext());
                                         view.setVisibility(View.GONE);
                                     }
                                 });
