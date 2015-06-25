@@ -88,12 +88,15 @@ public class MainActivity extends AppCompatActivity {
             /* close current main activity */
             MainActivity.mContext.finish();
 
+
+
+
+
         MainActivity.mContext = this;
         setContentView(R.layout.activity_homescreen);
         /* change drawer username */
         TextView drawerUsername = (TextView) findViewById(R.id.drawer_username);
         drawerUsername.setText(Login.getLoginName());
-
 
         /* update groups list */
         Groups.get_grouplist(OnJSONCompleted.GROUPLISTUPDATE, this);
@@ -108,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
         TabWrapper tabWrapper = new TabWrapper();
         fragmentTransaction.replace(R.id.fragment_container, tabWrapper);
         fragmentTransaction.commit();
+
+
 
         //        setUpNavDrawer();
 
@@ -136,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_item_2:
                         Snackbar.make(mContentFrame, "Groups", Snackbar.LENGTH_SHORT).show();
                         Groups groupsFragment = new Groups();
-                        //Tab4 tab4 = new Tab4();
                         fragmentTransaction.replace(R.id.fragment_container, groupsFragment);
                         fragmentTransaction.commit();
                         mCurrentSelectedPosition = 1;
@@ -144,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_item_3:
                         Snackbar.make(mContentFrame, "Contacts", Snackbar.LENGTH_SHORT).show();
                         Friends friendsFragment = new Friends();
-                        //Tab4 tab4 = new Tab4();
                         fragmentTransaction.replace(R.id.fragment_container, friendsFragment);
                         fragmentTransaction.commit();
                         mCurrentSelectedPosition = 2;
@@ -161,6 +164,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+//        workaround for new members ending up in an empty group
+        if (Groups.current_group_name == null){
+            Friends friendsFragment = new Friends();
+            fragmentTransaction.replace(R.id.fragment_container, friendsFragment);
+            mCurrentSelectedPosition = 2;
+        }
         final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toolbar.setNavigationIcon(R.drawable.ic_action);
 
@@ -198,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
         //        change title to current group name if there is an active group
         Typeface titleTF = Typeface.createFromAsset(getAssets(), "fonts/Crescent-Regular.ttf");
-        SpannableStringBuilder SS = new SpannableStringBuilder("Doko");
+        SpannableStringBuilder SS = new SpannableStringBuilder("doko");
         if (Groups.current_group_name != null){
             SS = new SpannableStringBuilder(Groups.current_group_name);
         }

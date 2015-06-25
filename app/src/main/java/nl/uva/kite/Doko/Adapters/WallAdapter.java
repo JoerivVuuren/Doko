@@ -1,13 +1,22 @@
 package nl.uva.kite.Doko.Adapters;
 
+
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.net.URI;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import nl.uva.kite.Doko.DownloadImageTask;
+import nl.uva.kite.Doko.Groups;
+import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.MainActivity;
 import nl.uva.kite.Doko.R;
 
@@ -31,6 +40,14 @@ public class WallAdapter extends RecyclerView.Adapter<WallAdapter.WallViewHolder
 //        username is always the same
         WallViewHolder.vUserName.setText(wi.vUserName);
         WallViewHolder.vDateTime.setText(wi.vDateTime);
+        try{
+            DownloadImageTask downloadImageTask = new DownloadImageTask();
+            ImageView iv = WallViewHolder.vPosterImage;
+            downloadImageTask.setImageFromURL(iv, "http://intotheblu.nl/image/" + wi.vUserName + ".jpg");
+        }
+        catch(Exception e) {
+            Log.e("", e.getMessage());
+        }
 //        choose the type of post and continue appropriately
         switch(wi.vType){
 //          Creating group
@@ -86,12 +103,14 @@ public class WallAdapter extends RecyclerView.Adapter<WallAdapter.WallViewHolder
         static protected String vOpponentName;
         static protected int vType;
         static protected double vAmount;
+        static protected CircleImageView vPosterImage;
 
         public WallViewHolder(View v) {
             super(v);
             vUserName = (TextView) v.findViewById(R.id.wall_poster_name);
             vMessage = (TextView) v.findViewById(R.id.wall_post_message);
             vDateTime = (TextView) v.findViewById(R.id.wall_post_datetime);
+            vPosterImage = (CircleImageView) v.findViewById(R.id.wall_poster_image);
         }
     }
 }

@@ -18,6 +18,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import nl.uva.kite.Doko.DownloadImageTask;
 import nl.uva.kite.Doko.Groups;
 import nl.uva.kite.Doko.JSONRetrieve;
 import nl.uva.kite.Doko.Login;
