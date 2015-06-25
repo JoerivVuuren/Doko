@@ -47,6 +47,7 @@ import java.util.Collections;
 import java.util.List;
 
 import nl.uva.kite.Doko.Fragments.TabWrapper;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -172,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
             String newGroupName = getIntent().getStringExtra("groupName");
             if (newGroupID > -1)
                 Groups.activateGroup(newGroupID, newGroupName);
+        } if (getIntent().getStringExtra("gameturn") != null && getIntent().getStringExtra("gameturn").equals("begon")) {
+            Tab4.get_game_data(OnJSONCompleted.LOADGAME, TicTacToe.current_game_id, TicTacToe.myContext);
         }
 
         /* activate last selected group_id */

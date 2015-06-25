@@ -12,8 +12,10 @@ import com.parse.ParsePushBroadcastReceiver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 import nl.uva.kite.Doko.Login;
 import nl.uva.kite.Doko.MainActivity;
+import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 import nl.uva.kite.Doko.TicTacToe;
 
@@ -76,8 +78,15 @@ public class MyPushBroadcastReceiver extends ParsePushBroadcastReceiver{
                 tryIntent.putExtra("Requests", "addMember");
             }
             else if (classType.equals("gameturn")) {
-                tryIntent = new Intent(context, TicTacToe.class);
-                tryIntent.putExtra("gameturn", "begon");
+                if(TicTacToe.isActivityVisible() && TicTacToe.myContext != null) {
+                    Log.e("", "isvisible is true");
+                    Tab4.get_game_data(OnJSONCompleted.LOADGAME, TicTacToe.current_game_id, TicTacToe.myContext);
+                } else {
+                    Log.e("", "we came in the push receive and tried to pend tictactoe as intent");
+                    builder.setContentTitle("Game turn");
+                    tryIntent = new Intent(context, MainActivity.class);
+                    tryIntent.putExtra("gameturn", "begon");
+                }
             }
             else {
                 Log.e("", "onpushreceive in de else gekomen helaas...");

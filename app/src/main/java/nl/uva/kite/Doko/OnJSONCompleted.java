@@ -19,13 +19,18 @@ import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import nl.uva.kite.Doko.Adapters.HistoryListArrayAdapter;
 import nl.uva.kite.Doko.Adapters.ListViewHeightFix;
@@ -59,6 +64,7 @@ public class OnJSONCompleted {
     public static final int POPUPUSERHISTORY = 30;
     public static final int WALLLIST = 31;
     public static final int WALLADD = 32;
+    public static final int FINISHGAME = 27;
 
     public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
@@ -445,7 +451,7 @@ public class OnJSONCompleted {
                 //NotificationCompat.Builder builder = new NotificationCompat.Builder(ctext);
                 //TicTacToe.getUpdate(json.getInt("group_id"), ctext);
             }
-            else if (/*type == UPDATEGAME || */type == LOADGAME) {
+            else if (type == LOADGAME) {
                 Intent tryIntent;
                 tryIntent = new Intent(ctext, TicTacToe.class);
                 tryIntent.putExtra("class", "UPDATEGAME");
@@ -463,6 +469,11 @@ public class OnJSONCompleted {
                 tryIntent.putExtra("player2", json.getString("player2"));
                 tryIntent.putExtra("turn", json.getString("turn"));
 
+                /* close previous activity first */
+                if (TicTacToe.myContext != null) {
+                    Activity a2 = (Activity)TicTacToe.myContext;
+                    a2.finish();
+                }
                 a.startActivity(tryIntent);
             }
             else if (type == GAMELISTUPDATE) {
@@ -487,6 +498,19 @@ public class OnJSONCompleted {
                 gamesAdapter.setType(gamesAdapter.GAMELIST);
                 gamesView.setAdapter(gamesAdapter);
                 ListViewHeightFix.setListViewHeightBasedOnChildren(gamesView);
+            } else if(type == FINISHGAME) {
+                List<NameValuePair> params = new ArrayList<>();
+                String winner = json.getString("winner");
+                if(!winner.equals("none")) {
+                    params.add(new BasicNameValuePair("username", Login.getLoginName()));
+                    params.add(new BasicNameValuePair("password", Login.getPassword()));
+                    params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
+                    params.add(new BasicNameValuePair("debitor", json.getString("loser")));
+                    params.add(new BasicNameValuePair("creditor", json.getString("winner")));
+                    params.add(new BasicNameValuePair("debt", json.getString("amount")));
+                    JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.DEBTADD);
+                    jr.execute("http://intotheblu.nl/debt_add.php");
+                }
             }
             else if (type == POPUPUSERHISTORY) {
 
