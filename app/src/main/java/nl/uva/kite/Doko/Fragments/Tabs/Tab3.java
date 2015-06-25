@@ -1,29 +1,38 @@
 package nl.uva.kite.Doko.Fragments.Tabs;
 
-import android.content.Intent;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
-import com.melnykov.fab.FloatingActionButton;
-
-import nl.uva.kite.Doko.Friends;
+import nl.uva.kite.Doko.Adapters.ListViewHeightFix;
+import nl.uva.kite.Doko.Adapters.UserHistoryArrayAdapter;
 import nl.uva.kite.Doko.Groups;
 import nl.uva.kite.Doko.Login;
-import nl.uva.kite.Doko.OnJSONCompleted;
 import nl.uva.kite.Doko.R;
 
 public class Tab3 extends Fragment {
     public static ListView listView;
+    public static View thisView;
+
+    public static String[] h_opponent;
+    public static double[] h_amount;
+    public static String[] h_datetime;
+    public static String[] h_reason;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,7 +45,7 @@ public class Tab3 extends Fragment {
             // do this when an item of the list is clicked
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedFromList = (listView.getItemAtPosition(position).toString());
-                Log.e("", "Clicked on " + selectedFromList);
+                Groups.get_history_user(Groups.current_group_id, selectedFromList, view);
             }
         });
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
@@ -87,5 +96,29 @@ public class Tab3 extends Fragment {
         Groups.get_groupmembers(this.getActivity());
 
         return v;
+    }
+
+    /* displays user info in a popup window */
+    public static void showPopup(String username, Activity a) {
+        if (thisView == null)
+            return;
+
+        View popupView = a.getLayoutInflater().inflate(R.layout.popup_user, null);
+        PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
+        /* set title */
+        TextView title = (TextView)popupView.findViewById(R.id.popup_user_name);
+        title.setText("Debt history for " + username);
+
+        /* create a ListView for user's history */
+        ListView historyView = (ListView)popupView.findViewById(R.id.popup_user_history);
+        UserHistoryArrayAdapter historyAdapter = new UserHistoryArrayAdapter(thisView.getContext(), h_opponent);
+        historyView.setAdapter(historyAdapter);
+        ListViewHeightFix.setListViewHeightBasedOnChildren(historyView);
+
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        popupWindow.showAtLocation(thisView, Gravity.CENTER_HORIZONTAL, 0, -650);
+
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +28,7 @@ import nl.uva.kite.Doko.Adapters.ListViewHeightFix;
 import nl.uva.kite.Doko.Adapters.MemberListArrayAdapter;
 import nl.uva.kite.Doko.Adapters.RequestListArrayAdapter;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 
 public class OnJSONCompleted {
@@ -48,6 +50,7 @@ public class OnJSONCompleted {
     public static final int UPDATEGAME = 24;
     public static final int GAMELISTUPDATE = 25;
     public static final int LOADGAME = 26;
+    public static final int POPUPUSERHISTORY = 30;
 
     public static void dotask(int type, JSONObject json, final Context ctext) {
         try {
@@ -473,6 +476,29 @@ public class OnJSONCompleted {
                 gamesAdapter.setType(gamesAdapter.GAMELIST);
                 gamesView.setAdapter(gamesAdapter);
                 ListViewHeightFix.setListViewHeightBasedOnChildren(gamesView);
+            }
+
+            else if (type == POPUPUSERHISTORY) {
+
+                /* fill Tab3.* with json response */
+                JSONArray jrequests_h_opponent = json.getJSONArray("h_opponent");
+                JSONArray jrequests_h_amount = json.getJSONArray("h_amount");
+                JSONArray jrequests_h_datetime = json.getJSONArray("h_datetime");
+                JSONArray jrequests_h_reason = json.getJSONArray("h_reason");
+
+                Tab3.h_opponent = new String[jrequests_h_opponent.length()];
+                Tab3.h_amount = new double[jrequests_h_opponent.length()];
+                Tab3.h_datetime = new String[jrequests_h_opponent.length()];
+                Tab3.h_reason = new String[jrequests_h_opponent.length()];
+                for (int i = jrequests_h_opponent.length() - 1; i >= 0; i--) {
+                    int reverseIndex = jrequests_h_opponent.length() - 1 - i;
+                    Tab3.h_opponent[reverseIndex] = jrequests_h_opponent.getString(i);
+                    Tab3.h_amount[reverseIndex] = jrequests_h_amount.getDouble(i);
+                    Tab3.h_datetime[reverseIndex] = jrequests_h_datetime.getString(i);
+                    Tab3.h_reason[reverseIndex] = jrequests_h_reason.getString(i);
+                }
+
+                Tab3.showPopup(json.getString("user"), a);
             }
         }
         catch (JSONException e) {
