@@ -49,14 +49,12 @@
             android:textColor="#343434"
             android:textSize="13sp"
             android:layout_marginTop="1dip"
-            android:layout_toRightOf="@+id/thumbnail"
-            android:text="Member" />
+            android:layout_toRightOf="@+id/thumbnail" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="€ 0,00"
             android:id="@+id/group_list_debt"
             android:layout_marginRight="19dp"
             android:layout_marginEnd="19dp"

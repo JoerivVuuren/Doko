@@ -20,6 +20,7 @@ import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
 
 public class Friends extends Fragment {
     public static String[] friends;
+    public static String[] pictures;
     public static String[] requests;
     private RelativeLayout layout;
 

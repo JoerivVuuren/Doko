@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import nl.uva.kite.Doko.Adapters.FriendListArrayAdapter;
 import nl.uva.kite.Doko.Adapters.HistoryListArrayAdapter;
 import nl.uva.kite.Doko.Adapters.ListViewHeightFix;
 import nl.uva.kite.Doko.Adapters.MemberListArrayAdapter;
@@ -128,7 +129,7 @@ public class OnJSONCompleted {
 //                friendListView.setEmptyView((a.findViewById(R.id.noFriends)));
                 ArrayList<String> arrList = new ArrayList<String>();
                 arrList.addAll(Arrays.asList(friend_list));
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(ctext, R.layout.member_list_row,R.id.member_group_list_name, arrList);
+                FriendListArrayAdapter listAdapter = new FriendListArrayAdapter(ctext, friend_list);
 
                 friendListView.setAdapter(listAdapter);
 

@@ -165,11 +165,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //        workaround for new members ending up in an empty group
-        if (Groups.current_group_name == null){
-            Friends friendsFragment = new Friends();
-            fragmentTransaction.replace(R.id.fragment_container, friendsFragment);
-            mCurrentSelectedPosition = 2;
-        }
+
         final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toolbar.setNavigationIcon(R.drawable.ic_action);
 
@@ -232,6 +228,11 @@ public class MainActivity extends AppCompatActivity {
         updatePicNameFromDB(this);
         TextView tv = (TextView)findViewById(R.id.drawer_username);
         tv.setText(Login.getLoginName());
+        if (Groups.current_group_name == null){
+            Groups groups = new Groups();
+            fragmentTransaction.replace(R.id.fragment_container, groups);
+            mCurrentSelectedPosition = 1;
+        }
 
     }
 
@@ -290,6 +291,7 @@ public class MainActivity extends AppCompatActivity {
 
     /* logs out the current user */
     public void LogOutUser(View view) {
+        Groups.activateGroup(0, "doko");
         Login.logOut(view.getContext());
     }
 

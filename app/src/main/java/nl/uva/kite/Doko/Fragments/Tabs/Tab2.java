@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -67,18 +68,20 @@ public class Tab2 extends Fragment {
         View v = inflater.inflate(R.layout.tab_2,container,false);
         get_request_list(OnJSONCompleted.ALLREQUESTUPDATE, this.getActivity());
 
-        userPicMe = (CircleImageView) this.getActivity().findViewById(R.id.circleimageviewME);
+        userPicMe = (CircleImageView) v.findViewById(R.id.circleimageviewME);
+        try{
+            DownloadImageTask downloadImageTask = new DownloadImageTask();
+            ImageView iv = userPicMe;
+            downloadImageTask.setImageFromURL(iv, "http://intotheblu.nl/image/" + Login.getLoginName() + ".jpg" );
+        }
+        catch(Exception e) {
+            Log.e("", e.getMessage());
+        }
         MainActivity.updatePicNameFromDB(MainActivity.mContext);
 
         /* display user's name */
         TextView meName = (TextView)v.findViewById(R.id.me_name);
         meName.setText(Login.getLoginName());
-//        ListView friendRequestsLv = (ListView)v.findViewById(R.id.friend_request_list);
-//        ArrayList<String> friendRequests = new ArrayList<String>();
-//        friendRequests.add("Staci Carr");
-//        friendRequests.add("Staci Carr");
-//        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(getActivity(), R.layout.friend_request_list_row,R.id.friend_request_name, friendRequests);
-//        friendRequestsLv.setAdapter(listAdapter);
 
         final ListView gameReq = (ListView)v.findViewById(R.id.game_request_list);
         TextView noGameRequest = (TextView)v.findViewById(R.id.empty_game_request);

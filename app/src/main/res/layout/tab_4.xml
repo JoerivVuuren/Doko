@@ -60,7 +60,7 @@ android:background="@color/activityBackground"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tic-Tac-Toe"
+                android:text="TicTacToe"
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:id="@+id/ttt_title"

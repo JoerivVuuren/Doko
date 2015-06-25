@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import nl.uva.kite.Doko.DownloadImageTask;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 import nl.uva.kite.Doko.MainActivity;
@@ -66,6 +68,16 @@ public class RequestListArrayAdapter extends ArrayAdapter<String> {
             reason.setText("Tic Tac Toe");
             amount.setText(MainActivity.doubleToEuro(Tab4.game_wagers[position]));
             opponent.setText(Tab4.game_opponents[position]);
+        }
+
+        CircleImageView memberPic = (CircleImageView)rowView.findViewById(R.id.group_list_image);
+        /* set member profile picture */
+        DownloadImageTask downloadImageTask = new DownloadImageTask();
+        try {
+            downloadImageTask.setImageFromURL(memberPic, "http://intotheblu.nl/image/"
+                    + names[position] + ".jpg");
+        }
+        catch(Exception e) {
         }
         return rowView;
     }

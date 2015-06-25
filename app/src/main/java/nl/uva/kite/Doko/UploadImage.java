@@ -100,7 +100,7 @@ public class UploadImage extends Activity {
                 Integer j = new Integer(b.getHeight());
                 Log.e("bitmap width =", i.toString());
                 Log.e("bitmap height =", j.toString());
-                m.setRectToRect(new RectF(0, 0, b.getWidth(), b.getHeight()), new RectF(0, 0, 100, 100), Matrix.ScaleToFit.CENTER);
+                m.setRectToRect(new RectF(0, 0, b.getWidth(), b.getHeight()), new RectF(0, 0, 400,  400), Matrix.ScaleToFit.CENTER);
                 b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), m, true);
                 Integer k = new Integer(b.getWidth());
                 Integer l = new Integer(b.getHeight());
@@ -200,6 +200,10 @@ public class UploadImage extends Activity {
                         updateFileNameDB();
                         Toast.makeText(getApplicationContext(), response,
                                 Toast.LENGTH_LONG).show();
+                        Intent myintent = new Intent(getApplicationContext(), MainActivity.class);
+                        myintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getApplicationContext().startActivity(myintent);
+
                     }
 
                     // When the response returned by REST has Http
