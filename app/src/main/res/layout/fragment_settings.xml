@@ -9,4 +9,14 @@
         android:id="@+id/change_pic_button"
         android:layout_gravity="center"
         android:onClick="onClickChooseImage" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:onClick="LogOutUser"
+        android:id ="@+id/logout_button"
+        android:layout_below="@+id/change_pic_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
