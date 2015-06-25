@@ -13,8 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -373,11 +375,13 @@ public class MainActivity extends AppCompatActivity {
         final Spinner spin = new Spinner(this);
         final EditText wageurl = new EditText(this);
 
+        // Load current group members, excluding yourself
         String[] allMembers = Groups.getGroupMemberList();
         ArrayList<String> members = new ArrayList<>();
         Collections.addAll(members, allMembers);
         members.remove(Login.getLoginName());
 
+        // Create drop down menu
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, members);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter2);
@@ -387,6 +391,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the default text to a link of the Queen
         wageurl.setHint("The wager of your game");
+        wageurl.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        wageurl.setKeyListener(DigitsKeyListener.getInstance("01234567890."));
         alertLayout.addView(spin);
         alertLayout.addView(wageurl);
 
@@ -406,6 +412,16 @@ public class MainActivity extends AppCompatActivity {
                     String wager = wageurl.getText().toString();
                     if (friendName.length() < 1 || friendName.equals(Login.getLoginName()))
                         return;
+                    try {
+                        if (Double.parseDouble(wager) < 0) {
+                            Toast.makeText(view.getContext(), "Enter a positive number!", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }
+                    catch (NumberFormatException e) {
+                        Toast.makeText(view.getContext(), "Invalid number!", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     try {
                         String login = Login.getLoginName();
@@ -453,11 +469,13 @@ public class MainActivity extends AppCompatActivity {
         final EditText debturl = new EditText(this);
         final EditText reasonurl = new EditText(this);
 
+        // Load current group members, excluding yourself
         String[] allMembers = Groups.getGroupMemberList();
         ArrayList<String> members = new ArrayList<>();
         Collections.addAll(members, allMembers);
         members.remove(Login.getLoginName());
 
+        // Create drop down menu
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, members);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter2);
@@ -466,6 +484,8 @@ public class MainActivity extends AppCompatActivity {
         spin.setLayoutParams(spinParams);
 
         debturl.setHint("The amount of debt");
+        debturl.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        debturl.setKeyListener(DigitsKeyListener.getInstance("01234567890."));
         reasonurl.setHint("The reason for this credit");
 
         alertLayout.addView(spin);
@@ -494,8 +514,14 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(view.getContext(), "You cannot create money out of thin air!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (Double.parseDouble(debt) < 0) {
-                    Toast.makeText(view.getContext(), "Enter a positive number!", Toast.LENGTH_LONG).show();
+                try {
+                    if (Double.parseDouble(debt) < 0) {
+                        Toast.makeText(view.getContext(), "Enter a positive number!", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+                catch (NumberFormatException e) {
+                    Toast.makeText(view.getContext(), "Invalid number!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -548,11 +574,13 @@ public class MainActivity extends AppCompatActivity {
         final EditText debturl = new EditText(this);
         final EditText reasonurl = new EditText(this);
 
+        // Load current group members, excluding yourself
         String[] allMembers = Groups.getGroupMemberList();
         ArrayList<String> members = new ArrayList<>();
         Collections.addAll(members, allMembers);
         members.remove(Login.getLoginName());
 
+        // Create drop down menu
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, members);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter2);
@@ -561,6 +589,8 @@ public class MainActivity extends AppCompatActivity {
         spin.setLayoutParams(spinParams);
 
         debturl.setHint("The amount of debt");
+        debturl.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        debturl.setKeyListener(DigitsKeyListener.getInstance("01234567890."));
         reasonurl.setHint("The reason for this debit");
 
         alertLayout.addView(spin);
@@ -590,8 +620,14 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(view.getContext(), "You cannot create money out of thin air!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (Double.parseDouble(debt) < 0) {
-                    Toast.makeText(view.getContext(), "Enter a positive number!", Toast.LENGTH_LONG).show();
+                try {
+                    if (Double.parseDouble(debt) < 0) {
+                        Toast.makeText(view.getContext(), "Enter a positive number!", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+                catch (NumberFormatException e) {
+                    Toast.makeText(view.getContext(), "Invalid number!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
