@@ -16,12 +16,16 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.parse.Parse;
@@ -37,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import nl.uva.kite.Doko.Fragments.TabWrapper;
@@ -365,20 +370,31 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout alertLayout= new LinearLayout(this);
         alertLayout.setOrientation(LinearLayout.VERTICAL);
 
-        final EditText friendurl = new EditText(this);
+        final Spinner spin = new Spinner(this);
         final EditText wageurl = new EditText(this);
 
+        String[] allMembers = Groups.getGroupMemberList();
+        ArrayList<String> members = new ArrayList<>();
+        Collections.addAll(members, allMembers);
+        members.remove(Login.getLoginName());
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, members);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(adapter2);
+        ViewGroup.LayoutParams spinParams = view.getLayoutParams();
+        spinParams.width = 450;
+        spin.setLayoutParams(spinParams);
+
         // Set the default text to a link of the Queen
-        friendurl.setHint("Your friends name");
         wageurl.setHint("The wager of your game");
-        alertLayout.addView(friendurl);
+        alertLayout.addView(spin);
         alertLayout.addView(wageurl);
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(alertLayout);
 
         alert.setTitle("Play for wager!");
-        alert.setMessage("Play against your buddies!");
+        alert.setMessage("Please select the name of your opponent");
 
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -386,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
                     //ParseUser currentUser = ParseUser.getCurrentUser();
 
-                    String friendName = friendurl.getText().toString();
+                    String friendName = spin.getSelectedItem().toString();
                     String wager = wageurl.getText().toString();
                     if (friendName.length() < 1 || friendName.equals(Login.getLoginName()))
                         return;
@@ -432,14 +448,27 @@ public class MainActivity extends AppCompatActivity {
     public void AddCredit(final View view) {
         LinearLayout alertLayout = new LinearLayout(this);
         alertLayout.setOrientation(LinearLayout.VERTICAL);
-        final EditText debitorurl = new EditText(this);
+
+        final Spinner spin = new Spinner(this);
         final EditText debturl = new EditText(this);
         final EditText reasonurl = new EditText(this);
-        debitorurl.setHint("The name of your debitor");
+
+        String[] allMembers = Groups.getGroupMemberList();
+        ArrayList<String> members = new ArrayList<>();
+        Collections.addAll(members, allMembers);
+        members.remove(Login.getLoginName());
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, members);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(adapter2);
+        ViewGroup.LayoutParams spinParams = view.getLayoutParams();
+        spinParams.width = 450;
+        spin.setLayoutParams(spinParams);
+
         debturl.setHint("The amount of debt");
         reasonurl.setHint("The reason for this credit");
 
-        alertLayout.addView(debitorurl);
+        alertLayout.addView(spin);
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
@@ -452,11 +481,11 @@ public class MainActivity extends AppCompatActivity {
         alert.setView(alertLayout);
 
         alert.setTitle("Add Credit");
-        alert.setMessage("Please enter data of your credit action");
+        alert.setMessage("Please select the name of your debitor:");
 
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String debitor = debitorurl.getText().toString().trim();
+                String debitor = spin.getSelectedItem().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
                 if (debitor.length() < 1 || debt.length() < 1)
@@ -481,7 +510,7 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
                     params.add(new BasicNameValuePair("origin", reason));
                     params.add(new BasicNameValuePair("type", "debit"));
-                    JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                    JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.DEBTADD);
                     jr.execute("http://intotheblu.nl/debt_request_add.php");
 
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
@@ -514,14 +543,27 @@ public class MainActivity extends AppCompatActivity {
     public void AddDebit(final View view) {
         LinearLayout alertLayout = new LinearLayout(this);
         alertLayout.setOrientation(LinearLayout.VERTICAL);
-        final EditText creditorurl = new EditText(this);
+
+        final Spinner spin = new Spinner(this);
         final EditText debturl = new EditText(this);
         final EditText reasonurl = new EditText(this);
-        creditorurl.setHint("The name of the creditor");
+
+        String[] allMembers = Groups.getGroupMemberList();
+        ArrayList<String> members = new ArrayList<>();
+        Collections.addAll(members, allMembers);
+        members.remove(Login.getLoginName());
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, members);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(adapter2);
+        ViewGroup.LayoutParams spinParams = view.getLayoutParams();
+        spinParams.width = 450;
+        spin.setLayoutParams(spinParams);
+
         debturl.setHint("The amount of debt");
         reasonurl.setHint("The reason for this debit");
 
-        alertLayout.addView(creditorurl);
+        alertLayout.addView(spin);
         alertLayout.addView(debturl);
         alertLayout.addView(reasonurl);
 
@@ -538,7 +580,7 @@ public class MainActivity extends AppCompatActivity {
 
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String creditor = creditorurl.getText().toString().trim();
+                String creditor = spin.getSelectedItem().toString().trim();
                 String debt = debturl.getText().toString().trim();
                 String reason = reasonurl.getText().toString().trim();
 
@@ -564,7 +606,7 @@ public class MainActivity extends AppCompatActivity {
                     params.add(new BasicNameValuePair("group_id", Integer.toString(Groups.current_group_id)));
                     params.add(new BasicNameValuePair("origin", reason));
                     params.add(new BasicNameValuePair("type", "credit"));
-                    JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.NONE);
+                    JSONRetrieve jr = new JSONRetrieve(view.getContext(), params, OnJSONCompleted.DEBTADD);
                     jr.execute("http://intotheblu.nl/debt_request_add.php");
 
                     ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
