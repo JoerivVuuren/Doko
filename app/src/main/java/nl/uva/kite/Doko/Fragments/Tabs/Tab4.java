@@ -38,17 +38,9 @@ public class Tab4 extends Fragment {
         get_game_list(OnJSONCompleted.GAMELISTUPDATE, this.getActivity());
         Log.e("", "send request for game list");
 
-
-
-
-//        ListView friendRequestsLv = (ListView)v.findViewById(R.id.friend_request_list);
-//        ArrayList<String> friendRequests = new ArrayList<String>();
-//        friendRequests.add("Staci Carr");
-//        friendRequests.add("Staci Carr");
-//        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(getActivity(), R.layout.friend_request_list_row,R.id.friend_request_name, friendRequests);
-//        friendRequestsLv.setAdapter(listAdapter);
-
         final ListView gameReq = (ListView)v.findViewById(R.id.game_list);
+        TextView nogActiveGames = (TextView)v.findViewById(R.id.empty_active_games);
+        gameReq.setEmptyView(nogActiveGames);
         gameReq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             // do this when an item of the list is clicked
