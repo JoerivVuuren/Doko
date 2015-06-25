@@ -58,11 +58,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name=".ProfileScreen"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-        </activity>
 
         <service android:name="com.parse.PushService" />
 

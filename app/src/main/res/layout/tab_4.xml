@@ -15,20 +15,6 @@ android:background="@color/activityBackground"
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"
-            android:onClick="LogOutUser"
-            android:id ="@+id/login_button" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="My Profile"
-            android:onClick="OpenProfileScreen"
-            android:id ="@+id/profile_button" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Tic Tac Toe"
             android:onClick="OpenTicTacToe"
             android:id ="@+id/ttt_button" />

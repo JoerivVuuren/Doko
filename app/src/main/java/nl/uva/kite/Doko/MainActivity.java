@@ -249,24 +249,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    /* opens the login screen activity */
-    public void OpenLoginScreen(View view) {
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
-    }
-
-    /* opens the profile screen activity */
-    public void OpenProfileScreen(View view) {
-        Intent intent = new Intent(this, ProfileScreen.class);
-        startActivity(intent);
-    }
-
-    /* opens the contacts fragment
-    public void OpenContacts(View view) {
-        Contacts contacts = new Contacts();
-        this.getFragmentManager().beginTransaction()
-        .replace(R.id.contentFragment, contacts, null).addToBackStack(null).commit();
-    } */
 
     /* places EURO sign in front of double */
     public static String doubleToEuro(double d) {
