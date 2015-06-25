@@ -16,6 +16,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab3;
 
 public class Groups extends Fragment {
@@ -106,6 +107,7 @@ public class Groups extends Fragment {
         params.add(new BasicNameValuePair("adduser", username));
         JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.GROUPADDUSER);
         jr.execute("http://intotheblu.nl/group_request_accept.php");
+        Tab1.wall_add(Login.getLoginName(), username, 0.0, 6, -1, ctext);
     }
 
     public static void add_request(String friendName, int groupid, String group_name, Context ctext) {

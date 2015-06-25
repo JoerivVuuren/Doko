@@ -96,14 +96,18 @@ public class Tab1 extends Fragment {
     }
 
     /* adds a new wall item */
-    public static void wall_add(String player1, String player2, double amount, int typ, Context ctext) {
+    public static void wall_add(String player1, String player2, double amount, int typ, int groupId, Context ctext) {
+        int new_group = groupId;
+        if (new_group == -1)
+            new_group = Groups.current_group_id;
+
         if (!Login.isLoggedIn() || Groups.current_group_id < 0)
             return;
 
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", Login.getLoginName()));
         params.add(new BasicNameValuePair("password", Login.getPassword()));
-        params.add(new BasicNameValuePair("group_id", "" + Groups.current_group_id));
+        params.add(new BasicNameValuePair("group_id", "" + new_group));
         params.add(new BasicNameValuePair("player1", player1));
 
         if (player2 != null)

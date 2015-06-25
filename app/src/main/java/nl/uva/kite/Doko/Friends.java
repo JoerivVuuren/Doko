@@ -16,6 +16,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.uva.kite.Doko.Fragments.Tabs.Tab1;
+
 public class Friends extends Fragment {
     public static String[] friends;
     public static String[] requests;

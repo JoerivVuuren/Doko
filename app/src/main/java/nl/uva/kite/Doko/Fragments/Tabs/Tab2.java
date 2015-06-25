@@ -128,6 +128,8 @@ public class Tab2 extends Fragment {
                                         requests_debit_reason[position], requests_debit_id[position], Groups.current_group_id,
                                         view.getContext(), "debit");
                                 view.setVisibility(View.GONE);
+                                Tab1.wall_add(Login.getLoginName(), selectedFromList,
+                                        requests_debit_amount[position], 5, -1, view.getContext());
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -164,6 +166,8 @@ public class Tab2 extends Fragment {
                                 addDebt(requests_credit_amount[position], Login.getLoginName(), requests_credit[position],
                                         requests_credit_reason[position], requests_credit_id[position], Groups.current_group_id,
                                         view.getContext(), "credit");
+                                Tab1.wall_add(Login.getLoginName(), selectedFromList,
+                                        requests_debit_amount[position], 4, -1, view.getContext());
                                 view.setVisibility(View.GONE);
                             }
                         })

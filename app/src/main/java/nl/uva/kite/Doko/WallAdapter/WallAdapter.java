@@ -59,6 +59,8 @@ public class WallAdapter extends RecyclerView.Adapter<WallAdapter.WallViewHolder
                 WallViewHolder.vMessage.setText(wi.vUserName + " has opened a debt of " + MainActivity.doubleToEuro(wi.vAmount) +
                 " to " + wi.vOpponentName + "!");
                 break;
+            case 6:
+                WallViewHolder.vMessage.setText(wi.vOpponentName + " was added to the group!");
         }
     }
 

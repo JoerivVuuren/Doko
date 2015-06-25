@@ -324,7 +324,7 @@ public class OnJSONCompleted {
             else if (type == GROUPCREATE) {
                 /* activate new group id */
                 Groups.activateGroup(Integer.parseInt(json.getString("group_id")), json.getString("group_name"));
-
+                Tab1.wall_add(Login.getLoginName(), "abc", 0.0, 1, Integer.parseInt(json.getString("group_id")), ctext);
                 /* restart MainActivity */
                 Intent intent = new Intent(ctext, MainActivity.class);
                 a.finish();
