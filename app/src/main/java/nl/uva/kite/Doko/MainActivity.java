@@ -1,6 +1,8 @@
 package nl.uva.kite.Doko;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.content.DialogInterface;
@@ -26,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,7 +50,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import nl.uva.kite.Doko.Fragments.TabWrapper;
+import nl.uva.kite.Doko.Fragments.Tabs.Tab2;
 import nl.uva.kite.Doko.Fragments.Tabs.Tab4;
 
 
@@ -214,6 +219,11 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.fragment_container, groups);
             }
         }
+
+        updatePicNameFromDB(this);
+        TextView tv = (TextView)findViewById(R.id.drawer_username);
+        tv.setText(Login.getLoginName());
+
     }
 
     private void setUpToolbar() {
@@ -726,6 +736,26 @@ public class MainActivity extends AppCompatActivity {
                 });
         alert.show();
 
+    }
+
+    public static void updatePicNameFromDB(Context ctext) {
+        Log.e("", "Enterd updatePic");
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params.add(new BasicNameValuePair("password", Login.getPassword()));
+        JSONRetrieve jr = new JSONRetrieve(ctext, params, OnJSONCompleted.PICNAME);
+        jr.execute("http://intotheblu.nl/get_pic_name.php");
+    }
+
+    public static void updateAllPics() {
+        CircleImageView userPic = (CircleImageView) mContext.findViewById(R.id.circleimageview);
+        //CircleImageView userPicMe = ;
+        if(userPic==null) Log.e("", "userPic is null");
+        //if(userPicMe==null)Log.e("", "userPicMe is null");
+        DownloadImageTask dIT = new DownloadImageTask();
+        //DownloadImageTask dIT2 = new DownloadImageTask();
+        dIT.setImageFromURL(userPic, "http://intotheblu.nl/image/" + Login.picName);
+        //dIT2.setImageFromURL(userPicMe, "http://intotheblu.nl/image/" + Login.picName);
     }
 
     public void onClickChooseImage(View view) {

@@ -2,6 +2,7 @@
 package nl.uva.kite.Doko.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +49,12 @@ public class MemberListArrayAdapter extends ArrayAdapter<String> {
 
         /* set member profile picture */
         DownloadImageTask downloadImageTask = new DownloadImageTask();
-        //extensie nog niet dynamisch: gebruik Groups.current_group_pictures[position]
-        //TODO: picturenaam updaten
-        downloadImageTask.setImageFromURL(memberPic, "http://intotheblu.nl/image/" + Groups.current_group_pictures[position]);
+        try {
+            downloadImageTask.setImageFromURL(memberPic, "http://intotheblu.nl/image/"
+                    + Groups.current_group_pictures[position]);
+        }
+        catch(Exception e) {
+        }
 
 
         return rowView;

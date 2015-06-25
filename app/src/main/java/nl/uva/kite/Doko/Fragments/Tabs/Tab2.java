@@ -1,5 +1,6 @@
 package nl.uva.kite.Doko.Fragments.Tabs;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +29,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import nl.uva.kite.Doko.DownloadImageTask;
 import nl.uva.kite.Doko.Groups;
 import nl.uva.kite.Doko.JSONRetrieve;
 import nl.uva.kite.Doko.Login;
@@ -38,6 +41,7 @@ import nl.uva.kite.Doko.TicTacToe;
 
 public class Tab2 extends Fragment {
     /* requests data */
+    public static CircleImageView userPicMe;
     public static String[] requests_game;
     public static int[] requests_game_id;
     public static double[] requests_game_amount;
@@ -62,6 +66,9 @@ public class Tab2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab_2,container,false);
         get_request_list(OnJSONCompleted.ALLREQUESTUPDATE, this.getActivity());
+
+        userPicMe = (CircleImageView) this.getActivity().findViewById(R.id.circleimageviewME);
+        MainActivity.updatePicNameFromDB(MainActivity.mContext);
 
         /* display user's name */
         TextView meName = (TextView)v.findViewById(R.id.me_name);

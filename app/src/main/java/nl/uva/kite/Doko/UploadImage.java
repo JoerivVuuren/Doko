@@ -1,6 +1,8 @@
 package nl.uva.kite.Doko;
 
 import android.app.Activity;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +27,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -45,7 +48,7 @@ public class UploadImage extends Activity {
     String encodedString;
     RequestParams params = new RequestParams();
     String imgPath, fileName, extensionType;
-    Bitmap bitmap;
+    Bitmap b;
     private static int RESULT_LOAD_IMG = 1;
     int indexOfLastDot;
 
@@ -89,9 +92,23 @@ public class UploadImage extends Activity {
                 imgPath = cursor.getString(columnIndex);
                 cursor.close();
                 ImageView imgView = (ImageView) findViewById(R.id.imgView);
+
+                Matrix m = new Matrix();
+
+                b = BitmapFactory.decodeFile(imgPath);
+                Integer i = new Integer(b.getWidth());
+                Integer j = new Integer(b.getHeight());
+                Log.e("bitmap width =", i.toString());
+                Log.e("bitmap height =", j.toString());
+                m.setRectToRect(new RectF(0, 0, b.getWidth(), b.getHeight()), new RectF(0, 0, 100, 100), Matrix.ScaleToFit.CENTER);
+                b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), m, true);
+                Integer k = new Integer(b.getWidth());
+                Integer l = new Integer(b.getHeight());
+                Log.e("new bitmap width =", k.toString());
+                Log.e("new bitmap height =", l.toString());
+
                 // Set the Image in ImageView
-                imgView.setImageBitmap(BitmapFactory
-                        .decodeFile(imgPath));
+                imgView.setImageBitmap(b);
                 // Get the Image's file name
                 indexOfLastDot = imgPath.lastIndexOf(".");
                 Log.e("", "index " + indexOfLastDot);
@@ -121,6 +138,7 @@ public class UploadImage extends Activity {
             // Convert image to String using Base64
             encodeImagetoString();
             // When Image is not selected from Gallery
+            MainActivity.updatePicNameFromDB(MainActivity.mContext);
         } else {
             Toast.makeText(
                     getApplicationContext(),
@@ -139,14 +157,12 @@ public class UploadImage extends Activity {
 
             @Override
             protected String doInBackground(Void... params) {
-                BitmapFactory.Options options = null;
+                /*BitmapFactory.Options options = null;
                 options = new BitmapFactory.Options();
-                options.inSampleSize = 3;
-                bitmap = BitmapFactory.decodeFile(imgPath,
-                        options);
+                options.inSampleSize = 3;*/
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 // Must compress the Image to reduce image size to make upload easy
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+                b.compress(Bitmap.CompressFormat.PNG, 50, stream);
                 byte[] byte_arr = stream.toByteArray();
                 // Encode Image to String
                 encodedString = Base64.encodeToString(byte_arr, 0);
@@ -229,11 +245,11 @@ public class UploadImage extends Activity {
     }
 
     public void updateFileNameDB() {
-        List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("username", Login.getLoginName()));
-        params.add(new BasicNameValuePair("password", Login.getPassword()));
-        params.add(new BasicNameValuePair("filename", fileName));
-        JSONRetrieve jr = new JSONRetrieve(this, params, OnJSONCompleted.NONE);
+        List<NameValuePair> params2 = new ArrayList<>();
+        params2.add(new BasicNameValuePair("username", Login.getLoginName()));
+        params2.add(new BasicNameValuePair("password", Login.getPassword()));
+        params2.add(new BasicNameValuePair("filename", fileName));
+        JSONRetrieve jr = new JSONRetrieve(this, params2, OnJSONCompleted.NONE);
         jr.execute("http://intotheblu.nl/update_pic_name.php");
     }
 

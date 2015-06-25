@@ -26,6 +26,7 @@ public class Login extends Activity implements OnClickListener {
     private static boolean loggedIn = false;
     private static String loginName = "";
     private static String loginPass = "";
+    public static String picName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +53,10 @@ public class Login extends Activity implements OnClickListener {
                 securePreferences.getString("password") != null) {
 
             attemptLogin(this, securePreferences.getString("username"),
-                         securePreferences.getString("password"));
+                    securePreferences.getString("password"));
         }
         else if (securePreferences.getString("autologin") != null &&
-                     securePreferences.getString("autologin").equals("0")) {
+                securePreferences.getString("autologin").equals("0")) {
             ((CheckBox)findViewById(R.id.autoLoginCheckBox)).setChecked(false);
         }
 

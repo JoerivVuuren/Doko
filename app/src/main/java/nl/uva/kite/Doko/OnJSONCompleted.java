@@ -5,10 +5,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import nl.uva.kite.Doko.Adapters.HistoryListArrayAdapter;
 import nl.uva.kite.Doko.Adapters.ListViewHeightFix;
 import nl.uva.kite.Doko.Adapters.MemberListArrayAdapter;
@@ -50,6 +57,7 @@ public class OnJSONCompleted {
     public static final int FRIENDREQUESTUPDATE = 15;
     public static final int DEBTADD = 16;
     public static final int ALLREQUESTUPDATE = 17;
+    public static final int PICNAME = 18;
     public static final int STARTGAME = 21;
     public static final int UPDATEGAME = 24;
     public static final int GAMELISTUPDATE = 25;
@@ -507,6 +515,7 @@ public class OnJSONCompleted {
                     jr.execute("http://intotheblu.nl/debt_add.php");
                 }
             }
+
             else if (type == POPUPUSERHISTORY) {
 
                 /* fill Tab3.* with json response */
@@ -528,6 +537,11 @@ public class OnJSONCompleted {
                 }
 
                 Tab3.showPopup(json.getString("user"), a);
+            }
+            else if (type == PICNAME) {
+                String picName = json.getString("profile_picture");
+                Login.picName = picName;
+                MainActivity.updateAllPics();
             }
             else if (type == WALLLIST) {
 
