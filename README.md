@@ -13,7 +13,7 @@ To host Doko on your own server, you should:
 
 This project was made by:
 
-- Artin Sanaye
+- Artin
 - Joeri van Vuuren
 - David Smelt
 - Mateusz Sadowski
